@@ -1,4 +1,4 @@
-# Video Prompting Guide — Veo
+# Video Prompting Guide, Veo
 
 ## The short version
 
@@ -13,7 +13,7 @@ Every good video prompt answers these seven questions, in roughly this order:
 1. **What is the mood?** One sentence.
 2. **What is in the frame?** Composition: wide/medium/close, what's in foreground, middle, background.
 3. **How is it lit?** The single most important factor. Name the source, direction, and color of light.
-4. **What materials and colors are present?** Not adjectives — real materials.
+4. **What materials and colors are present?** Not adjectives, real materials.
 5. **What moves in the frame?** Name specific motions with specific subjects.
 6. **How does the camera move?** Often: "static" or "slow drift". Rarely anything more.
 7. **What should be avoided?** A short negative list.
@@ -72,15 +72,15 @@ That is the right size and specificity for a Bold atmosphere video.
 
 ### Camera moves (use sparingly)
 
-- **Static** — default choice, strongest for atmosphere pieces
-- **Slow drift** — camera moves imperceptibly, 1-2 cm per second (implied)
-- **Slow push in** — camera moves forward toward a focal element, 10-20cm over the duration
-- **Slow pull back** — reverse of push, used for reveals of context
-- **Slow pan left / right** — horizontal rotation, very slow
-- **Slow tilt up / down** — vertical rotation
-- **Gentle handheld** — implies slight movement, warmer/more human feel
+- **Static**, default choice, strongest for atmosphere pieces
+- **Slow drift**, camera moves imperceptibly, 1-2 cm per second (implied)
+- **Slow push in**, camera moves forward toward a focal element, 10-20cm over the duration
+- **Slow pull back**, reverse of push, used for reveals of context
+- **Slow pan left / right**, horizontal rotation, very slow
+- **Slow tilt up / down**, vertical rotation
+- **Gentle handheld**, implies slight movement, warmer/more human feel
 
-Avoid: zoom, whip pan, crane shots, drone moves, dolly zoom, rack focus — Veo interprets these unreliably and they rarely serve atmosphere.
+Avoid: zoom, whip pan, crane shots, drone moves, dolly zoom, rack focus. Veo interprets these unreliably and they rarely serve atmosphere.
 
 ### In-frame motion (be specific)
 
@@ -143,7 +143,7 @@ shadow, the feeling of a museum at evening.
 The default for event atmosphere pieces. Gives room for wide composition. Use when the final destination is the proposal PDF, a Gamma slide background, or a web embed.
 
 ### 1:1 (square)
-Good for Instagram feed posts. Compress the prompt — square frames don't handle extreme wide shots well. Favor medium and close compositions.
+Good for Instagram feed posts. Compress the prompt, square frames don't handle extreme wide shots well. Favor medium and close compositions.
 
 ### 9:16 (vertical)
 For Instagram stories, TikTok, Reels. Think vertical: stacked compositions (overhead + ground-level element), walking figures shot tall, vertical architectural elements. Landscape scenes look awkward cropped to vertical; use stills designed for the format.
@@ -152,12 +152,12 @@ For Instagram stories, TikTok, Reels. Think vertical: stacked compositions (over
 
 ## Duration and pacing
 
-- **5s** — shortest useful. Enough for one small motion. Use when only one thing needs to happen.
-- **6-8s** — sweet spot for ambient atmosphere holds. Long enough to breathe, short enough to loop.
-- **9-12s** — for slow push-ins with a reveal. The first 4s establish, the next 5-6s advance, the last 1-2s rest at the destination.
-- **13-15s** — maximum useful for Veo. Rare. Only when there's a genuine narrative arc (setup → reveal → breath).
+- **5s**, shortest useful. Enough for one small motion. Use when only one thing needs to happen.
+- **6-8s**, sweet spot for ambient atmosphere holds. Long enough to breathe, short enough to loop.
+- **9-12s**, for slow push-ins with a reveal. The first 4s establish, the next 5-6s advance, the last 1-2s rest at the destination.
+- **13-15s**, maximum useful for Veo. Rare. Only when there's a genuine narrative arc (setup → reveal → breath).
 
-Longer videos fragment in Veo's output — morph artifacts, coherence drift. Don't push past 15s.
+Longer videos fragment in Veo's output: morph artifacts, coherence drift. Don't push past 15s.
 
 ---
 
@@ -185,14 +185,14 @@ The model already sees the space from your image. Telling it again competes with
 
 ## Handling of people
 
-People are the hardest element in any generated video. Hands, faces, walks — all are failure-prone.
+People are the hardest element in any generated video. Hands, faces, walks, all are failure-prone.
 
 **Safe approaches:**
-- **Silhouettes** — figures in full shadow against a lit background.
-- **Backs of heads** — camera behind the subject.
-- **Blurred movement** — figures passing fast enough to blur (motion + longer implied shutter).
-- **Partial in frame** — a hand reaching in, a figure half-visible at the frame's edge.
-- **Distant crowds** — people at a distance where individual features don't render.
+- **Silhouettes**, figures in full shadow against a lit background.
+- **Backs of heads**, camera behind the subject.
+- **Blurred movement**, figures passing fast enough to blur (motion + longer implied shutter).
+- **Partial in frame**, a hand reaching in, a figure half-visible at the frame's edge.
+- **Distant crowds**, people at a distance where individual features don't render.
 
 **Risky:**
 - Close-ups of faces (likely to look uncanny)
