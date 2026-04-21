@@ -50,7 +50,7 @@ What can go wrong. What is the mitigation. Top risks only (5 to 8). Not a full F
 ## Output template
 
 ```markdown
-# Operations & Logistics — [שם אירוע]
+# Operations & Logistics, [שם אירוע]
 
 ## 1. זרימת הקהל
 
@@ -72,7 +72,7 @@ What can go wrong. What is the mitigation. Top risks only (5 to 8). Not a full F
 (לכל אזור)
 
 ### צוואר בקבוק צפוי
-[הזמן/המקום הצפוי להיות עמוס, כניסה ב-19:30? יציאה מהשיא? ומה המענה]
+[הזמן/המקום הצפוי להיות עמוס - כניסה ב-19:30? יציאה מהשיא? - ומה המענה]
 
 ## 2. בינוי ותכנון שטח
 
@@ -103,7 +103,7 @@ What can go wrong. What is the mitigation. Top risks only (5 to 8). Not a full F
 - **גיבוי:** מיקרופון נוסף, רמקול ניידים
 
 ### אור
-- **תכנון תאורה:** [תיאור, דרמטי / רך / צבעוני / שלבים]
+- **תכנון תאורה:** [תיאור - דרמטי / רך / צבעוני / שלבים]
 - **ציוד:** [ביס, spots, ambient, moving heads, haze]
 - **ספק (תפקיד):** מעצב תאורה + חברת תאורה
 - **בקרה:** מפעיל אור חי
