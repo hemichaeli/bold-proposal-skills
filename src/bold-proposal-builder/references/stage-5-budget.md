@@ -4,7 +4,7 @@
 
 The budget is the credibility test of the proposal. Beautiful concepts get rejected when the numbers feel arbitrary. Stage 5 builds a structured, defensible budget where every line ties to a deliverable from stages 1 to 4.
 
-Output: `05-budget/budget.json` — a structured JSON that will be rendered into the final Excel file in stage 6.
+Output: `05-budget/budget.json`, a structured JSON that will be rendered into the final Excel file in stage 6.
 
 ---
 
@@ -27,7 +27,7 @@ Bold's budgets organize by these top-level categories. Not every event has every
 12. מנחה, אמנים, מופעים (MC, talent, performances)
 13. אושרים וצוות אירוע (Hostesses & event staff)
 14. אבטחה ורפואה (Security & medical)
-15. הפקה חזותית — תמונות וסרטונים (Visual content production)
+15. הפקה חזותית, תמונות וסרטונים (Visual content production)
 16. הדפסות ושילוט (Print & signage)
 17. מתנות ומזכרות (Gifts & takeaways)
 18. הסעות וחניה (Transport & parking)
@@ -77,14 +77,14 @@ Bold's budgets organize by these top-level categories. Not every event has every
       "name": "תפאורה ובינוי",
       "items": [
         {
-          "name": "ספק תפאורה - הרחבה (אם נדרש)",
+          "name": "ספק תפאורה, הרחבה (אם נדרש)",
           "qty": 1,
           "unit": "חבילה",
           "unit_cost": 6000,
           "vendor_role": "Scenography supplier",
           "conditional": true,
           "trigger_condition": "אם הלקוח יאשר הרחבה של קיר ה-Reveal ל-6x4 מ' במקום 4x3 מ'",
-          "notes": "שורה מותנית - להוסיף לסיכום רק אם מופעל",
+          "notes": "שורה מותנית, להוסיף לסיכום רק אם מופעל",
           "source_deliverable": "operations/logistics.md §2 + brand-heart motif"
         }
       ]
@@ -114,12 +114,12 @@ Every line has a `source_deliverable` pointing back to a stage 1-4 artifact. If 
 
 ### Units must be concrete
 
-- `"unit": "אירוע"` — flat fee for the whole event
-- `"unit": "יח'"` — per unit (chair, table, sign)
-- `"unit": "שעה"` — per hour of service
-- `"unit": "סועד"` — per guest (catering)
-- `"unit": "חבילה"` — package (explain in notes)
-- `"unit": "יום"` — per day (multi-day events)
+- `"unit": "אירוע"`, flat fee for the whole event
+- `"unit": "יח'"`, per unit (chair, table, sign)
+- `"unit": "שעה"`, per hour of service
+- `"unit": "סועד"`, per guest (catering)
+- `"unit": "חבילה"`, package (explain in notes)
+- `"unit": "יום"`, per day (multi-day events)
 
 ### Vendor roles, not vendor names (yet)
 
@@ -127,7 +127,7 @@ In stage 5, write the vendor *role* (e.g., "Scenography supplier", "Lighting des
 
 Exceptions:
 - "Bold internal" for roles Bold fills with its own team.
-- Specific vendor names that the client has mandated (from stage 1's "mandatory suppliers" field) — use the actual name and mark it in `notes`.
+- Specific vendor names that the client has mandated (from stage 1's "mandatory suppliers" field), use the actual name and mark it in `notes`.
 
 ### Conditional items
 
@@ -144,7 +144,7 @@ Short, direct. "Includes setup and breakdown" is good. "This is a very important
 
 ---
 
-## How to populate the budget — the method
+## How to populate the budget, the method
 
 ### Step 1: Extract line items from stage-4 documents
 
