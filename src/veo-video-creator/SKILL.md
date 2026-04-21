@@ -20,16 +20,16 @@ Google Veo is Google DeepMind's video generation model. Veo 3 (current as of ear
 - User has a still image and wants to bring it to motion.
 
 **Don't use for:**
-- Multi-shot edits with cuts, transitions, text overlays, use `ffmpeg-editor` after Veo produces the raw footage.
-- Long-form video (30+ seconds), Veo is not built for that.
-- Voiceover/music generation, generate separately (ElevenLabs / MusicGen) and layer with ffmpeg.
+- Multi-shot edits with cuts, transitions, text overlays — use `ffmpeg-editor` after Veo produces the raw footage.
+- Long-form video (30+ seconds) — Veo is not built for that.
+- Voiceover/music generation — generate separately (ElevenLabs / MusicGen) and layer with ffmpeg.
 
 ---
 
 ## Prerequisites
 
 ### MCP connection
-The Veo MCP server must be listed in the user's active MCP servers. Verify by calling `tool_search` with the query `"veo video"`. If the server is not available or returns errors, report this to the user before proceeding; do not attempt to call the Veo REST API directly from this skill.
+The Veo MCP server must be listed in the user's active MCP servers. Verify by calling `tool_search` with the query `"veo video"`. If the server is not available or returns errors, report this to the user before proceeding — do not attempt to call the Veo REST API directly from this skill.
 
 ### Finding the right tool
 The exact tool names on the Veo MCP may vary between versions. Before generating, search:
@@ -56,9 +56,9 @@ A Bold-quality atmosphere video is **slow, silent, and single-shot**. It is not 
 
 ### The two shapes that work
 
-**Shape A, the slow push-in.** Camera drifts toward a single focal element. Duration 8-10s. Starts wide, ends at a detail. Used for reveals, hero moments, significant objects.
+**Shape A — the slow push-in.** Camera drifts toward a single focal element. Duration 8-10s. Starts wide, ends at a detail. Used for reveals, hero moments, significant objects.
 
-**Shape B, the ambient hold.** Camera static or barely moving. Duration 6-8s. Captures a space with quiet life in it. Used for establishing atmosphere, mood loops, pre-roll before the event starts.
+**Shape B — the ambient hold.** Camera static or barely moving. Duration 6-8s. Captures a space with quiet life in it. Used for establishing atmosphere, mood loops, pre-roll before the event starts.
 
 Most Bold atmosphere videos are Shape B. Shape A is for when there is a specific thing to reveal.
 
@@ -67,14 +67,14 @@ Most Bold atmosphere videos are Shape B. Shape A is for when there is a specific
 ## Prompt anatomy
 
 ```
-[Mood sentence, what this moment feels like]
-[Composition, what's in the frame and how it's framed]
-[Light, the defining factor]
-[Materials and color, texture and palette]
-[Motion, camera and in-frame motion, deliberately limited]
-[Duration, 5 to 15 seconds]
-[Aspect ratio, 16:9 for cinematic, 9:16 for Instagram story, 1:1 for square social]
-[Negative, what to avoid]
+[Mood sentence — what this moment *feels* like]
+[Composition — what's in the frame and how it's framed]
+[Light — the defining factor]
+[Materials & color — texture and palette]
+[Motion — camera and in-frame motion, deliberately limited]
+[Duration — 5 to 15 seconds]
+[Aspect ratio — 16:9 for cinematic, 9:16 for Instagram story, 1:1 for square social]
+[Negative — what to avoid]
 ```
 
 ### Worked example
@@ -101,7 +101,7 @@ Aspect ratio: 16:9.
 Avoid: crowd movement, zoom, pan, cut, music, text overlay, neon, lens flare effects.
 ```
 
-That's a well-formed Veo prompt. Note the specificity of motion: "one silhouetted figure passing once" is very different from "people walking around". Veo respects specificity.
+That's a well-formed Veo prompt. Note the specificity of motion — "one silhouetted figure passing once" is very different from "people walking around". Veo respects specificity.
 
 ---
 
@@ -157,7 +157,7 @@ Longer than 15s: stitch two 8-second clips with ffmpeg crossfade, don't ask Veo 
 
 ---
 
-## Using the Veo MCP, operational flow
+## Using the Veo MCP — operational flow
 
 ```
 1. tool_search(query="veo video")        → find the right tool name
@@ -189,7 +189,7 @@ Path("atmosphere-video.mp4").write_bytes(requests.get(url).content)
 
 **"Tool not found" on Veo MCP:** the MCP server is disconnected or the tool name is wrong. Ask the user to reconnect the Veo MCP in Settings → Connectors. Do not fall back to a different video model without telling the user.
 
-**Generation times out:** retry once. If the second attempt times out, check the prompt, overly complex prompts (multiple simultaneous motions, impossible physics) time out more often. Simplify.
+**Generation times out:** retry once. If the second attempt times out, check the prompt — overly complex prompts (multiple simultaneous motions, impossible physics) time out more often. Simplify.
 
 **Video looks wobbly or has morph artifacts:** Veo is stronger with *less* motion. Cut the motion in half and regenerate. "Slow drift" beats "smooth tracking shot" most of the time.
 
@@ -206,8 +206,8 @@ When called from stage 4a of the proposal builder:
 
 1. Read the style anchor from `mood-direction.md` or `brand-system.md`.
 2. Pick the reference mockup (usually `01-arrival.png` or `02-hero.png`).
-3. Build a motion prompt that preserves the still's mood, usually Shape B (ambient hold), rarely Shape A (slow push).
-4. Generate one video (not multiple variants, the proposal needs one).
+3. Build a motion prompt that preserves the still's mood — usually Shape B (ambient hold), rarely Shape A (slow push).
+4. Generate one video (not multiple variants — the proposal needs one).
 5. Save to `proposals/<slug>/04-specialists/visual/atmosphere-video.mp4`.
 6. Strip audio if auto-generated.
 7. Add the file path to the stage completion summary for the orchestrator.
