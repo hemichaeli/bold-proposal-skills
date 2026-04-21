@@ -1,4 +1,4 @@
-# Bold Productions — Brand Guidelines (template)
+# Bold Productions, Brand Guidelines (template)
 
 This file is a placeholder. It should be filled in once with Bold's actual brand assets, and then left alone. Event-specific brand heart outputs (in `03-brand-heart/brand-system.md`) are separate and generated fresh for each proposal; *this* file is Bold's own corporate identity, which carries across every proposal.
 
@@ -28,11 +28,11 @@ Replace with Bold's actual palette:
 
 | Role | Hex | Pantone | CMYK | Usage |
 |---|---|---|---|---|
-| Primary | #XXXXXX | — | — | Bold logo, primary text |
-| Secondary | #XXXXXX | — | — | Section titles, emphatic elements |
-| Accent | #XXXXXX | — | — | Highlights, CTAs |
-| Neutral light | #XXXXXX | — | — | Backgrounds |
-| Neutral dark | #XXXXXX | — | — | Body text |
+| Primary | #XXXXXX | , | , | Bold logo, primary text |
+| Secondary | #XXXXXX | , | , | Section titles, emphatic elements |
+| Accent | #XXXXXX | , | , | Highlights, CTAs |
+| Neutral light | #XXXXXX | , | , | Backgrounds |
+| Neutral dark | #XXXXXX | , | , | Body text |
 
 ---
 
@@ -51,7 +51,7 @@ Replace with Bold's actual palette:
 **Falls back to:** [...]
 
 ### Numbers / data
-If Bold uses a separate tabular/mono font for budgets, figures, timetables — specify here.
+If Bold uses a separate tabular/mono font for budgets, figures, timetables, specify here.
 
 ---
 
@@ -71,7 +71,7 @@ Bold's *corporate* voice (distinct from any given event's tone). Typically:
 
 - Warm documentary style for event photos
 - High contrast, controlled shadows
-- People visible but rarely the main subject — the *space* is the subject
+- People visible but rarely the main subject, the *space* is the subject
 - Never stock. Only commissioned or event-derived imagery.
 
 ---
