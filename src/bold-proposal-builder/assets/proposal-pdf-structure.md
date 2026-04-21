@@ -6,7 +6,7 @@ The canonical spine for a Bold Productions client-facing proposal PDF. This file
 
 ## Page-by-page spec
 
-### Page 1 — Cover (always exactly 1 page)
+### Page 1, Cover (always exactly 1 page)
 
 **Layout:** full-bleed visual + restrained text.
 
@@ -20,13 +20,13 @@ The canonical spine for a Bold Productions client-facing proposal PDF. This file
 
 **Source image:** highest-impact mockup from `04-specialists/visual/mockups/`, usually `02-hero.png` or `01-arrival.png`, OR a canvas-design output generated specifically for this cover.
 
-### Page 2 — The moment (1 page)
+### Page 2, The moment (1 page)
 
 One short paragraph (3-5 sentences) setting the strategic context: why this event, why now, what it answers. Drawn from `01-intake/challenges.md` §1, rewritten for client tone (remove internal jargon, remove "tension" language).
 
 **Visual element:** a thin horizontal line in accent color. Nothing else.
 
-### Pages 3-4 — Strategic reading (1-2 pages)
+### Pages 3-4, Strategic reading (1-2 pages)
 
 The one or two insights from `challenges.md` that justify the entire creative direction. Written as observation, not analysis. No bullet points. Prose.
 
@@ -37,13 +37,13 @@ Structure:
 
 If there is a second strategic insight, give it its own page. If only one, a single page is enough.
 
-### Pages 5-6 — The creative concept (2 pages)
+### Pages 5-6, The creative concept (2 pages)
 
-**Page 5:** The concept sentence, large, with a 2-3 sentence unpacking beneath. The event name presented as a hero — display font, large type, breathing space around it.
+**Page 5:** The concept sentence, large, with a 2-3 sentence unpacking beneath. The event name presented as a hero, display font, large type, breathing space around it.
 
 **Page 6:** The tagline and the visual motif described in one paragraph. This is where the reader starts to *see* the event in their head, not just understand it.
 
-### Page 7 — Palette & typography (1 page)
+### Page 7, Palette & typography (1 page)
 
 Visual, not written.
 
@@ -53,7 +53,7 @@ Visual, not written.
 
 Keep legends minimal. No hex codes on the client PDF (keep those for internal use).
 
-### Pages 8-12 — Visualization (3-5 pages)
+### Pages 8-12, Visualization (3-5 pages)
 
 One page per key mockup. Full-bleed image, single-line caption at bottom in text font. 
 
@@ -64,21 +64,21 @@ Recommended order:
 4. Detail
 5. Food / culinary (if applicable)
 
-On page 12 (last visualization page), add a small footer: "סרטון האווירה זמין בקישור: [QR code + URL]". Do not embed the video in the PDF — it breaks across readers.
+On page 12 (last visualization page), add a small footer: "סרטון האווירה זמין בקישור: [QR code + URL]". Do not embed the video in the PDF, it breaks across readers.
 
-### Pages 13-14 — The experience (2 pages)
+### Pages 13-14, The experience (2 pages)
 
 **Page 13 (Flow):** The block view from `agenda.md` rendered as a horizontal 5-stage flow diagram. Each block a short label and a one-line description. No minute-by-minute. The reader should grasp the arc in 15 seconds.
 
-**Page 14 (Signature moments):** 3 signature moments pulled from the agenda, each written as a short paragraph describing what guests experience. These are the moments the client will talk about internally — design them deliberately.
+**Page 14 (Signature moments):** 3 signature moments pulled from the agenda, each written as a short paragraph describing what guests experience. These are the moments the client will talk about internally, design them deliberately.
 
-### Page 15 — Culinary (1 page)
+### Page 15, Culinary (1 page)
 
 A paragraph narrating the culinary journey of the evening (drawn from `menu.md` intro). Then a structured but restrained menu list: 3-4 dishes named with 1-line descriptions. Service style noted in a small caption.
 
 If the event is food-forward, expand to 2 pages.
 
-### Page 16 — Operations (1 page)
+### Page 16, Operations (1 page)
 
 Short paragraphs on:
 - The venue (1 paragraph)
@@ -87,7 +87,7 @@ Short paragraphs on:
 
 The full operational document does not go to the client. They trust Bold to know this.
 
-### Pages 17-18 — Investment (2 pages)
+### Pages 17-18, Investment (2 pages)
 
 **Page 17 (Summary table):** Top-level categories with totals. Not every line item. Typical rows:
 - ניהול הפקה
@@ -105,7 +105,7 @@ Then, in a visually distinct block below: **שורות מותנות** as a separ
 
 **Page 18 (Payment terms):** Payment schedule (typical: 40% on signing, 40% two weeks before event, 20% post-event), bank details block, note pointing to the accompanying Excel for the full line-item breakdown.
 
-### Page 19 — Timeline (1 page)
+### Page 19, Timeline (1 page)
 
 A horizontal timeline from today to the event date. 4-6 milestones:
 - היום: חתימה על ההצעה
@@ -115,13 +115,13 @@ A horizontal timeline from today to the event date. 4-6 milestones:
 - **יום האירוע**
 - [24 שעות אחרי]: הודעת תודה לאורחים ודוח סיכום
 
-### Page 20 — About Bold (1 page, optional)
+### Page 20, About Bold (1 page, optional)
 
 Include only if this is a new client. For existing relationships, skip.
 
 Short: who Bold is, 3-4 past events with 1-line descriptions, what Bold does differently. No founding story. No team photo grid. The proposal itself is the portfolio.
 
-### Page 21 — Next steps + contact (1 page, always)
+### Page 21, Next steps + contact (1 page, always)
 
 Clean layout, no visuals.
 
