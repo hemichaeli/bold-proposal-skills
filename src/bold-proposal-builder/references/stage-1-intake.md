@@ -1,175 +1,222 @@
-# Stage 1 — Intake Reference
+# Stage 1, Intake & Brief Reference (v2)
 
-## Purpose of this stage
+## Purpose
 
-The brief the client hands you is never the real brief. Clients describe what they want; the intake agent's job is to surface what they *need*. A gala opening they described as "celebratory" may be quietly trying to reposition a brand that has gone stale. A product launch framed as "introducing X" may actually be a defensive move against a rising competitor. Stage 1 output feeds everything downstream; if it is thin, the whole proposal is thin.
+Stage 1 is the gate. Nothing starts until the brief is complete enough to justify the work that follows. Bold's 2001-era brief form is the foundation; v2 adds explicit goal classification and KPIs because Bold always builds events to serve goals, and those goals must be measurable at Debrief (Stage 7).
 
-Two things happen in this stage:
-1. **Structured brief capture** — all the logistical facts.
-2. **Challenge distillation** — the strategic tensions the event must resolve.
-
----
-
-## Inputs you might receive
-
-### A. Free-form conversation or phone call summary
-Hemi will paraphrase what the client said. You may get 2 to 4 paragraphs. Ask clarifying questions only if a mandatory field is missing.
-
-### B. Fireflies transcript
-A full transcript of an intake call. Possibly 10-40 minutes. Parse it end-to-end. Attribute statements to speakers. Note emotional cues ("I'm just tired of the same thing every year") because they reveal unstated priorities.
-
-### C. Email thread
-Usually short, often missing budget and date. Flag gaps immediately.
-
-### D. Hybrid
-A voice note + a doc + three WhatsApp screenshots. Common. Merge them.
+The flow produces two artifacts:
+- `01-intake/brief.md`, the filled-in brief itself.
+- `01-intake/challenges.md`, Claude's strategic reading of the brief, setting up Stage 2.
 
 ---
 
-## The mandatory brief schema
+## Inputs
 
-Fill every field in `01-intake/brief.md`. If truly unknown, write `חסר — להשלים מול הלקוח`. Never guess.
+In priority order:
 
-```markdown
-# בריף — [שם לקוח / אירוע]
+1. **Fireflies transcript**, if the user pastes one or references a recent call, Claude reads it first and pre-fills every field it can extract. Extraction is conservative: if the transcript is ambiguous, leave the field blank and ask.
 
-## 1. לקוח
-- שם הארגון:
-- איש קשר (שם + תפקיד):
-- טלפון + מייל:
-- מי מאשר את ההצעה:
+2. **Prior project files**, if the user grants Drive access, Claude pulls from prior proposals for the same client to pre-fill "mandatory constraints", "forbidden elements", and "preferred vendors".
 
-## 2. האירוע
-- סוג אירוע: (השקת מוצר / גאלה / חנוכת בית / כנס / השקה פנים-ארגונית / יום הולדת / אחר)
-- תאריך מועדף + תאריך גיבוי:
-- שעת התחלה + משך:
-- עיר + מקום (אם כבר סגור):
-- מספר מוזמנים:
-- פרופיל הקהל: (גיל, רקע, תפקידים, שפה)
+3. **Interactive intake**, the user and Claude fill the remaining fields through structured questions. One question at a time. Specific, not open-ended ("how many guests" not "tell me about the event").
 
-## 3. מטרות עסקיות
-- מטרה ראשית: (מה הלקוח מודד הצלחה לפיו אחרי 3 חודשים)
-- מטרות משניות:
-- KPIs (אם הוזכרו):
+---
 
-## 4. מסרים
-- מסר מרכזי שחייב לעבור:
-- מה אסור שייאמר:
-- קריאה לפעולה (Call to action) אחרי האירוע:
+## The brief fields
 
-## 5. תקציב וציפיות מסחריות
-- טווח תקציב:
-- גמישות:
-- מה כלול / לא כלול בטווח:
+The fields mirror Bold's original 2001 form (`assets/brief-form-original.md`) with three additions: goal classification (field 3), KPIs (field 16), and undisclosed constraints (field 18).
 
-## 6. שותפים, ספקים ואילוצים קיימים
-- ספקי חובה (מי שהלקוח חייב להשתמש בו):
-- ספקים חסומים (מי שאי אפשר לעבוד איתו):
-- מותג-אב אם זה אירוע תחת מותג קיים:
+### Contact
+- שם ממלא הבריף
+- תפקיד
+- טלפון
+- דוא"ל
 
-## 7. היסטוריה
-- אירועים קודמים של הלקוח (מה עבד, מה לא):
-- מתחרים/Benchmarks שהלקוח מעריך או מפחד מהם:
+### 1. The reason why
+Why this event, why now. One paragraph. The cause, not the excuse.
 
-## 8. חומרים שקיבלנו
-- נכסי מותג (לוגו, מדריך מותג, פונטים):
-- תמונות מאירועים קודמים:
-- מצגות רקע:
+### 2. Event type (one or more checkboxes)
+- כנס / קד"מ חוויתי / תערוכה / אירוע חברה / פסטיבל / מסיבת עיתונאים / השקה / מנהלים / מכירות / יח"צ
 
-## 9. תאריך יעד להצעה
-- מתי הלקוח צריך לראות את ההצעה:
-- מתי התשובה:
+### 3. Event goals, classified
+**This is the spine of Stage 7.** Every goal selected here becomes a KPI in field 16 and a measurement target at Debrief.
+
+Goals fall into four categories. An event can serve one, several, or all four, but each one chosen requires a specific goal statement:
+
+- [ ] **שיווקית (Marketing)**, awareness, reach, engagement, brand memory.
+  *If selected, ask:* "איזה מדד שיווקי תרצה שיזוז? הרשמות, אזכורים בתקשורת, שיתופים ברשת, זיהוי מותג?"
+  
+- [ ] **Fun (Experience)**, enjoyment, bonding, emotional resonance.
+  *If selected, ask:* "איך נדע שהאורחים נהנו? משוב איכותני, שיתוף תמונות ברשת, חזרות לעוד אירועים?"
+  
+- [ ] **מכירתית (Sales)**, leads, conversions, closed deals, pipeline movement.
+  *If selected, ask:* "כמה עסקאות, באיזה סכום, באיזה פרק זמן אחרי האירוע?"
+  
+- [ ] **תדמיתית (Reputation / positioning)**, perception shift, narrative control, crisis response.
+  *If selected, ask:* "איזו תפיסה אנחנו רוצים שתשתנה, בקרב איזה קהל, ועד מתי?"
+
+Each selected goal produces a short statement: "להגדיל את מספר ההרשמות לרשימת תפוצה מ-400 ל-600 תוך 30 יום אחרי האירוע". Goals without numbers are not goals; they are wishes. Reject them and ask again.
+
+### 4. Date / optional dates
+Up to four, in priority order. Day of week + time per date.
+
+### 5. Hours of operation
+Opening, peak, closing. Israeli events in particular benefit from acknowledging that guests arrive late.
+
+### 6. Primary audience
+Segmentation (age, role, industry, gender if relevant), characterization, headcount. Headcount drives most downstream scale decisions.
+
+### 7. Secondary audience
+Everyone else in the room: press, influencers, end-customers, employees, partners, reluctant attendees.
+
+### 8. Messages to embed
+Up to three. One sentence each. More than three = none retained.
+
+### 9. Known / desired content
+Speakers already confirmed, films to be screened, planned presentations, booked performers. What already exists and doesn't need to be invented.
+
+### 10. Past events in this space
+What this client (or competitors, or the industry) did before. What worked. What didn't. Feeds Stage 2 research.
+
+### 11. Past performers
+Performers who appeared at this client's prior events. Don't repeat. Includes MCs, singers, bands, comedians, visual artists, TED-style speakers.
+
+### 12. Design / brand guidelines
+Colors that must be preserved, materials to avoid, safety / accessibility / kashrut / halakha / personal preference notes from leadership.
+
+### 13. Ancillary needs
+Video / stills documentation, giveaways, recording for external distribution, live stream, simultaneous translation, heightened security, subsidized parking / valet, shuttles.
+
+### 14. Budget
+Range or exact. Without a number, no Stage 5. If the client resists a number, press for upper and lower bounds.
+
+### 15. Deadline for proposal delivery
+When the client expects the proposal. Drives the pace of the remaining stages.
+
+### 16. KPIs and success measures (NEW)
+Derived from the goals in field 3. Each goal becomes at least one KPI. Each KPI has:
+- **Metric** (what is being counted)
+- **Current baseline** (if known)
+- **Target** (specific number or percentage)
+- **Time window** (when it will be measured, usually 24h / 7d / 30d after event)
+- **Data source** (how we'll get the number at Debrief)
+
+Example for a product launch with marketing + sales goals:
+```
+KPI 1 (marketing):
+  Metric: Press mentions of the product in Israeli tech media
+  Baseline: 0 (pre-launch)
+  Target: 8 mentions in first-tier outlets
+  Window: 7 days post-event
+  Source: manual scan of Globes, Calcalist, TheMarker, Geektime
+
+KPI 2 (sales):
+  Metric: Qualified leads entered into CRM by attending sales team
+  Baseline: 0
+  Target: 25
+  Window: 72 hours post-event
+  Source: Zoho CRM lead source = "Launch Event 2026"
+
+KPI 3 (reputation):
+  Metric: Positive / neutral / negative sentiment ratio in press coverage
+  Baseline: prior sentiment from brand tracker
+  Target: 80% positive or neutral
+  Window: 14 days post-event
+  Source: manual review + Talkwalker / Mentionlytics if available
 ```
 
+Minimum: one KPI per selected goal. More is fine. Fewer is rejected.
+
+### 17. Competitive context (NEW)
+Is Bold the only agency proposing, or one of several? If competitive, how many, and what's the client's likely priority ranking (price / creative / execution reliability)? Affects the depth of the proposal and the pitch.
+
+### 18. Undisclosed constraints (NEW)
+Things the client hasn't written because they assume they're obvious to them: CEO doesn't like music in Hebrew, founder won't speak publicly, a specific past event failure they're avoiding. Extract from Fireflies if possible; otherwise ask directly: "What would make you reject a proposal even if everything else was perfect?"
+
 ---
 
-## Challenge distillation — how to find the real problem
+## The gate
 
-After you have filled the brief, write `01-intake/challenges.md`. This is **not** a repetition of the brief. It is the strategic lens.
+Before leaving Stage 1, these fields MUST be filled. All of them. Not most:
 
-### The method
+| # | Field | Why it blocks |
+|---|---|---|
+| 1 | Reason why | Without it, the event has no thesis |
+| 3 | Goals (classified) | Stage 7 has nothing to measure |
+| 6 | Primary audience + headcount | Every scale decision downstream breaks |
+| 14 | Budget (even a range) | Stage 5 has no ceiling |
+| 16 | KPIs | Debrief has nothing to check against |
 
-Ask these four questions against the brief and answer each in 2 to 4 sentences, with evidence from the brief:
+If any of these five are missing, Claude does not move to Stage 2. It goes back and asks.
 
-1. **What tension is this event secretly solving?**
-   - Brand vs. category? Internal (employees) vs. external (market)? Generational? Legacy vs. future?
-   - Example: a law firm's 40-year anniversary. Stated: "celebrate our history". Real tension: the next generation of partners wants to signal modernity without insulting the founders.
+Fields 2, 4, 5, 7, 8, 9, 10, 11, 12, 13, 15, 17, 18 are strongly preferred but not blocking. Where they're missing, Claude notes their absence in `challenges.md` as assumptions that will need client confirmation.
 
-2. **Who is the audience really performing for?**
-   - The audience at an event usually plays two roles: the people in the room, and the people they'll show photos to tomorrow. Which audience is this event truly designed for?
-   - A VC's portfolio day is officially for LPs in the room; it is really a status signal to future founders watching on Twitter.
+---
 
-3. **What is the one thing that cannot fail?**
-   - Identify the single element where failure = the whole event fails. For a product launch, it may be the reveal moment. For a gala, it may be the host speech. For a family event, it may be the food. Everything else is secondary.
+## `challenges.md`, strategic reading output
 
-4. **What is the client embarrassed to ask for but clearly wants?**
-   - The unspoken wish. Often luxury, often status, often "I want it to look like X which I can't afford". Name it.
-
-### Output format
+After the brief is filled, Claude writes a short strategic reading. 1 to 2 pages. Structure:
 
 ```markdown
-# אתגרי מותג ואסטרטגיה — [שם אירוע]
+# קריאה אסטרטגית, [שם אירוע]
 
-## 1. המתח הסמוי
-[2-4 משפטים. איזה מתח אסטרטגי האירוע באמת פותר?]
-**ראיות מהבריף:** [ציטוטים או הפניות]
+## מה באמת נמכר כאן
+[One paragraph. The business or brand moment this event is actually for,
+underneath the stated reason-why. Often the stated reason and the real
+reason diverge; name both.]
 
-## 2. הקהל האמיתי
-בחדר: [תיאור]
-מחוץ לחדר (מי רואה את התמונות אחרי): [תיאור]
-**העיקר:** [מי מהשניים קובע את העיצוב?]
+## המתחים (tensions to preserve)
+1. [Tension 1]
+2. [Tension 2]
+3. [Tension 3 if relevant]
 
-## 3. הדבר שלא יכול להיכשל
-**[אירוע הקריטי]**. אם זה עובד והכל סביב נופל בינוני, ההצעה עדיין הצליחה. אם זה נכשל, שום דבר אחר לא מציל.
-**השלכות תקציב:** [איפה להשקיע כבד]
+Tensions are what make the event alive. "Intimate but grand." "Professional
+but not corporate." "Celebratory but restrained." Without tension, the event
+flattens into a template.
 
-## 4. המשאלה הלא-מדוברת
-[השאיפה הלא-מוצהרת של הלקוח]
-**איך לענות לה בלי להלבין אותה:** [רעיון או כיוון]
+## המטרות והמשמעויות
+For each goal selected in field 3:
+  - Goal: [...]
+  - What this goal implies for the event: [1-2 sentences]
+  - What this goal rules OUT: [1 sentence; this is as important]
 
-## 5. שלוש שאלות פתוחות לסבב שני עם הלקוח
-- [שאלה 1]
-- [שאלה 2]
-- [שאלה 3]
+## סיכונים וסיכויים (Risks and opportunities)
+Three risks (what could kill the event's effect) and three opportunities
+(what could elevate it beyond the brief).
+
+## הנחות שהנחתי
+If any non-gated field was missing from the brief, Claude lists the
+assumption it's making and flags for client confirmation before Stage 6.
 ```
 
----
-
-## Parsing a Fireflies transcript
-
-When the input is a transcript:
-
-1. **Skim once** for the overall flow. Don't get lost in minute 30 before you know what minute 2 was about.
-2. **Extract** all concrete facts into the brief schema. Mark them with the timestamp when possible: `תאריך: 14/06/2026 [12:34]`.
-3. **Quote** the exact client language for the mission/mandatory-message fields. Do not paraphrase the client's own words about their goals — those wordings carry information.
-4. **Flag** contradictions between speakers on the client side. Two co-founders may disagree about the audience. Surface this explicitly:
-   ```
-   ⚠ סתירה: יואב אמר "אירוע לעובדים בלבד" [18:22], טל אמרה "אולי נזמין גם לקוחות VIP" [23:05]. נדרש הכרעה.
-   ```
-5. **Record** what was *not* said. If nobody mentioned budget in a 45-minute call, that is itself information (usually: budget is embarrassingly tight or embarrassingly big).
+This document drives Stage 2 (research), Stage 3 (brand heart), and informs the strategic-reading pages of the Stage 6 PDF.
 
 ---
 
-## Parsing a free-form description
+## Handling Fireflies input
 
-When Hemi describes the brief in his own words:
+When the user provides a transcript or a Fireflies link:
 
-1. Start from what he told you; treat it as the source of truth.
-2. Re-read and check against the schema. List the missing fields.
-3. Ask **one consolidated question** covering the top 3 missing items. Never pepper him with 8 small questions.
-4. If he answers partially, proceed with `חסר` markers on the rest and move to stage 2. Don't stall.
+1. **Extract what's there**, don't invent. If the transcript mentions "the Phoenix Group event in June" without specifying a date, the date field remains empty; it does NOT become "June 2026".
 
----
+2. **Flag contradictions**, if two speakers disagree on a fact (budget range, headcount), note both and ask the user which is correct.
 
-## What "good" looks like
+3. **Mark sentiment cues**, if the client sounded hesitant about something or excited about something else, note it in field 18 (undisclosed constraints). These signals are gold.
 
-A strong stage-1 output reads like a senior strategist prepared it, not a form filler. When Hemi reads `challenges.md`, he should nod and say "yes, that's actually what's going on" — not "I already knew all that". If your challenges.md just restates the brief, you failed the stage.
+4. **Never quote directly**, paraphrase. The transcript may contain off-the-record remarks not intended for a proposal.
 
 ---
 
-## Common intake traps
+## Vendor registry preload (NEW, v2)
 
-- **Accepting "just make it beautiful" as a brief.** That is a symptom of a client who hasn't decided what the event is for. Probe.
-- **Over-indexing on the date.** Dates move. Concepts don't.
-- **Treating budget as a hard constraint too early.** In stage 1, capture the number but don't let it shape the concept. Stage 5 is where reality bites.
-- **Ignoring the room.** A beautiful concept in a fluorescent-lit convention hall dies. Always ask about the physical venue, even if "not yet decided".
+Before writing the brief, if this is the first time the user is running this skill since v2, Claude checks for `data/vendor-registry.json`. If it doesn't exist or is stale (>90 days old), prompt the user to run `scripts/extract-vendor-data.py` to populate it from Drive.
+
+The vendor registry doesn't directly affect Stage 1, but it must be current before Stage 5 runs.
+
+---
+
+## What "done" looks like
+
+A `brief.md` that a stranger could read and execute from, a `challenges.md` that reads like a senior strategist spent an hour thinking about the brief, and no blocked gate fields.
+
+If any of those are shaky, Stage 1 is not done. Going into Stage 2 with a weak brief is the single biggest cause of mediocre proposals; do not rush past this stage.
