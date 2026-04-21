@@ -13,7 +13,7 @@ This is the skeleton of the prompt you paste into Gamma.app to produce the inter
 ## Template
 
 ```
-Create a cinematic event-proposal presentation for the following event. The presentation should be polished, editorial, premium — not corporate or cluttered. ~15 slides. Use full-bleed visuals where possible. Minimal text per slide.
+Create a cinematic event-proposal presentation for the following event. The presentation should be polished, editorial, premium, not corporate or cluttered. ~15 slides. Use full-bleed visuals where possible. Minimal text per slide.
 
 EVENT: {{event_name}}
 CLIENT: {{client_name}}
@@ -32,62 +32,62 @@ GUEST COUNT: {{guest_count}}
 
 ## Slide-by-slide
 
-### Slide 1 — Cover
+### Slide 1, Cover
 Title: {{event_name}}
 Subtitle: {{tagline}}
 Visual: full-bleed hero image (I will attach: mockups/01-arrival.png)
 No other text on this slide. The cover should breathe.
 
-### Slide 2 — The moment
+### Slide 2, The moment
 A short paragraph (2-3 sentences) explaining the cultural or business moment this event arrives in. Pull from this source:
 {{insight_from_challenges_md}}
 
-### Slide 3 — The concept
+### Slide 3, The concept
 Large text: "{{concept_sentence}}"
 A supporting paragraph (2-3 sentences) explaining what this means in practice.
 
-### Slide 4 — The name
+### Slide 4, The name
 Display: {{event_name}}
 Under: {{tagline}}
 One line of reasoning for the name underneath.
 
-### Slide 5 — The visual world
+### Slide 5, The visual world
 Short paragraph describing the visual motif: {{motif_description}}
 Two-column layout:
   Left: palette strip (show the 4-6 hex colors as a horizontal bar with their roles)
   Right: typography sample (H1 in display font showing "{{event_name}}", body text sample in text font)
 
-### Slide 6 — Arrival
+### Slide 6, Arrival
 Full-bleed image (I will attach: mockups/01-arrival.png)
 One line caption at the bottom: {{arrival_caption}}
 
-### Slide 7 — The hero moment
+### Slide 7, The hero moment
 Full-bleed image (I will attach: mockups/02-hero.png)
 One line caption: {{hero_caption}}
 
-### Slide 8 — Atmosphere
+### Slide 8, Atmosphere
 Embed video (I will attach: atmosphere-video.mp4) as full-bleed background if Gamma supports; otherwise, use a representative still frame.
 
-### Slide 9 — The experience (flow)
+### Slide 9, The experience (flow)
 Five-block horizontal flow, left to right:
 {{block_1_name}} → {{block_2_name}} → {{block_3_name}} → {{block_4_name}} → {{block_5_name}}
 Each block with a 3-5 word label.
 
-### Slide 10 — Culinary
+### Slide 10, Culinary
 Short paragraph: {{culinary_narrative}}
 If available, I will attach a mockup image of food presentation.
 
-### Slide 11 — Signature moments
+### Slide 11, Signature moments
 Three short callouts, each with an icon or small visual:
 1. {{moment_1}}
 2. {{moment_2}}
 3. {{moment_3}}
 
-### Slide 12 — Site and scale
+### Slide 12, Site and scale
 Short paragraph on the venue and guest flow.
 Include a simple diagram if Gamma can generate one, otherwise text-only.
 
-### Slide 13 — Investment
+### Slide 13, Investment
 Title: "השקעה"
 Body:
 - סה"כ לפני מע"מ: ₪{{total_pre_vat}}
@@ -96,7 +96,7 @@ Body:
 - תוקף: עד {{valid_until}}
 Note under: "תקציב מפורט בקובץ ה-Excel המצורף"
 
-### Slide 14 — Timeline
+### Slide 14, Timeline
 Horizontal timeline from today to event day:
 {{milestone_1_date}}: {{milestone_1_label}}
 {{milestone_2_date}}: {{milestone_2_label}}
@@ -104,7 +104,7 @@ Horizontal timeline from today to event day:
 {{milestone_4_date}}: {{milestone_4_label}}
 {{event_date}}: האירוע
 
-### Slide 15 — Next steps
+### Slide 15, Next steps
 Clean layout:
 - החלטה עקרונית: עד {{decision_deadline}}
 - אישור קונספט: {{concept_approval_date}}
@@ -121,7 +121,7 @@ End with a quiet page. No "thank you". No exclamation marks.
 
 ---
 
-## Field mapping — where each `{{placeholder}}` comes from
+## Field mapping, where each `{{placeholder}}` comes from
 
 | Placeholder | Source |
 |---|---|
