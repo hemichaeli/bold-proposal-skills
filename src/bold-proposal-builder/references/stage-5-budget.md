@@ -77,14 +77,14 @@ Bold's budgets organize by these top-level categories. Not every event has every
       "name": "תפאורה ובינוי",
       "items": [
         {
-          "name": "ספק תפאורה, הרחבה (אם נדרש)",
+          "name": "ספק תפאורה - הרחבה (אם נדרש)",
           "qty": 1,
           "unit": "חבילה",
           "unit_cost": 6000,
           "vendor_role": "Scenography supplier",
           "conditional": true,
           "trigger_condition": "אם הלקוח יאשר הרחבה של קיר ה-Reveal ל-6x4 מ' במקום 4x3 מ'",
-          "notes": "שורה מותנית, להוסיף לסיכום רק אם מופעל",
+          "notes": "שורה מותנית - להוסיף לסיכום רק אם מופעל",
           "source_deliverable": "operations/logistics.md §2 + brand-heart motif"
         }
       ]
