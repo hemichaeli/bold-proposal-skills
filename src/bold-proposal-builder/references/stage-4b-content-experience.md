@@ -4,8 +4,8 @@
 
 Every event lives in time. A brilliant space with the wrong running order feels awkward. A perfectly run evening with generic words feels forgettable. Stage 4b authors the two artifacts that make the event feel directed and written, not just produced:
 
-- `04-specialists/content/agenda.md` — the time-based architecture of the event.
-- `04-specialists/content/scripts.md` — every piece of written or spoken text.
+- `04-specialists/content/agenda.md` the time-based architecture of the event.
+- `04-specialists/content/scripts.md` every piece of written or spoken text.
 
 ---
 
@@ -15,7 +15,7 @@ Every event lives in time. A brilliant space with the wrong running order feels 
 
 **Time is the scarcest material.** A 3-hour event has 180 minutes. Every 5-minute segment is a decision: who owns this time, what is happening, what is the guest feeling.
 
-**Peaks need space around them.** A reveal moment, a key speech, a performance — these need a quiet minute before and after. Stacking peaks kills them.
+**Peaks need space around them.** A reveal moment, a key speech, a performance, these need a quiet minute before and after. Stacking peaks kills them.
 
 **Guests get tired.** After 90 minutes of standing, everyone wants to sit. After 45 minutes of content, everyone wants to move. Build the agenda knowing this.
 
@@ -25,7 +25,7 @@ Every event lives in time. A brilliant space with the wrong running order feels 
 
 Two views, both in the same file:
 
-**View A — Block view** (for the brand heart translation):
+**View A, Block view** (for the brand heart translation):
 ```markdown
 ## מבנה האירוע — תמונת על
 
@@ -48,7 +48,7 @@ Two views, both in the same file:
 ...
 ```
 
-**View B — Minute-by-minute run-sheet** (for the production):
+**View B, Minute-by-minute run-sheet** (for the production):
 ```markdown
 ## לוח זמנים מפורט
 
@@ -166,7 +166,7 @@ This file is a library of every word guests see or hear, keyed by moment.
 
 **Tie back to the concept.** The opening line should carry an echo of the concept from the brand heart. Guests never hear the concept, but they feel it when the words are aligned.
 
-**Avoid clichés.** "חוגגים יחד", "ערב בלתי נשכח", "להוסיף נופך מיוחד" — banned. Anything the MC of any other event might say is by definition wrong for this one.
+**Avoid clichés.** "חוגגים יחד", "ערב בלתי נשכח", "להוסיף נופך מיוחד", banned. Anything the MC of any other event might say is by definition wrong for this one.
 
 ### Tone calibration against the brand system
 
