@@ -1,255 +1,130 @@
-# Stage 6 — Assembly Reference
+# Stage 6, Assembly Reference (v2)
 
 ## Purpose
 
-Stage 6 is production, not thinking. The thinking happened in stages 1 to 5. Stage 6 takes the artifacts and builds the four final deliverables:
+Stage 6 is production, not thinking. The thinking happened in stages 1 to 5. Stage 6 takes the artifacts and builds six final deliverables:
 1. `proposal.pdf`, the designed, client-facing PDF
 2. `budget.xlsx`, the detailed Excel budget with formulas
 3. `gamma-prompt.md`, the ready-to-paste prompt for Gamma.app
 4. `summary.md`, a 1-page executive summary for intro messages
+5. `kpis-scorecard.md`, a standalone KPI measurement plan (also embedded in the proposal) (NEW v2)
+6. Trello debrief card, created in the "Bold, Debriefs" board, due the day after the event (NEW v2)
 
-Order matters: XLSX first (the numbers lock), then PDF (tells the story with numbers confirmed), then Gamma prompt (digital companion), then summary.
+Order: XLSX first (the numbers lock), then PDF, then Gamma prompt, then KPIs scorecard, then summary, then Trello card.
 
 ---
 
-## 1. Building the Excel budget (`budget.xlsx`)
+## 1. Building the Excel budget (budget.xlsx)
 
 ### Inputs
 - `05-budget/budget.json` (the source of truth)
 - Bold brand palette from `brand-system.md` (for XLSX header styling)
 
 ### Method
-Use the `build_budget_xlsx.py` script in `scripts/`. Command:
+Use the `build_budget_xlsx.py` script in `scripts/`:
 
 ```bash
-cd /home/claude
 python3 /home/claude/skills/bold-proposal-builder/scripts/build_budget_xlsx.py \
   --input <path-to-budget.json> \
   --output <path-to-output>/budget.xlsx
 ```
 
-The script:
-- Reads `budget.json`.
-- Creates three sheets: `סיכום`, `פירוט תקציב`, `שורות מותנות`.
-- Populates the detail sheet with all non-conditional items, grouped by category with subtotal rows.
-- Populates the conditional sheet separately.
-- Writes formulas (not hardcoded numbers) for subtotal, contingency, margin, VAT, and totals.
-- Applies the brand palette to headers.
-- Adds a "Valid until" note from `meta.valid_until`.
-- Sets RTL for Hebrew content.
-
-### If the script is unavailable
-Fall back to the `xlsx` public skill. Open `/mnt/skills/public/xlsx/SKILL.md` and follow its guidance. The structure (3 sheets, categories with subtotals, formulas, RTL) stays the same.
-
-### Post-build QA
-- Open the xlsx and verify the total matches `summary.total_pre_vat` implied by the JSON.
-- Check formulas: click a total cell and verify it sums the right range, not a hardcoded number.
-- Verify conditional items are on their own sheet and do NOT appear in the main subtotal.
+Creates three sheets: `סיכום`, `פירוט תקציב`, `שורות מותנות`. Reads `budget.json` as source of truth. Writes formulas (not hardcoded numbers). Applies brand palette. Sets RTL for Hebrew.
 
 ---
 
-## 2. Building the PDF (`proposal.pdf`)
+## 2. Building the PDF (proposal.pdf)
 
-### Structure
-
-A Bold proposal PDF follows this spine. Adjust depth per event; never change the order.
+### Structure (v2, includes KPI page)
 
 ```
 Cover (1 page)
-  - Event name, client name, date, Bold logo, tagline
-  - Visual: hero mockup from 4a OR canvas-design artwork tied to brand-system
-
 About the event (1 page)
-  - The concept in one sentence
-  - 3-4 sentences of context ("the moment this event arrives in")
-
 Strategic reading (1-2 pages)
-  - The 1-2 key insights from challenges.md (rewritten for client eyes, not raw)
-  - Why this direction now
-
 The creative concept (2-3 pages)
-  - Name, tagline, visual treatment
-  - Color palette strip
-  - Typography sample
-  - Motif explanation with visual
-
 Visualization (3-5 pages)
-  - Mockup images, each on its own page or two per page
-  - Brief captions tying each to a brand-system element
-  - Atmosphere video QR code / link
-
 The experience (2-3 pages)
-  - Agenda block view (not minute-by-minute, that's internal)
-  - Signature moments described in 1-2 sentences each
-  - Culinary paragraph
-
 Operations (1-2 pages)
-  - Site plan description
-  - Technical infrastructure summary
-  - What makes this event safe, accessible, smooth
-
 Investment (2-3 pages)
-  - Budget summary table (categories + totals, not every line)
-  - Conditional items clearly separated
-  - Payment terms
-  - Note: "Detailed budget in accompanying Excel file"
-
+KPIs and success measurement (1 page) (NEW v2)
 Timeline (1 page)
-  - From today to event day: key milestones
-  - Decision dates for the client
-  - Production milestones
-
 About Bold (1 page, optional)
-  - Include only if new relationship. Existing clients skip.
-
 Next steps (1 page)
-  - Proposed decision points
-  - Who owns what
-  - Contact + signature block
 ```
 
-Total: 14 to 22 pages. Shorter than that, the client feels underserved. Longer than that, they stop reading.
+Total: 15 to 23 pages. The new KPI page sits between Investment and Timeline.
 
-### Method
+### The KPIs page (NEW v2)
 
-Two paths, depending on complexity:
+A single page titled "איך נמדוד הצלחה". Shows the KPIs from Stage 1 field 16 in a structured table:
 
-**Path A: Markdown → PDF via `pdf` public skill**
-For proposals where the visuals are simple and the client is technical / efficient.
+| מטרה | מדד | יעד | מתי נמדוד | מקור נתונים |
+|---|---|---|---|---|
+| שיווקית | אזכורים בתקשורת | 8 אזכורים | 7 ימים אחרי | סריקה ידנית |
+| מכירתית | לידים איכותיים | 25 | 72 שעות אחרי | Zoho CRM |
 
-1. Write all the page content in markdown in `06-assembly/proposal.md`.
-2. Use the `pdf` skill (read `/mnt/skills/public/pdf/SKILL.md`) to convert with custom CSS styled to the brand palette.
+Below the table, one short paragraph:
 
-**Path B: `canvas-design` cover + markdown body, assembled**
-For proposals where design quality is the selling point.
-
-1. Use `canvas-design` to create the cover page as a standalone PNG or PDF, using the brand system.
-2. Generate the body pages from markdown as in Path A.
-3. Stitch: insert the cover as page 1, the body follows.
-
-For this stage, **default to Path B for all Bold proposals above ₪50,000.** Bold's identity is premium; a markdown-rendered PDF cover cheapens it. Below ₪50,000 (small events, quick turnarounds), Path A is acceptable.
-
-### Typography and palette
-- Use the exact fonts from `brand-system.md`.
-- Headers in the primary color, body in the neutral dark.
-- White space is not empty; it's breathing room. Do not fill.
-
-### Images
-- Every mockup at its native resolution, not stretched.
-- Captions under, not over.
-- Atmosphere video: embed a frame + QR code + link. PDFs with embedded video are unreliable across readers.
-
-### Cover page
-The cover is a single visual statement. It carries:
-- Event name (large, display font)
-- Tagline (smaller, under name)
-- Client name + date (small, lower third)
-- Bold logo (small, lower corner or footer)
-
-No "הצעת מחיר" label on the cover. That's obvious and diminishes.
-
-### Back / last page
-End with a quiet page. The contact, signature lines, next steps. Do not end with a "thank you" exclamation. The last impression is calm confidence, not gratitude.
+> "לאחר האירוע, 24 שעות לאחר קיומו, נבצע סיכום משותף מול המדדים לעיל. תקבל דוח מסודר עם המספרים, ופגישה של 30 דקות לסיכום הלקחים אם תבקש."
 
 ---
 
-## 3. Building the Gamma prompt (`gamma-prompt.md`)
+## 3. Building the Gamma prompt (gamma-prompt.md)
 
-### Why a prompt, not a call
+The v2 template includes a new slide between Investment and Timeline:
 
-Gamma.app does not have a public API at the time of writing (verified periodically; if this changes, update this section). Bold's Gamma presentations are created by pasting a well-structured prompt into Gamma's generate interface. This stage produces that prompt.
-
-### Template structure
-
-```markdown
-# Gamma Prompt, [שם אירוע]
-
-**Instructions for Hemi:** Open Gamma.app → "Generate" → paste everything below. When Gamma asks for style, choose [style suggestion based on brand heart]. Expected length: ~15 slides. After generation, attach the mockup images and the atmosphere video manually to the slides indicated.
-
----
-
-# Create a presentation for: [Event Name]
-
-## Context
-[One paragraph from challenges.md, the strategic moment this event answers]
-
-## The creative direction
-[Concept sentence + name + tagline]
-
-## Visual style
-- Colors: [palette hex codes]
-- Typography feel: [brand system typography in description form]
-- Mood: [5-7 words from inspiration.md]
-- Imagery: cinematic, premium, editorial, no stock-photo people
-
-## Slides
-
-### Slide 1, Cover
-Title: [Event name]
-Subtitle: [Tagline]
-Visual: [description of cover image]
-ATTACH: mockup `01-arrival.png`
-
-### Slide 2, The moment
-[Short paragraph on the strategic context]
-
-### Slide 3, The concept
-[Concept sentence large]
-[One paragraph explaining it]
-
-### Slide 4, The name
-[Event name large]
-[Tagline under]
-
-### Slide 5, Palette & typography
-Show the palette strip and typography samples
-
-### Slide 6, The visual world
-Paragraph describing the motif
-ATTACH: mockup `02-hero.png`
-
-### Slide 7, Arrival
-ATTACH: mockup `01-arrival.png`
-Caption: [one line]
-
-### Slide 8, The hero moment
-ATTACH: mockup `02-hero.png`
-Caption: [one line]
-
-### Slide 9, Atmosphere
-ATTACH: `atmosphere-video.mp4` (embed as background video if Gamma supports)
-
-### Slide 10, The experience (agenda)
-[Block view from agenda.md as a flow diagram]
-
-### Slide 11, Culinary
-Paragraph + ATTACH mockup of food if available
-Menu outlined in 4-5 lines
-
-### Slide 12, Operations
-Short paragraph on site, flow, scale
-
-### Slide 13, Investment
-Budget summary (total, conditional, payment terms)
-"Detailed budget in accompanying Excel"
-
-### Slide 14, Timeline
-Milestone dates
-
-### Slide 15, Next steps + Contact
-Clear next actions
-Hemi's contact
+```
+### Slide 13b, KPIs (NEW v2)
+Title: "איך נמדוד הצלחה"
+Body: Table from the KPIs scorecard.
+Closing line: "נבצע debrief 24 שעות אחרי האירוע."
 ```
 
-The prompt is long. That is the point. Gamma produces much better output when given structure instead of "make me a beautiful deck about X". Treat the prompt as a spec, not a nudge.
+See `assets/gamma-prompt-template.md` for the full template.
 
 ---
 
-## 4. Building the summary (`summary.md`)
+## 4. Building the KPIs scorecard (kpis-scorecard.md) (NEW v2)
 
-A one-page executive summary that Hemi pastes into WhatsApp or an email to introduce the proposal. The full proposal is attached; this is the hook.
+A standalone artifact in `06-assembly/kpis-scorecard.md` serving two audiences:
+1. The client, receives a copy, uses it to track measurement post-event.
+2. Stage 7, Claude reads this file directly when the debrief chat opens.
 
 ### Template
+
+```markdown
+# Scorecard, [Event Name]
+**לקוח:** [name]
+**תאריך האירוע:** [date]
+**תאריך הפקת לקחים:** [date + 1 day]
+
+## מטרות האירוע
+[List the goals from brief field 3, classified by category]
+
+## KPIs
+
+### KPI 1: [metric name]
+- קטגוריה: שיווקית / Fun / מכירתית / תדמיתית
+- מדד: [what is being counted]
+- Baseline: [pre-event number]
+- יעד: [target]
+- חלון מדידה: [when]
+- מקור נתונים: [how]
+- אחראי לאיסוף: [name]
+
+(One section per KPI)
+
+## פגישת Debrief
+- מתי: [date + 1 day]
+- משך: 30-45 דקות
+- פלט: debrief-[event-slug].md
+```
+
+---
+
+## 5. Building the summary (summary.md)
+
+### Template (v2, includes KPI callout)
 
 ```markdown
 [Client first name] שלום,
@@ -257,10 +132,10 @@ A one-page executive summary that Hemi pastes into WhatsApp or an email to intro
 הנה ההצעה שלנו ל-[Event Name].
 
 **הקונספט בקצרה:**
-[Concept sentence from brand-system.md]
+[Concept sentence]
 
 **מה יחוו האורחים:**
-[3-4 sentences pulling from agenda block view and culinary narrative. No buzzwords.]
+[3-4 sentences]
 
 **מספרים מרכזיים:**
 - מוזמנים: [X]
@@ -268,49 +143,100 @@ A one-page executive summary that Hemi pastes into WhatsApp or an email to intro
 - השקעה: ₪[Z] + מע"מ | שורות מותנות בנפרד
 - תוקף ההצעה: עד [YYYY-MM-DD]
 
+**איך נמדוד הצלחה:** (NEW v2)
+הגדרנו [N] מדדי הצלחה בהתאם למטרות שהעלית. פירוט ב-kpis-scorecard.md המצורף.
+24 שעות אחרי האירוע, נעשה debrief מסודר ותקבל דוח מול המדדים.
+
 **מצורפים:**
 - הצעה מעוצבת מלאה (PDF)
 - תקציב מפורט (Excel)
-- מצגת אינטראקטיבית (Gamma - קישור יישלח)
+- KPIs scorecard (Markdown)
+- מצגת אינטראקטיבית (Gamma, קישור יישלח)
 - סרטון האווירה (MP4)
 
-שמח לדבר מתי שיתאים. 
+שמח לדבר מתי שיתאים.
 
 [Signature]
 ```
 
-Short. Direct. Specific. No salesmanship.
+---
+
+## 6. Creating the Trello debrief card (NEW v2)
+
+The final automated action of Stage 6. Creates a reminder that becomes the entry point for Stage 7.
+
+### Method
+
+Use the Trello MCP server. Check for a board called "Bold, Debriefs". If it doesn't exist, create it with a single list "ממתין להפקת לקחים".
+
+Card creation:
+
+```
+Board: Bold, Debriefs
+List: ממתין להפקת לקחים
+Title: הפקת לקחים, [Event Name]
+Description:
+  לקוח: [client]
+  תאריך האירוע: [event date]
+  תאריך ההפקת לקחים: [event date + 1]
+  
+  קבצי המקור:
+  - הצעה: [link]
+  - בריף: [link to brief.md]
+  - KPIs: [link to kpis-scorecard.md]
+  
+  ---
+  פרומפט מוכן להדבקה בשיחה חדשה של Claude:
+  
+  הפק לקחים לאירוע [Event Name] של [Client] שהתקיים ב-[Event Date].
+  תעבור איתי מדד-מדד לפי מה שמופיע ב-kpis-scorecard.md.
+
+Due date: [event date + 1 day], 10:00
+Labels: "Debrief" (yellow), "[client]" (custom color)
+```
+
+After creating the card, store the card URL in the proposal's summary.md.
+
+### If Trello MCP is unavailable
+
+Write a plain markdown reminder file `DEBRIEF-REMINDER.md` in the proposal folder. Email Hemi via Gmail MCP the day before: "תזכורת: Debrief של [Event] מחר ב-10:00".
 
 ---
 
-## Final QA checklist before delivery
+## Final QA checklist
 
-Before calling `present_files` on the four outputs:
-
-- [ ] PDF opens and renders correctly on both macOS Preview and Adobe Acrobat (Hebrew RTL often breaks in one or the other)
-- [ ] PDF fonts are embedded (not missing)
-- [ ] Excel totals match the PDF's summary table
+- [ ] PDF opens and renders correctly on macOS Preview and Adobe Acrobat
+- [ ] PDF fonts embedded
+- [ ] Excel totals match PDF summary table
 - [ ] Excel has 3 sheets with correct tab names
-- [ ] Gamma prompt has all ATTACH markers pointing to files that actually exist
-- [ ] Summary.md word count is under 200 words
-- [ ] Valid-until date is in the future and matches across PDF, Excel, summary
-- [ ] Event name is spelled identically across all four files (common bug: typo in one)
-- [ ] Client name is spelled identically
-- [ ] Contact info is correct
+- [ ] Gamma prompt has all ATTACH markers pointing to existing files
+- [ ] KPIs scorecard matches brief.md field 16 exactly (NEW v2)
+- [ ] KPI page in PDF matches scorecard (NEW v2)
+- [ ] Summary.md word count under 250 words
+- [ ] Valid-until date consistent across all files
+- [ ] Event name spelled identically
+- [ ] Client name spelled identically
+- [ ] Contact info correct
+- [ ] Trello card created and URL captured in summary.md (NEW v2)
 
 ---
 
 ## Present-files call
 
-At the end, call `present_files` with exactly these four, in this order:
+At the end, call `present_files` with these five, in this order:
 
 ```
 [
   "proposals/<slug>/06-assembly/proposal.pdf",
   "proposals/<slug>/06-assembly/budget.xlsx",
+  "proposals/<slug>/06-assembly/kpis-scorecard.md",
   "proposals/<slug>/06-assembly/gamma-prompt.md",
   "proposals/<slug>/06-assembly/summary.md"
 ]
 ```
 
-Then output the one-line completion marker and stop. Don't narrate what was produced; the files speak.
+Then output one-line completion marker including Trello card URL and stop:
+
+```
+✓ ההצעה מוכנה. Trello debrief card: [URL]
+```
