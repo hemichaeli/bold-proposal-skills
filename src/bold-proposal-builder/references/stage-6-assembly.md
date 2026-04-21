@@ -3,10 +3,10 @@
 ## Purpose
 
 Stage 6 is production, not thinking. The thinking happened in stages 1 to 5. Stage 6 takes the artifacts and builds the four final deliverables:
-1. `proposal.pdf` the designed, client-facing PDF
-2. `budget.xlsx` the detailed Excel budget with formulas
-3. `gamma-prompt.md` the ready-to-paste prompt for Gamma.app
-4. `summary.md` a 1-page executive summary for intro messages
+1. `proposal.pdf`, the designed, client-facing PDF
+2. `budget.xlsx`, the detailed Excel budget with formulas
+3. `gamma-prompt.md`, the ready-to-paste prompt for Gamma.app
+4. `summary.md`, a 1-page executive summary for intro messages
 
 Order matters: XLSX first (the numbers lock), then PDF (tells the story with numbers confirmed), then Gamma prompt (digital companion), then summary.
 
@@ -161,12 +161,85 @@ Gamma.app does not have a public API at the time of writing (verified periodical
 
 ### Template structure
 
-See `assets/gamma-prompt-template.md` for the full template with all placeholder fields. In summary, the prompt always contains:
-- Context paragraph from challenges.md
-- Creative direction (concept, name, tagline)
-- Visual style block (palette hex, typography feel, mood keywords)
-- 15 slide specifications with ATTACH markers for mockups and video
-- Budget summary for the Investment slide
+```markdown
+# Gamma Prompt, [שם אירוע]
+
+**Instructions for Hemi:** Open Gamma.app → "Generate" → paste everything below. When Gamma asks for style, choose [style suggestion based on brand heart]. Expected length: ~15 slides. After generation, attach the mockup images and the atmosphere video manually to the slides indicated.
+
+---
+
+# Create a presentation for: [Event Name]
+
+## Context
+[One paragraph from challenges.md, the strategic moment this event answers]
+
+## The creative direction
+[Concept sentence + name + tagline]
+
+## Visual style
+- Colors: [palette hex codes]
+- Typography feel: [brand system typography in description form]
+- Mood: [5-7 words from inspiration.md]
+- Imagery: cinematic, premium, editorial, no stock-photo people
+
+## Slides
+
+### Slide 1, Cover
+Title: [Event name]
+Subtitle: [Tagline]
+Visual: [description of cover image]
+ATTACH: mockup `01-arrival.png`
+
+### Slide 2, The moment
+[Short paragraph on the strategic context]
+
+### Slide 3, The concept
+[Concept sentence large]
+[One paragraph explaining it]
+
+### Slide 4, The name
+[Event name large]
+[Tagline under]
+
+### Slide 5, Palette & typography
+Show the palette strip and typography samples
+
+### Slide 6, The visual world
+Paragraph describing the motif
+ATTACH: mockup `02-hero.png`
+
+### Slide 7, Arrival
+ATTACH: mockup `01-arrival.png`
+Caption: [one line]
+
+### Slide 8, The hero moment
+ATTACH: mockup `02-hero.png`
+Caption: [one line]
+
+### Slide 9, Atmosphere
+ATTACH: `atmosphere-video.mp4` (embed as background video if Gamma supports)
+
+### Slide 10, The experience (agenda)
+[Block view from agenda.md as a flow diagram]
+
+### Slide 11, Culinary
+Paragraph + ATTACH mockup of food if available
+Menu outlined in 4-5 lines
+
+### Slide 12, Operations
+Short paragraph on site, flow, scale
+
+### Slide 13, Investment
+Budget summary (total, conditional, payment terms)
+"Detailed budget in accompanying Excel"
+
+### Slide 14, Timeline
+Milestone dates
+
+### Slide 15, Next steps + Contact
+Clear next actions
+Hemi's contact
+```
 
 The prompt is long. That is the point. Gamma produces much better output when given structure instead of "make me a beautiful deck about X". Treat the prompt as a spec, not a nudge.
 
@@ -198,10 +271,10 @@ A one-page executive summary that Hemi pastes into WhatsApp or an email to intro
 **מצורפים:**
 - הצעה מעוצבת מלאה (PDF)
 - תקציב מפורט (Excel)
-- מצגת אינטראקטיבית (Gamma, קישור יישלח)
+- מצגת אינטראקטיבית (Gamma - קישור יישלח)
 - סרטון האווירה (MP4)
 
-שמח לדבר מתי שיתאים.
+שמח לדבר מתי שיתאים. 
 
 [Signature]
 ```
