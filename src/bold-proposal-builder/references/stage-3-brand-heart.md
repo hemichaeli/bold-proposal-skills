@@ -62,11 +62,11 @@ Real hex codes. Real roles. The roles are: primary, secondary, accent, neutral l
 
 Format:
 ```
-#XXXXXX  —  ראשי, משמש ל-[איפה]
-#XXXXXX  —  משני, משמש ל-[איפה]
-#XXXXXX  —  אקסנט, משמש רק ל-[איפה]
-#XXXXXX  —  רקע בהיר
-#XXXXXX  —  טקסט / ניגוד כהה
+#XXXXXX  ראשי, משמש ל-[איפה]
+#XXXXXX  משני, משמש ל-[איפה]
+#XXXXXX  אקסנט, משמש רק ל-[איפה]
+#XXXXXX  רקע בהיר
+#XXXXXX  טקסט / ניגוד כהה
 ```
 
 Test: can the palette survive being printed on white paper AND projected on an LED wall? If not, adjust.
@@ -98,13 +98,13 @@ The motif's job is to make the event instantly recognizable in a photo, even if 
 
 ### 8. Sensory signatures
 
-Non-visual cues. These are often underthought; when planned, they elevate. 
+Non-visual cues. These are often underthought; when planned, they elevate.
 
 Format:
 ```
 סאונד: [סגנון מוזיקה / סאונד סקייפ / שקט]
 ריח: [אם יש / דוגמה קונקרטית]
-טקסטורה: [מה המוזמן ייגע בו - קרטון? קטיפה? אבן? מתכת?]
+טקסטורה: [מה המוזמן ייגע בו, קרטון? קטיפה? אבן? מתכת?]
 טמפרטורה: [יש ציפייה? מבוקר קריר, חיצוני חם?]
 ```
 
@@ -125,7 +125,7 @@ Example for a minimal corporate launch:
 
 ---
 
-## Method — how to actually write this
+## Method, how to actually write this
 
 ### Start from challenges.md, not from a blank page
 
@@ -147,7 +147,7 @@ A law firm's event doesn't have to have a name with "justice" or "tradition" in 
 
 - Start with 2 colors. Add a third only when needed. Only add more after you have tested 3.
 - Avoid "every color available" palettes. Those are flags for lack of conviction.
-- Reserve the accent (the one bright color) for the 5% — the CTA, the reveal, the detail. Not the background.
+- Reserve the accent (the one bright color) for the 5%, the CTA, the reveal, the detail. Not the background.
 - Neutrals carry 70% of the visual weight. Choose them carefully; do not default to #000 and #FFF.
 
 ### Typography rules
@@ -167,7 +167,7 @@ A law firm's event doesn't have to have a name with "justice" or "tradition" in 
 
 ---
 
-## Output template — full
+## Output template, full
 
 ```markdown
 # מערכת המותג — [שם אירוע]
@@ -200,8 +200,8 @@ A law firm's event doesn't have to have a name with "justice" or "tradition" in 
 | #XXXXXX | טקסט/כהה | [...] |
 
 ## 6. טיפוגרפיה
-- **כותרות:** [שם פונט] — [למה]
-- **גוף:** [שם פונט] — [למה]
+- **כותרות:** [שם פונט], [למה]
+- **גוף:** [שם פונט], [למה]
 
 ## 7. מוטיב חזותי
 [תיאור של 2-3 משפטים של המוטיב החוזר]
@@ -227,7 +227,7 @@ A law firm's event doesn't have to have a name with "justice" or "tradition" in 
 
 ## Failure modes to avoid
 
-1. **Generic luxury** — "gold, black, marble". If this is your palette for every second proposal, something is off.
-2. **Trend-chasing** — copying the current most-shared event on Instagram. Stage 2 lets you be informed by trends; stage 3 must make its own choices.
-3. **Client-pleasing over conviction** — if the client hinted they love purple, purple does not have to dominate the palette. Your job is to surface the best answer, not the most comfortable one.
-4. **Too many adjectives, not enough decisions** — "modern yet classic, bold yet understated, premium yet approachable" is four contradictions in one sentence. Pick one.
+1. **Generic luxury**, "gold, black, marble". If this is your palette for every second proposal, something is off.
+2. **Trend-chasing**, copying the current most-shared event on Instagram. Stage 2 lets you be informed by trends; stage 3 must make its own choices.
+3. **Client-pleasing over conviction**, if the client hinted they love purple, purple does not have to dominate the palette. Your job is to surface the best answer, not the most comfortable one.
+4. **Too many adjectives, not enough decisions**, "modern yet classic, bold yet understated, premium yet approachable" is four contradictions in one sentence. Pick one.
