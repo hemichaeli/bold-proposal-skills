@@ -1,10 +1,12 @@
-# Stage 5 — Budget Reference
+# Stage 5 — Budget Reference (v2)
 
 ## Purpose
 
-The budget is the credibility test of the proposal. Beautiful concepts get rejected when the numbers feel arbitrary. Stage 5 builds a structured, defensible budget where every line ties to a deliverable from stages 1 to 4.
+The budget is the credibility test of the proposal. Beautiful concepts get rejected when the numbers feel arbitrary. Stage 5 v2 builds a structured, defensible budget where every line ties to a deliverable AND to a real historical price from Bold's own archive, adjusted for inflation.
 
-Output: `05-budget/budget.json`, a structured JSON that will be rendered into the final Excel file in stage 6.
+Output: `05-budget/budget.json`, rendered to Excel in Stage 6.
+
+**Key change from v1:** Instead of inventing or guessing unit costs, Stage 5 consults `data/vendor-registry.json`, which is populated by `scripts/extract-vendor-data.py` from Bold's historical proposals in Drive.
 
 ---
 
@@ -38,7 +40,102 @@ Bold's budgets organize by these top-level categories. Not every event has every
 
 ---
 
-## JSON schema
+## The vendor registry, how it feeds Stage 5
+
+### What the registry contains
+
+`data/vendor-registry.json` is structured like this:
+
+```json
+{
+  "_meta": {
+    "extracted_on": "2026-04-21",
+    "source_folders": ["J:/My Drive/Efrat", "J:/My Drive/Keren"],
+    "total_records": 284,
+    "cpi_adjustment_table": "data/cpi-israel.json"
+  },
+  "vendors": [
+    {
+      "vendor_name": "חברת במות הצפון",
+      "category": "תפאורה ובינוי",
+      "items": [
+        {
+          "item_name": "במה 6x4 מ', גובה 60 ס\"מ",
+          "quote_date": "2024-03-15",
+          "unit_cost_ils": 4200,
+          "unit": "אירוע",
+          "source_proposal": "Keren/Biotech Launch Mar 2024.pdf",
+          "notes": "כולל הובלה והקמה"
+        },
+        {
+          "item_name": "במה 6x4 מ', גובה 60 ס\"מ",
+          "quote_date": "2022-09-08",
+          "unit_cost_ils": 3600,
+          "unit": "אירוע",
+          "source_proposal": "Efrat/Pharma Conference Sep 2022.pdf",
+          "notes": "כולל הובלה, בלי הקמה"
+        }
+      ],
+      "contact": {
+        "phone": "...",
+        "email": "..."
+      }
+    }
+  ]
+}
+```
+
+### How to use it during Stage 5
+
+For each line item Claude wants to price:
+
+1. **Look up the category + item in the registry.**
+2. **Find the most recent quote.** If there are multiple, prefer the latest.
+3. **Apply CPI adjustment** from the quote date to today using `data/cpi-israel.json`.
+4. **Write the line** with the adjusted number and cite the source in `notes`.
+
+Example:
+
+Registry entry: 
+- Item: "במה 6x4 מ'"
+- Quote date: 2024-03-15
+- Unit cost: ₪4,200
+
+CPI adjustment (Israel):
+- March 2024 CPI: 100.0 (baseline)
+- April 2026 CPI: 108.4 (hypothetical; actual from cpi-israel.json)
+- Adjusted unit cost: ₪4,200 × 1.084 = ₪4,553
+
+Budget line:
+```json
+{
+  "name": "במה 6x4 מ', גובה 60 ס\"מ",
+  "qty": 1,
+  "unit": "אירוע",
+  "unit_cost": 4553,
+  "vendor_role": "Scenography supplier",
+  "notes": "בסיס: חברת במות הצפון 2024-03. התאמה לפי מדד מחירים + כולל הובלה והקמה",
+  "source_deliverable": "operations/logistics.md §2",
+  "source_vendor_registry": "vendor-registry.json#vendors[0].items[0]"
+}
+```
+
+### When no registry entry exists
+
+If the item is genuinely new (no historical precedent in Bold's archive):
+1. Flag it in notes: `"Awaiting vendor quote, no historical baseline"`
+2. Set `"unit_cost": null`
+3. Ask Hemi to either provide a placeholder or contact a vendor
+
+Do NOT invent a number. The registry exists precisely so Bold's prices are grounded in Bold's history, not Claude's imagination.
+
+### Keeping the registry fresh
+
+The registry should be refreshed quarterly by re-running `scripts/extract-vendor-data.py`. Additionally, Stage 7 Debrief can produce a registry update as a skill-level learning: "the actual price charged for X was ₪Y, 18% above the registry estimate. Update the baseline."
+
+---
+
+## JSON schema (v2, unchanged from v1 except for `source_vendor_registry` field)
 
 ```json
 {
@@ -52,7 +149,8 @@ Bold's budgets organize by these top-level categories. Not every event has every
     "margin_pct": 22,
     "contingency_pct": 8,
     "vat_applicable": true,
-    "vat_pct": 18
+    "vat_pct": 18,
+    "vendor_registry_version": "2026-04-21"
   },
   "categories": [
     {
@@ -68,24 +166,8 @@ Bold's budgets organize by these top-level categories. Not every event has every
           "conditional": false,
           "trigger_condition": null,
           "notes": "ליווי מהקיקאוף עד אחרי האירוע",
-          "source_deliverable": "operations/logistics.md §6"
-        }
-      ]
-    },
-    {
-      "id": "scenography",
-      "name": "תפאורה ובינוי",
-      "items": [
-        {
-          "name": "ספק תפאורה - הרחבה (אם נדרש)",
-          "qty": 1,
-          "unit": "חבילה",
-          "unit_cost": 6000,
-          "vendor_role": "Scenography supplier",
-          "conditional": true,
-          "trigger_condition": "אם הלקוח יאשר הרחבה של קיר ה-Reveal ל-6x4 מ' במקום 4x3 מ'",
-          "notes": "שורה מותנית - להוסיף לסיכום רק אם מופעל",
-          "source_deliverable": "operations/logistics.md §2 + brand-heart motif"
+          "source_deliverable": "operations/logistics.md §6",
+          "source_vendor_registry": null
         }
       ]
     }
@@ -102,102 +184,71 @@ Bold's budgets organize by these top-level categories. Not every event has every
 }
 ```
 
-Set `summary` values to `null` in the JSON. The `build_budget_xlsx.py` script will calculate and inject them into the Excel file. Keeping them null in the JSON forces a single source of truth.
-
 ---
 
-## Item-level rules
+## Item-level rules (mostly unchanged from v1)
 
 ### Every item must reference a deliverable
+Every line has a `source_deliverable` pointing back to a stage 1-4 artifact.
 
-Every line has a `source_deliverable` pointing back to a stage 1-4 artifact. If you cannot point, the line does not belong. This prevents "phantom" budget items like "miscellaneous decor ₪8,000" that later get removed by the client for being vague.
+### NEW v2: Every non-Bold-internal item should reference the registry if possible
+If the line is sourced from `vendor-registry.json`, populate `source_vendor_registry` with the JSON pointer. If not, leave null and flag in notes.
 
 ### Units must be concrete
+`אירוע` / `יח'` / `שעה` / `סועד` / `חבילה` / `יום`.
 
-- `"unit": "אירוע"`, flat fee for the whole event
-- `"unit": "יח'"`, per unit (chair, table, sign)
-- `"unit": "שעה"`, per hour of service
-- `"unit": "סועד"`, per guest (catering)
-- `"unit": "חבילה"`, package (explain in notes)
-- `"unit": "יום"`, per day (multi-day events)
-
-### Vendor roles, not vendor names (yet)
-
-In stage 5, write the vendor *role* (e.g., "Scenography supplier", "Lighting designer", "Catering company"). Actual vendor names are assigned later when Hemi confirms which vendor Bold is using for this proposal. This separation lets the same budget template work across different vendor combinations.
-
-Exceptions:
-- "Bold internal" for roles Bold fills with its own team.
-- Specific vendor names that the client has mandated (from stage 1's "mandatory suppliers" field), use the actual name and mark it in `notes`.
+### Vendor roles, not vendor names (in the budget itself)
+In the budget line, write the vendor *role*. The registry holds actual vendor names; Hemi assigns them later.
 
 ### Conditional items
-
-Conditional items (`"conditional": true`) have a `trigger_condition` field explaining when they activate. The canonical example is Bold's 6,000 ₪ scenography expansion line. Conditional items:
-- Do NOT appear in the main subtotal.
-- DO appear in a separate section of the Excel called "שורות מותנות".
-- DO appear in the `total_with_conditional` summary as a separate total the client sees.
-
-This lets the client see the baseline price clearly and understand what adds what. No surprises.
+Conditional items (`conditional: true`) have a `trigger_condition` field.
 
 ### Notes fields
-
-Short, direct. "Includes setup and breakdown" is good. "This is a very important element for the ambiance of the event" is filler; delete it.
+Short, direct. Include the registry source citation when applicable.
 
 ---
 
-## How to populate the budget, the method
+## How to populate the budget (v2 method)
 
 ### Step 1: Extract line items from stage-4 documents
+Walk through each stage-4 deliverable and list every tangible or services item it implies.
 
-Walk through each stage-4 deliverable and list every tangible or services item it implies:
-- From `logistics.md` § build: every structure, every piece of furniture, every signage element.
-- From `logistics.md` § technical: every sound/light/video/power item.
-- From `content/scripts.md`: printed invitations, signage, menu cards.
-- From `culinary/menu.md`: catering, bar, rentals specific to food service.
-- From `visual/mockups/` and mood-direction.md: signage, installations, light treatments beyond standard.
-- From agenda.md: any talent, MC, performers implied.
-
-### Step 2: Quantify and unit-price
-
-For each item:
-- **Quantity:** from the physical plan (how many chairs? how many spotlights?).
-- **Unit cost:** from Bold's historical data in Drive, from industry rates, from current market. If unknown, put `"unit_cost": null` and flag in notes: "Awaiting vendor quote". Do not invent numbers.
+### Step 2: Query the vendor registry
+For each line item, search the registry:
+```python
+# pseudocode
+for item in draft_line_items:
+    matches = registry.find(category=item.category, item_name_like=item.name)
+    if matches:
+        most_recent = max(matches, key=lambda m: m.quote_date)
+        item.unit_cost = cpi_adjust(most_recent.unit_cost_ils, most_recent.quote_date, today)
+        item.source_vendor_registry = most_recent.pointer()
+        item.notes += f" (בסיס: {most_recent.vendor} {most_recent.quote_date}, התאמת CPI)"
+    else:
+        item.unit_cost = None
+        item.notes = "Awaiting vendor quote, no historical baseline"
+```
 
 ### Step 3: Apply contingency and margin
-
-- **Contingency** is a % of the subtotal that absorbs surprises. Typical 5 to 10%. Set 8% as default unless the event is unusually stable (low contingency, 5%) or unusually risky (high, 12%).
-- **Margin** is Bold's profit. Typical 20 to 28%. Default 22%. Negotiated down only for strategic clients or loss-leader events.
+- Contingency default: 8%
+- Margin default: 22%
 
 ### Step 4: VAT and final totals
-
-Israeli VAT in 2026 is 18%. If the client is a business that can reclaim VAT, present pre-VAT prominently. If the client is a consumer or a non-reclaiming entity (certain nonprofits, individuals), present with-VAT prominently.
+Israeli VAT in 2026: 18%.
 
 ### Step 5: Conditional items
-
-For each genuinely optional enhancement the client could add, add a conditional line. Don't load 15 conditional items; 2 to 4 is usually right. Over-loading reads as upselling.
+2 to 4 conditional items typically. Don't overload.
 
 ---
 
 ## Sanity checks before closing stage 5
 
-Before marking stage 5 complete, run these:
-
-1. **Deliverable coverage.** Every stage-4 output has at least one budget line. No orphans.
-2. **No phantom lines.** Every budget line has a `source_deliverable`. No orphans.
-3. **Per-guest sanity.** Divide the subtotal by guest count. Does the per-guest cost look sensible for the event type and standard? If it's ₪350/guest for a premium seated dinner, plausible. If it's ₪1,800/guest, something is inflated or the event is unusually premium and the client knows it.
-4. **Top three categories.** Which three categories are the biggest? Do they match the client's stated priorities from the brief? If the hero moment is a reveal, scenography should be top-heavy. If it's a chef's dinner, catering. If they don't match, something is off.
-5. **Conditional items are genuinely optional.** If the event doesn't work without the conditional item, it's not conditional; promote it.
-
----
-
-## Historical seeding from Drive
-
-When Hemi grants access to Drive proposals:
-- Pull 3 to 5 past Bold proposals with similar event type and guest count.
-- Extract their line-item structures and typical unit costs.
-- Use them as priors, not as gospel. Prices change; events differ.
-- Cite the source in `notes`: `"Baseline from Phoenix Group 2025 opening, adjusted +8% for 2026 inflation"`.
-
-This turns each new proposal into a compounding asset: Bold's historical knowledge gets more useful, not less, over time.
+1. **Deliverable coverage.** Every stage-4 output has at least one budget line.
+2. **No phantom lines.** Every budget line has a `source_deliverable`.
+3. **Registry coverage.** At least 70% of non-internal lines should have `source_vendor_registry` populated. If less, the registry is under-populated and worth a refresh.
+4. **Per-guest sanity.** Divide the subtotal by guest count. Does per-guest cost look sensible?
+5. **Top three categories** match the client's stated priorities from the brief.
+6. **Conditional items are genuinely optional.**
 
 ---
 
@@ -207,6 +258,6 @@ A finance-literate client reviewer reading the budget Excel can:
 - See clearly what they're paying for.
 - See clearly what is optional.
 - Understand per-guest and per-category spending.
-- Trace any number back to a deliverable.
+- Trace any number back to a deliverable AND (for non-internal lines) to a historical Bold precedent.
 
 And Bold's margin is protected but transparent.
