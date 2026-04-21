@@ -29,7 +29,7 @@ Google Veo is Google DeepMind's video generation model. Veo 3 (current as of ear
 ## Prerequisites
 
 ### MCP connection
-The Veo MCP server must be listed in the user's active MCP servers. Verify by calling `tool_search` with the query `"veo video"`. If the server is not available or returns errors, report this to the user before proceeding, do not attempt to call the Veo REST API directly from this skill.
+The Veo MCP server must be listed in the user's active MCP servers. Verify by calling `tool_search` with the query `"veo video"`. If the server is not available or returns errors, report this to the user before proceeding; do not attempt to call the Veo REST API directly from this skill.
 
 ### Finding the right tool
 The exact tool names on the Veo MCP may vary between versions. Before generating, search:
@@ -70,7 +70,7 @@ Most Bold atmosphere videos are Shape B. Shape A is for when there is a specific
 [Mood sentence, what this moment feels like]
 [Composition, what's in the frame and how it's framed]
 [Light, the defining factor]
-[Materials & color, texture and palette]
+[Materials and color, texture and palette]
 [Motion, camera and in-frame motion, deliberately limited]
 [Duration, 5 to 15 seconds]
 [Aspect ratio, 16:9 for cinematic, 9:16 for Instagram story, 1:1 for square social]
@@ -101,9 +101,7 @@ Aspect ratio: 16:9.
 Avoid: crowd movement, zoom, pan, cut, music, text overlay, neon, lens flare effects.
 ```
 
-That's a well-formed Veo prompt. Note the specificity of motion, "one silhouetted figure passing once" is very different from "people walking around". Veo respects specificity.
-
-See `references/video-prompting.md` for the full prompting methodology, light recipes, motion vocabulary, and scene-specific prompt templates.
+That's a well-formed Veo prompt. Note the specificity of motion: "one silhouetted figure passing once" is very different from "people walking around". Veo respects specificity.
 
 ---
 
@@ -113,7 +111,7 @@ For event proposals, the strongest workflow is:
 
 1. Generate the still mockup with `nano-banana` first (stage 4a).
 2. Pick the strongest still (usually the arrival shot or the hero shot).
-3. Pass that still to Veo as a reference / start frame, along with a motion prompt.
+3. Pass that still to Veo as a *reference / start frame*, along with a motion prompt.
 
 This gives you:
 - A still mockup and a video that share the exact same composition and palette.
@@ -136,6 +134,13 @@ The motion prompt for image-to-video is **only about motion**, not about the sce
 - Camera motion (static / slow pan left / slow dolly in / slow tilt down)
 - Duration and pacing (slow, not fast)
 
+Short example motion prompt:
+```
+Camera remains static. In frame: a slow drift of warm light as if someone
+passed a candle just outside the frame, and the faint sway of the ivory linen
+at the right edge. 8 seconds. No other motion.
+```
+
 ---
 
 ## Aspect ratios and durations
@@ -155,7 +160,7 @@ Longer than 15s: stitch two 8-second clips with ffmpeg crossfade, don't ask Veo 
 ## Using the Veo MCP, operational flow
 
 ```
-1. tool_search(query="veo video")        find the right tool name
+1. tool_search(query="veo video")        → find the right tool name
 2. (Optional) Generate reference still with nano-banana
 3. Call the Veo MCP tool with:
      - reference image (if using image-to-video)
@@ -168,17 +173,25 @@ Longer than 15s: stitch two 8-second clips with ffmpeg crossfade, don't ask Veo 
 6. Call present_files on the video file
 ```
 
-If the MCP returns a URL instead of a file, download it with `web_fetch` or the Python `requests` library.
+If the MCP returns a URL instead of a file, download it with `web_fetch` or the Python `requests` library:
+
+```python
+import requests
+from pathlib import Path
+
+url = "https://veo-output-storage.googleapis.com/..."  # from MCP response
+Path("atmosphere-video.mp4").write_bytes(requests.get(url).content)
+```
 
 ---
 
 ## Error handling
 
-**"Tool not found" on Veo MCP:** the MCP server is disconnected or the tool name is wrong. Ask the user to reconnect the Veo MCP in Settings then Connectors.
+**"Tool not found" on Veo MCP:** the MCP server is disconnected or the tool name is wrong. Ask the user to reconnect the Veo MCP in Settings → Connectors. Do not fall back to a different video model without telling the user.
 
-**Generation times out:** retry once. If the second attempt times out, simplify the prompt.
+**Generation times out:** retry once. If the second attempt times out, check the prompt, overly complex prompts (multiple simultaneous motions, impossible physics) time out more often. Simplify.
 
-**Video looks wobbly or has morph artifacts:** Veo is stronger with less motion. Cut the motion in half and regenerate.
+**Video looks wobbly or has morph artifacts:** Veo is stronger with *less* motion. Cut the motion in half and regenerate. "Slow drift" beats "smooth tracking shot" most of the time.
 
 **Video audio is unwanted:** Veo may auto-generate ambient sound. Strip with ffmpeg:
 ```bash
@@ -193,7 +206,7 @@ When called from stage 4a of the proposal builder:
 
 1. Read the style anchor from `mood-direction.md` or `brand-system.md`.
 2. Pick the reference mockup (usually `01-arrival.png` or `02-hero.png`).
-3. Build a motion prompt that preserves the still's mood, usually Shape B (ambient hold).
+3. Build a motion prompt that preserves the still's mood, usually Shape B (ambient hold), rarely Shape A (slow push).
 4. Generate one video (not multiple variants, the proposal needs one).
 5. Save to `proposals/<slug>/04-specialists/visual/atmosphere-video.mp4`.
 6. Strip audio if auto-generated.
@@ -207,8 +220,8 @@ If the user does not have the Veo MCP connected and wants to proceed:
 
 1. Tell them the proposal will be delivered without the atmosphere video.
 2. Offer two alternatives:
-   - Still photography sequence: generate 3 stills from nano-banana representing early/middle/late in the imagined moment, present as a storyboard in the proposal.
-   - Later attachment: deliver the proposal now without the video, generate the video later and send as a follow-up.
+   - **Still photography sequence**: generate 3 stills from nano-banana representing early/middle/late in the imagined moment, present as a "storyboard" in the proposal.
+   - **Later attachment**: deliver the proposal now without the video, generate the video later and send as a follow-up.
 3. Do not generate with another service without explicit user consent.
 
 ---
