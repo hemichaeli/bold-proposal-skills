@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Turn the brand heart into images the client can see. A written concept is abstract. Mockups and atmosphere video let the client walk into the event in their mind before writing a check. The consistency of these visuals, palette, motif, light, typography, is what separates a premium proposal from a Pinterest board.
+Turn the brand heart into images the client can see. A written concept is abstract. Mockups and atmosphere video let the client walk into the event in their mind before writing a check. The consistency of these visuals (palette, motif, light, typography) is what separates a premium proposal from a Pinterest board.
 
 Output:
 - 4 to 8 still mockups in `04-specialists/visual/mockups/`
@@ -133,7 +133,7 @@ This file explains to the user (and to future Claude instances iterating on the 
 Template:
 
 ```markdown
-# Mood Direction — [שם אירוע]
+# Mood Direction, [שם אירוע]
 
 ## עוגן הסגנון (Style Anchor)
 [The full style anchor paragraph]
@@ -153,12 +153,12 @@ Template:
 [Why people are shown this way, silhouetted, blurred, absent, featured]
 
 ## שוטים ופרומפטים
-### Mockup 1 — [שם]
+### Mockup 1, [שם]
 **מה מראה:** [...]
 **פרומפט:** [the actual prompt, including the style anchor]
 **למה זה חשוב:** [...]
 
-### Mockup 2 — ...
+### Mockup 2, ...
 (לכל mockup)
 
 ## וידאו האווירה
