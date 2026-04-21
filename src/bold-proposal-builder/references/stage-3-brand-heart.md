@@ -98,7 +98,7 @@ The motif's job is to make the event instantly recognizable in a photo, even if 
 
 ### 8. Sensory signatures
 
-Non-visual cues. These are often underthought; when planned, they elevate.
+Non-visual cues. These are often underthought; when planned, they elevate. 
 
 Format:
 ```
@@ -170,7 +170,7 @@ A law firm's event doesn't have to have a name with "justice" or "tradition" in 
 ## Output template, full
 
 ```markdown
-# מערכת המותג — [שם אירוע]
+# מערכת המותג, [שם אירוע]
 
 ## 1. קונספט
 [משפט אחד]
