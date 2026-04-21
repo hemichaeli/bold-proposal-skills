@@ -13,11 +13,11 @@ Output: `04-specialists/culinary/menu.md`
 Every culinary plan rests on four choices. Make them deliberately.
 
 ### 1. Service style
-- **Seated (מוגש / plated)** — formal, controlled timing, high staff ratio. Feels ceremonial. Works for 40 to 400 guests.
-- **Stations (עמדות)** — active, social, guests move. Feels contemporary. Works for 100 to 800 guests.
-- **Passed / roaming (מוגש על מגש)** — elegant, low-commitment, keeps guests standing. Works for cocktail hours and short events.
-- **Family-style / shared platters (משפחתי)** — warm, intimate, encourages conversation across the table. Works for 30 to 200 guests.
-- **Hybrid** — e.g., passed hors d'oeuvres during arrival, then seated dinner. Common and usually good.
+- **Seated (מוגש / plated)**, formal, controlled timing, high staff ratio. Feels ceremonial. Works for 40 to 400 guests.
+- **Stations (עמדות)**, active, social, guests move. Feels contemporary. Works for 100 to 800 guests.
+- **Passed / roaming (מוגש על מגש)**, elegant, low-commitment, keeps guests standing. Works for cocktail hours and short events.
+- **Family-style / shared platters (משפחתי)**, warm, intimate, encourages conversation across the table. Works for 30 to 200 guests.
+- **Hybrid**, e.g., passed hors d'oeuvres during arrival, then seated dinner. Common and usually good.
 
 **Rule:** match service style to event tone. A minimal, quiet event does not want frantic stations. A celebratory crowd does not want formal plated service that slows them down.
 
@@ -38,19 +38,19 @@ Default coverage for Israeli events (adjust per audience):
 A menu is not a list. It is a short story. It has a beginning (opening, light, wakes up the palate), a middle (the substantive center, generous), and an end (close, sweet or bitter, memorable).
 
 Each dish should tie to the event's concept or motif in one of these ways:
-- **Material echo** — the same material family the motif uses (e.g., brushed brass motif → copper-glazed plates; concrete motif → stoneware).
-- **Palette echo** — dish colors that live in the brand palette.
-- **Geometric echo** — a recurring shape appears in plating.
-- **Conceptual echo** — the dish's idea references the concept (e.g., a "new classic" concept = familiar dishes with one unexpected element).
+- **Material echo**, the same material family the motif uses (e.g., brushed brass motif → copper-glazed plates; concrete motif → stoneware).
+- **Palette echo**, dish colors that live in the brand palette.
+- **Geometric echo**, a recurring shape appears in plating.
+- **Conceptual echo**, the dish's idea references the concept (e.g., a "new classic" concept = familiar dishes with one unexpected element).
 
 Avoid literalism: the concept is "fire" does not mean everything must be grilled. Subtle echoes are stronger than obvious ones.
 
 ### 4. Beverage pairing
 
 Match drinks to dishes, atmosphere, and hour. Three levels to consider:
-- **Arrival drink** — one signature drink that captures the event's opening feel. Non-alcoholic version must be equally considered, not an afterthought.
-- **Dinner pairing** — wine or cocktail per course; or a single well-chosen house wine for simplicity.
-- **Late-night / post-dinner** — the bar that runs as the evening loosens.
+- **Arrival drink**, one signature drink that captures the event's opening feel. Non-alcoholic version must be equally considered, not an afterthought.
+- **Dinner pairing**, wine or cocktail per course; or a single well-chosen house wine for simplicity.
+- **Late-night / post-dinner**, the bar that runs as the evening loosens.
 
 ---
 
@@ -95,16 +95,16 @@ Match drinks to dishes, atmosphere, and hour. Three levels to consider:
 ### שם: [...]
 **מרכיבים:** [...]
 **הגשה:** [זכוכית, גודל, גרניש]
-**גרסה לא-אלכוהולית:** [ולא "מיץ ענבים" - גרסה שווה משקל]
+**גרסה לא-אלכוהולית:** [ולא "מיץ ענבים", גרסה שווה משקל]
 
 ## בר
 **ציר מרכזי:** [יין / קוקטיילים חתומים / בר פתוח]
 **יין:** [יין אדום + לבן, סוג וייצרן או סגנון]
 **משקאות חריפים:** [...]
-**בר ללא אלכוהול:** [תיאור שווה - לא כ-afterthought]
+**בר ללא אלכוהול:** [תיאור שווה, לא כ-afterthought]
 
 ## שילוט ושמות מנות
-[אם יש תפריט מודפס / שילוט - הטקסט המדויק כפי שיופיע]
+[אם יש תפריט מודפס / שילוט, הטקסט המדויק כפי שיופיע]
 
 ## הערות לצוות המטבח / הקייטרינג
 - [שעת הגשה של כל קורס]
