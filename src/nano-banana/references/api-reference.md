@@ -1,4 +1,4 @@
-# API Reference — Nano Banana (Gemini image generation)
+# API Reference , Nano Banana (Gemini image generation)
 
 Current as of April 2026. Verify at https://ai.google.dev/gemini-api/docs/image-generation before quoting pricing to clients.
 
@@ -24,7 +24,7 @@ pip install google-genai --break-system-packages
 | Nano Banana Pro | `gemini-3-pro-image-preview` | Best text rendering, 4K capable, batch API supported |
 | Nano Banana (v1) | `gemini-2.5-flash-image` | Legacy. Avoid for new work. |
 
-All three model IDs are case-sensitive. The `-preview` suffix is part of the ID — do not drop it.
+All three model IDs are case-sensitive. The `-preview` suffix is part of the ID, do not drop it.
 
 ---
 
@@ -51,7 +51,7 @@ response = client.models.generate_content(
 
 ## Response structure
 
-The response contains `candidates[0].content.parts`, which is a list of `Part` objects. Each part has either `text` or `inline_data`. **Always iterate** — position is not guaranteed.
+The response contains `candidates[0].content.parts`, which is a list of `Part` objects. Each part has either `text` or `inline_data`. **Always iterate**, position is not guaranteed.
 
 ```python
 for part in response.candidates[0].content.parts:
@@ -64,7 +64,7 @@ for part in response.candidates[0].content.parts:
         print("Model text:", part.text)
 ```
 
-The `inline_data.data` is **raw bytes**, not base64-encoded (the new SDK handles decoding). The older `google-generativeai` SDK returned base64 strings; if you see a base64 string, you are on the old SDK — upgrade.
+The `inline_data.data` is **raw bytes**, not base64-encoded (the new SDK handles decoding). The older `google-generativeai` SDK returned base64 strings; if you see a base64 string, you are on the old SDK, upgrade.
 
 ---
 
@@ -170,7 +170,7 @@ The model can refuse to generate certain content. Common triggers:
 - Medical/legal/financial advice in image form
 - Minors in sensitive contexts
 
-When refused, the response will have `finish_reason: SAFETY` and no `inline_data` in the parts. Rephrase the prompt — remove the trigger — and try again.
+When refused, the response will have `finish_reason: SAFETY` and no `inline_data` in the parts. Rephrase the prompt, remove the trigger, and try again.
 
 Relaxing safety (only at your own risk, and only for legitimate business use):
 
@@ -203,7 +203,7 @@ All Gemini-generated images embed an invisible SynthID watermark. This is mandat
 
 | Code | Meaning | Response |
 |---|---|---|
-| `400 INVALID_ARGUMENT` | Malformed request — usually wrong modality config or bad model ID | Verify config and model ID spelling |
+| `400 INVALID_ARGUMENT` | Malformed request, usually wrong modality config or bad model ID | Verify config and model ID spelling |
 | `403 PERMISSION_DENIED` | API key invalid, wrong account, or model not enabled for this project | Regenerate key; verify you're using the right Google account |
 | `404 NOT_FOUND` | Model ID does not exist (common typo: `gemini-3-pro-image` without `-preview`) | Check exact ID |
 | `429 RESOURCE_EXHAUSTED` | Rate or quota limit hit | Wait, back off exponentially, or switch to batch API on Pro |
@@ -265,4 +265,4 @@ Google rotates preview model IDs periodically. When a new preview model launches
 2. Find the current image-generation model IDs
 3. Update this reference and the `nano-banana/SKILL.md`
 
-Do not silently swap models — notify the user when the default changes.
+Do not silently swap models, notify the user when the default changes.
