@@ -27,7 +27,7 @@ The physical structures and dressings being built on site. Stage, bar, signage, 
 
 ### 3. Technical infrastructure (תשתיות טכניות)
 
-Sound, light, video, power. What is the system, who is the supplier (role, not name yet — actual vendors get priced in stage 5), what is the redundancy plan.
+Sound, light, video, power. What is the system, who is the supplier (role, not name yet, actual vendors get priced in stage 5), what is the redundancy plan.
 
 ### 4. Safety, security, accessibility (בטיחות, אבטחה, נגישות)
 
@@ -43,7 +43,7 @@ Roles (not names yet): event manager, stage manager, technical lead, runner coor
 
 ### 7. Risk register (ניהול סיכונים)
 
-What can go wrong. What is the mitigation. Top risks only (5 to 8). Not a full FMEA — this is a proposal, not a contract.
+What can go wrong. What is the mitigation. Top risks only (5 to 8). Not a full FMEA, this is a proposal, not a contract.
 
 ---
 
@@ -72,7 +72,7 @@ What can go wrong. What is the mitigation. Top risks only (5 to 8). Not a full F
 (לכל אזור)
 
 ### צוואר בקבוק צפוי
-[הזמן/המקום הצפוי להיות עמוס - כניסה ב-19:30? יציאה מהשיא? - ומה המענה]
+[הזמן/המקום הצפוי להיות עמוס, כניסה ב-19:30? יציאה מהשיא? ומה המענה]
 
 ## 2. בינוי ותכנון שטח
 
@@ -103,7 +103,7 @@ What can go wrong. What is the mitigation. Top risks only (5 to 8). Not a full F
 - **גיבוי:** מיקרופון נוסף, רמקול ניידים
 
 ### אור
-- **תכנון תאורה:** [תיאור - דרמטי / רך / צבעוני / שלבים]
+- **תכנון תאורה:** [תיאור, דרמטי / רך / צבעוני / שלבים]
 - **ציוד:** [ביס, spots, ambient, moving heads, haze]
 - **ספק (תפקיד):** מעצב תאורה + חברת תאורה
 - **בקרה:** מפעיל אור חי
