@@ -4,8 +4,8 @@
 
 Every event lives in time. A brilliant space with the wrong running order feels awkward. A perfectly run evening with generic words feels forgettable. Stage 4b authors the two artifacts that make the event feel directed and written, not just produced:
 
-- `04-specialists/content/agenda.md` the time-based architecture of the event.
-- `04-specialists/content/scripts.md` every piece of written or spoken text.
+- `04-specialists/content/agenda.md`, the time-based architecture of the event.
+- `04-specialists/content/scripts.md`, every piece of written or spoken text.
 
 ---
 
@@ -27,24 +27,24 @@ Two views, both in the same file:
 
 **View A, Block view** (for the brand heart translation):
 ```markdown
-## מבנה האירוע — תמונת על
+## מבנה האירוע, תמונת על
 
-### 1. הגעה (arrival) — 30 דק'
+### 1. הגעה (arrival), 30 דק'
 **תחושה מבוקשת:** [...]
 **מה קורה:** [...]
 **עוגן חזותי:** [...]
 
-### 2. פתיחה — 15 דק'
+### 2. פתיחה, 15 דק'
 **תחושה מבוקשת:** [...]
 **מה קורה:** [...]
 
-### 3. גוף האירוע — [X דק']
+### 3. גוף האירוע, [X דק']
 ...
 
-### 4. שיא — [X דק']
+### 4. שיא, [X דק']
 ...
 
-### 5. סיום — [X דק']
+### 5. סיום, [X דק']
 ...
 ```
 
@@ -79,7 +79,7 @@ This file is a library of every word guests see or hear, keyed by moment.
 ### Structure
 
 ```markdown
-# Scripts — [שם אירוע]
+# Scripts, [שם אירוע]
 
 ## §1. הזמנה (Invitation copy)
 **ערוץ:** WhatsApp / דיגיטלית מודפסת
@@ -110,7 +110,7 @@ This file is a library of every word guests see or hear, keyed by moment.
 
 ---
 
-## §6. דברי פתיחה — מנחה
+## §6. דברי פתיחה, מנחה
 **משך צפוי:** 3-4 דק'
 **טון:** [הפנייה ל-brand-system.md §4]
 
@@ -133,7 +133,7 @@ This file is a library of every word guests see or hear, keyed by moment.
 
 ---
 
-## §9. רגע השיא — סקריפט ותזמון
+## §9. רגע השיא, סקריפט ותזמון
 **מה נאמר + מה קורה חזותית בו-זמנית.**
 
 [תיאור משולב]
