@@ -5,9 +5,9 @@
 Stage 2 is the skill's intellectual engine. A proposal that does not rest on cultural observation, precedent, and synthesis is decoration. The client does not need more decoration; they can get that anywhere. They need to know that Bold sees the moment clearly and has chosen this direction *because* of what is happening in the world.
 
 Stage 2 produces three artifacts:
-- `trends.md` — what is moving in culture right now that this event should ride.
-- `case-studies.md` — specific events/activations that solved adjacent challenges well.
-- `inspiration.md` — a creative mood board in prose: references, motifs, tensions.
+- `trends.md`, what is moving in culture right now that this event should ride.
+- `case-studies.md`, specific events/activations that solved adjacent challenges well.
+- `inspiration.md`, a creative mood board in prose: references, motifs, tensions.
 
 All three are short, sharp, and sourced. Padding is disqualifying.
 
@@ -19,7 +19,7 @@ Give this stage real research time. Budget ~15 to 30 `web_search` + `web_fetch` 
 
 ---
 
-## Trends — the methodology
+## Trends, the methodology
 
 ### What counts as a trend
 
@@ -27,10 +27,10 @@ A trend for Bold's purposes is a pattern that is (a) visible across at least 3 i
 
 ### What does NOT count
 
-- "AI is hot right now" — too broad to be useful.
-- "Sustainability matters" — a stance, not a trend.
-- A single viral TikTok — noise.
-- Anything from a content-marketing blog selling a service — biased source.
+- "AI is hot right now", too broad to be useful.
+- "Sustainability matters", a stance, not a trend.
+- A single viral TikTok, noise.
+- Anything from a content-marketing blog selling a service, biased source.
 
 ### Where to look
 
@@ -57,7 +57,7 @@ A trend for Bold's purposes is a pattern that is (a) visible across at least 3 i
 ### Output format for trends.md
 
 ```markdown
-# טרנדים רלוונטיים — [שם אירוע]
+# טרנדים רלוונטיים, [שם אירוע]
 
 ## מבוא (2-3 שורות)
 למה דווקא הטרנדים האלה רלוונטיים לאתגר שזיהינו בשלב 1.
@@ -85,7 +85,7 @@ Each trend must have:
 
 ---
 
-## Case studies — the methodology
+## Case studies, the methodology
 
 ### What you are looking for
 
@@ -102,7 +102,7 @@ Specific named events (not genres) that solved an adjacent challenge in a memora
 ### Output format for case-studies.md
 
 ```markdown
-# Case Studies רלוונטיים — [שם אירוע]
+# Case Studies רלוונטיים, [שם אירוע]
 
 ## Case 1: [שם האירוע / שם הלקוח / שנה]
 - **מה נעשה:** 2-3 משפטים.
@@ -128,7 +128,7 @@ Specific named events (not genres) that solved an adjacent challenge in a memora
 
 ---
 
-## Inspiration — the methodology
+## Inspiration, the methodology
 
 This is the softer sibling of trends and case studies. It captures visual, sensory, and conceptual references that will seed stage 3 (Brand Heart). It is deliberately more associative, more poetic. But it is still sourced.
 
@@ -143,7 +143,7 @@ This is the softer sibling of trends and case studies. It captures visual, senso
 ### Output format for inspiration.md
 
 ```markdown
-# מצפן השראה — [שם אירוע]
+# מצפן השראה, [שם אירוע]
 
 ## הרגשה ברגע אחד (one-sentence vibe)
 משפט אחד שתופס את התחושה.
@@ -154,7 +154,7 @@ This is the softer sibling of trends and case studies. It captures visual, senso
 - **מה לקחת מזה:** אלמנט קונקרטי לאירוע (צבע, חומר, הרכב, תנועה)
 - **לינק / קרדיט:** [מקור]
 
-(5 עד 10 מקורות — חזותיים, קולנועיים, מוזיקליים, ארכיטקטוניים, קולינריים)
+(5 עד 10 מקורות, חזותיים, קולנועיים, מוזיקליים, ארכיטקטוניים, קולינריים)
 
 ## מתחים לשמור עליהם (tensions to preserve)
 - מתח 1: [למשל "אינטימי אבל גרנדיוזי", "בלתי-טקסי אבל מדויק"]
