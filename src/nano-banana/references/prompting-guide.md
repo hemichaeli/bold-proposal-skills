@@ -12,7 +12,7 @@ Specificity is the entire game.
 
 Every strong prompt has these four layers, in this order:
 
-### 1. Composition — what is in the frame, from where
+### 1. Composition, what is in the frame, from where
 
 Examples:
 - "Wide shot from the guest's point of view, looking down a narrow corridor toward a far wall."
@@ -22,7 +22,7 @@ Examples:
 
 Without a composition cue, the model picks the statistical-average angle, which is "medium shot, straight on". Almost never what you want.
 
-### 2. Light — the defining factor
+### 2. Light, the defining factor
 
 Light is more important than color. Light is what separates "amateur event photo" from "editorial".
 
@@ -82,7 +82,7 @@ Stack 3 to 5 avoids. More than 5 and the model starts fighting itself.
 
 ---
 
-## The "reference verbs" — how to describe style
+## The "reference verbs", how to describe style
 
 Instead of adjectives, use analogies to known visual territories:
 
@@ -117,7 +117,7 @@ Aspect ratio: 16:9
 ### Recipe: Hero moment
 ```
 Wide central shot of the stage area. Single focal element:
-[describe the hero element — installation, reveal, platform].
+[describe the hero element, installation, reveal, platform].
 Light tightly focused on the hero, room dim around it. Audience in silhouette.
 Camera: medium format, centered composition, symmetric.
 Mood: reverent, composed.
@@ -188,7 +188,7 @@ Aspect ratio: 3:2
 
 ---
 
-## Consistency across a set — the non-obvious rules
+## Consistency across a set, the non-obvious rules
 
 - **The style anchor must be *identical*, byte-for-byte, across all images.** Not paraphrased. Copy-paste.
 - **Same aspect ratio per set** (mostly). Mixing 16:9 and 4:5 in the same set fractures the world.
@@ -204,7 +204,7 @@ Hebrew rendering works but is less reliable than English:
 
 - Use Nano Banana Pro for any visible Hebrew text.
 - Keep Hebrew strings short (1 to 5 words). Longer strings increase the chance of letter errors.
-- Specify the typeface as "thin", "sans-serif", "serif" — the model works better with font descriptors than font names it may not know.
+- Specify the typeface as "thin", "sans-serif", "serif", the model works better with font descriptors than font names it may not know.
 - For any critical Hebrew signage, accept that you may need to overlay the real text in post (using PIL, Figma, or canvas-design).
 - RTL considerations: Hebrew reads right-to-left. If specifying placement, say "right-aligned" for start-of-line.
 
@@ -223,6 +223,6 @@ Before committing to an image, ask:
 2. Can I tell what materials are in the frame?
 3. Does the light have a *source* (not ambient everywhere)?
 4. Does the image carry the brand motif?
-5. If I showed this to the client, would they ask "is this a real photo of what we're building?" — or would they assume it's a stock image?
+5. If I showed this to the client, would they ask "is this a real photo of what we're building?", or would they assume it's a stock image?
 
 If any answer is weak, iterate before moving on. One strong image beats three mediocre ones.
