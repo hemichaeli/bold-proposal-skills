@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Turn the brand heart into images the client can see. A written concept is abstract. Mockups and atmosphere video let the client walk into the event in their mind before writing a check. The consistency of these visuals — palette, motif, light, typography — is what separates a premium proposal from a Pinterest board.
+Turn the brand heart into images the client can see. A written concept is abstract. Mockups and atmosphere video let the client walk into the event in their mind before writing a check. The consistency of these visuals, palette, motif, light, typography, is what separates a premium proposal from a Pinterest board.
 
 Output:
 - 4 to 8 still mockups in `04-specialists/visual/mockups/`
@@ -15,7 +15,7 @@ Tools: the `nano-banana` skill (Gemini image generation) and the `veo-video-crea
 
 ## The "style anchor" pattern
 
-The single most important trick for consistency across mockups is building a **style anchor** — a reusable block of prompt language that describes the visual world in one paragraph. This anchor goes into every image prompt. Without it, mockup 3 will look like it's from a different event than mockup 1.
+The single most important trick for consistency across mockups is building a **style anchor**, a reusable block of prompt language that describes the visual world in one paragraph. This anchor goes into every image prompt. Without it, mockup 3 will look like it's from a different event than mockup 1.
 
 ### How to build the style anchor
 
@@ -57,24 +57,24 @@ This way, mockup 8 still looks like it belongs to mockup 1.
 
 A strong proposal shows the client the event from multiple vantage points. Default shot list (adjust per event type):
 
-1. **Arrival / first impression** — what guests see when they walk in. Wide shot, establishing the space.
-2. **Hero moment** — the central visual: the stage, the reveal, the anchor installation. This is the image the client will remember.
-3. **Scale reference** — a shot that shows the full room with people in it, establishing size and flow.
-4. **Detail / texture** — close-up of a signature element: table setting, signage, menu card, installation detail. Sells the craftsmanship.
-5. **Food / beverage** — if applicable. Branded presentation.
-6. **Atmosphere / ambient** — the space without people, or with people blurred. Captures mood.
-7. **Signage / wayfinding** — the typography and motif applied to navigation.
-8. **Exit / takeaway** — what guests leave with, if there is a takeaway element.
+1. **Arrival / first impression**, what guests see when they walk in. Wide shot, establishing the space.
+2. **Hero moment**, the central visual: the stage, the reveal, the anchor installation. This is the image the client will remember.
+3. **Scale reference**, a shot that shows the full room with people in it, establishing size and flow.
+4. **Detail / texture**, close-up of a signature element: table setting, signage, menu card, installation detail. Sells the craftsmanship.
+5. **Food / beverage**, if applicable. Branded presentation.
+6. **Atmosphere / ambient**, the space without people, or with people blurred. Captures mood.
+7. **Signage / wayfinding**, the typography and motif applied to navigation.
+8. **Exit / takeaway**, what guests leave with, if there is a takeaway element.
 
 For smaller events, 4 to 5 of the above is enough. For proposals requiring persuasion of a committee, all 8.
 
 ### Negative examples to avoid in prompts
 
-- "beautiful event" — meaningless
-- "luxury" — lazy; describe what luxury looks like in this palette
-- "vibrant" / "stunning" — filler words
-- "people smiling at camera" — will return stock-photo output
-- "modern" — vague and trend-chasing
+- "beautiful event", meaningless
+- "luxury", lazy; describe what luxury looks like in this palette
+- "vibrant" / "stunning", filler words
+- "people smiling at camera", will return stock-photo output
+- "modern", vague and trend-chasing
 
 ### Positive examples
 
@@ -107,10 +107,10 @@ The video is not a highlight reel. It is a 5-to-15-second mood piece. No cuts if
 
 ```
 [STYLE ANCHOR, condensed]
-Scene: [one continuous moment — e.g., "Camera drifts slowly left across the arrival lounge. Guests in silhouette, warm low light, the brass wall catches the eye. Dust motes in the air."]
+Scene: [one continuous moment, e.g., "Camera drifts slowly left across the arrival lounge. Guests in silhouette, warm low light, the brass wall catches the eye. Dust motes in the air."]
 Duration: [5-15 seconds]
 Camera: [static / slow pan / dolly in / slow push]
-Motion in frame: [subtle — crowd murmur, fabric movement, candle flicker]
+Motion in frame: [subtle, crowd murmur, fabric movement, candle flicker]
 Mood: [exact mood words from brand-system.md's sensory signatures]
 Aspect ratio: [16:9 widescreen / 9:16 vertical for Instagram]
 Avoid: [fast cuts, title cards, music, busy motion]
@@ -126,7 +126,7 @@ Take the "Arrival / first impression" mockup and turn it into a video. That is u
 
 ---
 
-## `mood-direction.md` — what goes in it
+## `mood-direction.md`, what goes in it
 
 This file explains to the user (and to future Claude instances iterating on the proposal) *why* the visuals look the way they do. It is for internal reasoning and optional inclusion in the client PDF as a "creative direction" section.
 
@@ -150,7 +150,7 @@ Template:
 [Why wide vs tight, symmetry vs candid]
 
 ### 4. אנשים במסגרת
-[Why people are shown this way — silhouetted, blurred, absent, featured]
+[Why people are shown this way, silhouetted, blurred, absent, featured]
 
 ## שוטים ופרומפטים
 ### Mockup 1 — [שם]
