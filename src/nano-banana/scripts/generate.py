@@ -10,7 +10,7 @@ Usage:
     python3 generate.py --prompt "Change the sign to read 'Phoenix 2026'" --ref-image input.png --output out.png
 
 Env:
-    GEMINI_API_KEY — required
+    GEMINI_API_KEY, required
 """
 
 import argparse
