@@ -1,10 +1,10 @@
 ---
 name: bold-proposal-builder
-description: Build premium event proposals for Bold Productions, a Tel-Aviv event production company, through a 7-stage flow, brief gathering, research, three-direction brand heart selection, three-direction visualization, content/operations/culinary specialists, budget, assembly, and post-event debrief. Use whenever Hemi Michaeli asks to build, draft, or prepare a proposal or event concept for a Bold client. Also triggers for "לבנות הצעה", "פיץ' לאירוע", "הצעת מחיר לכנס", "קונספט לאירוע של". Mentions of Phoenix, Keren, Efrat clients also trigger. Produces a client-facing package, strategy, brand system, mockups, atmosphere video, agenda, scripts, menu, operations, budget XLSX, designed PDF, Gamma prompt, KPIs scorecard, Trello debrief reminder. Requires nano-banana and veo-video-creator skills for Stage 4.
+description: Build premium event proposals for Bold Productions, a Tel-Aviv event production company, through a 7-stage flow, brief gathering, research, three-direction brand heart selection, three-direction visualization, content/operations/culinary specialists, budget, assembly, and post-event debrief. Use whenever Hemi Michaeli asks to build, draft, or prepare a proposal or event concept for a Bold client. Also triggers for "לבנות הצעה", "פיץ' לאירוע", "הצעת מחיר לכנס", "קונספט לאירוע של". Mentions of Phoenix, Keren, Efrat clients also trigger. Produces a client-facing package, strategy, brand system, mockups, atmosphere video, agenda, scripts, menu, operations, budget XLSX in Bold's canonical 6-category format, designed PDF, Gamma prompt, KPIs scorecard, Trello debrief reminder. Requires nano-banana and veo-video-creator skills for Stage 4.
 license: Proprietary
 ---
 
-# Bold Proposal Builder (v2.2)
+# Bold Proposal Builder (v2.3)
 
 A 7-stage orchestrator for producing premium event proposals for Bold Productions. The skill does not improvise: each stage reads a reference file in `references/`, produces its artifacts, and hands off to the next. Skip stages and the final proposal fragments; the sequence is load-bearing.
 
@@ -19,8 +19,8 @@ A 7-stage orchestrator for producing premium event proposals for Bold Production
 | 4b | Content & experience | `references/stage-4b-content-experience.md` | `agenda.md`, `scripts.md` |
 | 4c | Operations | `references/stage-4c-operations.md` | `logistics.md` |
 | 4d | Culinary | `references/stage-4d-culinary.md` | `menu.md` |
-| 5 | Budget | `references/stage-5-budget.md` | `budget.json` (uses `data/vendor-registry.json`) |
-| 6 | Assembly | `references/stage-6-assembly.md` | **Premium deck PDF** (via premium-deck-strategist), XLSX, KPIs scorecard, Gamma prompt, summary, Trello card |
+| 5 | Budget | `references/stage-5-budget.md` + `assets/budget-categories-reference.md` | `budget.json` (6-category canonical tree) |
+| 6 | Assembly | `references/stage-6-assembly.md` | **Premium deck PDF** (via premium-deck-strategist), **XLSX in Bold template format**, KPIs scorecard, Gamma prompt, summary, Trello card |
 | 7 | Debrief | `references/stage-7-debrief.md` | `debrief-[event].md`, client profile, preferences update, skill PR |
 
 ## The four goal categories
@@ -36,6 +36,23 @@ Both Stage 3 and Stage 4a propose three distinct directions along a chosen axis.
 
 ### Learning Hemi over time
 Every selection logged to `data/hemi-preferences.md`. Read at start of every Stage 3 and Stage 4a session.
+
+## The budget spine (Bold's canonical 6-category tree)
+
+Bold has used the same 6 top-level budget categories since 2010. Stage 5 does NOT invent categories; it picks from this spine:
+
+1. כללי (General)
+2. תקשור מקדים (Pre-event communications)
+3. מיתוג ושילוט (Branding & signage)
+4. טכני (Technical)
+5. כח אדם ולוגיסטיקה (Staff & logistics)
+6. שונות (Miscellaneous)
+
+Underneath the six, sub-categories (חניה, אבטחה, הגברה, במות, קייטרינג, etc.) organize ~140 possible line items. Full tree: `assets/budget-categories-reference.md`. XLSX layout matches Bold's actual template ("טמפלט תקציב 01") including vendor name, invoice number, actual spend columns for Bold-internal tracking, plus client-facing "מחיר יחידה / סה\"כ חיוב / רווחיות / %" columns.
+
+Production fee: single "דמי ארגון והפקה" line at 15% after the six categories. This IS the margin. No separate "Bold rewach" category.
+
+Conditional items live on sheet 2 ("אופציות") with their own 15% fee and separate total.
 
 ## Voice rules
 
@@ -53,8 +70,8 @@ Every selection logged to `data/hemi-preferences.md`. Read at start of every Sta
 - Gate 3→4: One direction picked from three-direction set; brand-system.md has 9 fields.
 - Gate 4a→rest: One visual direction picked; full mockup set + video + mood-direction.md.
 - Gate 4→5: All specialists reference brand system + visual.
-- Gate 5→6: 70%+ lines reference vendor registry.
-- Gate 6→done: Six Stage 6 artifacts + Trello debrief card (deck built via premium-deck-strategist).
+- Gate 5→6: Every line maps to one of the 6 canonical categories; 70%+ lines reference vendor registry; no line without `source_deliverable`.
+- Gate 6→done: Six Stage 6 artifacts + Trello debrief card (deck built via premium-deck-strategist; XLSX built via `scripts/build_budget_xlsx.py` in Bold's canonical template format).
 - Gate 7: Runs 24h after event from Trello card.
 
 ## Required sibling skills
