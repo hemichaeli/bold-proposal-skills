@@ -1,17 +1,22 @@
-# Stage 6, Assembly Reference (v2.4)
+# Stage 6, Assembly Reference (v2.5)
 
 ## Purpose
 
 Stage 6 is production, not thinking. The thinking happened in stages 1 to 5. Stage 6 takes the artifacts and builds six final deliverables:
 
-1. **Premium proposal deck** (PDF), built via `premium-deck-strategist` skill, brand system from Stage 3 applied. The flagship, polished, committee-ready.
-2. `budget.xlsx`, the detailed Excel in Bold's canonical template format
-3. **Live Gamma deck + editable PPTX**, generated together via the custom Gamma MCP (`gamma_generate` with `exportAs: "pptx"`). One call returns both the live URL and a downloadable PowerPoint file.
+1. **Premium proposal deck** (PDF), built via `premium-deck-strategist` skill, brand system from Stage 3 applied, Bold's canonical 28-slide structure (or 16-card compressed form), strict footer/cover/closing rules per `assets/bold-presentation-template-spec.md`
+2. `budget.xlsx`, the detailed Excel in Bold's canonical template format, produced by `scripts/build_budget_xlsx.py` from `budget.json`, matches "טמפלט תקציב 01" byte-for-byte in layout terms
+3. **Live Gamma deck + editable PPTX**, generated together via `gamma_generate` with `exportAs: "pptx"`. One call returns both the live URL and a downloadable PowerPoint file. Card dimensions 4x3 (matching Bold's longstanding 4:3 PPT template)
 4. `summary.md`, a 1-page executive summary for intro messages
 5. `kpis-scorecard.md`, a standalone KPI measurement plan (also embedded in the deck)
-6. Trello debrief card, created in the "Bold, Debriefs" board, due the day after the event
+6. Trello debrief card in the "Bold, Debriefs" board, due the day after the event
 
-**v2.4 change:** Gamma now exports to PPTX instead of PDF. Rationale: the PDF surface is already covered by premium-deck-strategist at higher design quality; the Gamma PPTX is additive, gives the client an editable file they can open in PowerPoint or Google Slides and comment directly. Three complementary surfaces, not two redundant ones.
+**v2.5 changes:** 
+- Gamma `cardDimensions` corrected from `"16x9"` to `"4x3"`. Bold has used 4:3 for two decades; 16:9 would break visual continuity with prior client work
+- XLSX output now matches Bold's actual canonical template (see `scripts/build_budget_xlsx.py` v3.0 and `assets/budget-categories-reference.md`)
+- Explicit references to `assets/bold-presentation-template-spec.md` for type system, layout, footer, cover, closing rules
+- Explicit references to `assets/logos/` for the three official logo assets
+- Mandatory footer composition: white Bold logo bottom-left + "A Bold Presentation© [current year]" center + client logo bottom-right
 
 Order: XLSX first (numbers lock), then premium PDF (tells the story with numbers confirmed), then live Gamma deck + PPTX export (interactive + editable), then KPIs scorecard, then summary (links all three surfaces), then Trello card.
 
@@ -19,20 +24,82 @@ Order: XLSX first (numbers lock), then premium PDF (tells the story with numbers
 
 ## 1. Building the Excel budget (budget.xlsx)
 
-Unchanged from v2.2. Use `build_budget_xlsx.py` against `05-budget/budget.json`, outputs the Bold canonical template format.
+**v3.0 canonical format.** Run `scripts/build_budget_xlsx.py` against `05-budget/budget.json`.
+
+Input requirements:
+- Every `main_line` MUST have a `category` field from the 6 canonicals in `assets/budget-categories-reference.md`: כללי / תקשור מקדים / מיתוג ושילוט / טכני / כח אדם ולוגיסטיקה / שונות.
+- Non-canonical categories are not silently dropped; the script warns and rolls them into שונות. If a warning appears, Stage 5 should be revisited.
+- `conditional_lines` is optional but all conditional items go flat under a single כללי marker in the options section.
+- `production_fee_rate` defaults to 0.15 (Bold's standard 15% margin). Override only with Hemi's explicit approval.
+
+Output: `06-assembly/budget.xlsx`, single sheet "טמפלט ריק", 13 columns RTL, main section + options section, matching Bold's template in use since 2010.
 
 ---
 
 ## 2. Building the premium deck (proposal.pdf)
 
-Unchanged from v2.2. Claude invokes `premium-deck-strategist` with the full brief (slide order, voice rules, brand override from `brand-system.md`). See v2.2 section for the exact invocation payload.
+Claude invokes `premium-deck-strategist` with a full brief. The brief must include:
+
+### Slide structure
+
+Either the 16-card compressed form (modern attention spans) OR the canonical 28-slide sequence from `assets/bold-presentation-template-spec.md` (for larger clients expecting the full Bold treatment). Hemi picks; default is 16-card.
+
+### Required slide order (16-card compressed)
+
+1. Cover (`bold-black-opening.jpg` or hero mockup, no footer)
+2. About this event (one-line reason-why from brief field 1)
+3. Strategic reading (3 key insights from challenges.md)
+4. The creative concept (brand-system.md fields 1-3, hero mockup)
+5-9. Visualization (5 mockups: arrival, main space, hero moment, catering, details)
+10. The experience (agenda highlights, 3 anchor moments)
+11. Operations (run-sheet outline, 1 slide)
+12. Culinary (menu narrative, 1 slide)
+13. Investment (budget summary, clear price + conditional lines)
+14. KPIs and success measurement (table from brief field 16, closing line about 24h debrief)
+15. Timeline (delivery dates + decision points)
+16. Closing (`bold-closing.mp4` first frame + "▶" overlay in PDF; no footer)
+
+### Design directive
+
+- Aspect ratio 4:3 (14.22 x 10.66 inches), NEVER 16:9
+- Title font Tahoma bold 35pt Hebrew, Verdana bold 35pt English
+- Body text Tahoma/Verdana 18-22pt, black or #333333
+- Palette sourced from `brand-system.md` Stage 3 output; no default Deep Blue
+- Footer stripe on slides 2-15: white Bold logo (`assets/logos/bold-white-footer.jpg`) bottom-left at (0.3, 9.8) inches, `A Bold Presentation© [current year]` center Verdana 14pt gray #808080 at y=9.9, client logo bottom-right at (12.7, 9.8)
+- Cover slide (1) and closing slide (16): no footer, no Bold logo credit, unique layouts per `bold-presentation-template-spec.md`
+
+### Voice rules (non-negotiable)
+
+- Hebrew-first, all client-facing slides in Hebrew
+- No em-dash, no en-dash
+- Max 5-7 words per on-slide bullet; depth in speaker notes
+- Specific numbers, not adjectives
+- Banned clichés: "בלתי נשכח", "מרגש", "חוגגים יחד", "unforgettable", "once in a lifetime"
+- No Bold credits outside the footer stripe
+
+### Output
+
+`proposals/<slug>/06-assembly/proposal.pdf`
 
 ### Budget threshold fallback
-For proposals under ₪25K, premium-deck-strategist is overkill. Fall back to a simpler 8-slide version. Claude makes this decision automatically based on budget.json subtotal.
+
+For proposals under ₪25K, premium-deck-strategist is overkill. Fall back to a simpler 8-slide version (cover, concept, visualization x2, experience, investment, KPIs, closing). Claude makes this decision automatically based on budget.json subtotal. Footer and cover/closing rules still apply.
+
+### Post-generation QA
+
+- Slide count matches spec (16 or 8 for low-budget, or 28 if Hemi chose long form)
+- Palette matches brand-system.md exactly
+- Footer present on all body slides, absent on cover and closing
+- White Bold logo, center text, and client logo correctly positioned
+- Hebrew RTL rendering correct
+- Investment slide total matches budget.xlsx total
+- Aspect ratio 4:3
+
+If any check fails, Claude asks premium-deck-strategist to regenerate the specific slide, not the whole deck.
 
 ---
 
-## 3. Building the live Gamma deck + PPTX export [v2.4, MCP-native]
+## 3. Building the live Gamma deck + PPTX export
 
 ### Three surfaces, one call
 
@@ -40,7 +107,7 @@ For proposals under ₪25K, premium-deck-strategist is overkill. Fall back to a 
 
 ### Precondition
 
-Before calling `gamma_generate`, verify the Gamma MCP is connected. If the `gamma_generate` tool is not available in the current session, fall back to the v2.2 flow (write `gamma-prompt.md` and instruct Hemi to paste it into Gamma manually; no PPTX in this path).
+Before calling `gamma_generate`, verify the Gamma MCP is connected. If the `gamma_generate` tool is not available in the current session, fall back to the v2.2 prompt-paste flow (write `gamma-prompt.md`; no PPTX in this path).
 
 ### Theme resolution
 
@@ -55,7 +122,7 @@ gamma_generate(
   numCards: 16,
   themeId: <resolved from gamma_list_themes>,
   folderIds: [<Bold-Proposals folder id, from gamma_list_folders, cached>],
-  cardOptions: { dimensions: "16x9" },
+  cardOptions: { dimensions: "4x3" },                 // <<< 4x3, not 16x9
   textOptions: {
     language: "he",
     tone: <from brand-system.md §4, condensed to one adjective>,
@@ -66,12 +133,14 @@ gamma_generate(
     source: "aiGenerated",
     style: <from brand-system.md §8, e.g. "editorial photography, shallow depth, warm light">
   },
-  additionalInstructions: "Hebrew-first. No em-dash. No clichés. Specific numbers not adjectives. No Bold credits.",
+  additionalInstructions: "Hebrew-first. No em-dash. No clichés. Specific numbers not adjectives. No Bold credits on body slides. Footer: 'A Bold Presentation© [current year]' centered in small gray text.",
   exportAs: "pptx",
   wait: true,
   pollTimeoutMs: 900000
 )
 ```
+
+Note: Gamma does not support embedding custom logos in the footer programmatically via API. The "A Bold Presentation© [year]" text can be placed via `additionalInstructions`. The white/client logo assets are added by hand after export if the client wants the PPTX polished to match the PDF; for the live Gamma URL, the centered text alone is sufficient.
 
 ### After the call
 
@@ -137,7 +206,7 @@ On return from `gamma_generate`, Claude verifies:
 - `exportUrl` present and downloads successfully (non-empty PPTX)
 - Credits deducted as expected (log for cost tracking)
 
-If `status == "failed"`, Claude reads `error.message`, fixes the obvious issue (invalid themeId, numCards over cap, etc.), and retries once. If the second attempt fails, fall back to the v2.2 prompt-paste path and continue (PPTX will not be available in the fallback).
+If `status == "failed"`, Claude reads `error.message`, fixes the obvious issue (invalid themeId, numCards over cap, etc.), and retries once. If the second attempt fails, fall back to the prompt-paste path and continue (PPTX will not be available in the fallback).
 
 ### For returning clients: `gamma_generate_from_template`
 
@@ -158,7 +227,7 @@ gamma_generate_from_template(
 
 This preserves the layout, visual system, and scale of the winning deck while swapping content, and still delivers both the live URL and the PPTX export.
 
-### Fallback: v2.2 prompt-paste path
+### Fallback: prompt-paste path
 
 If the Gamma MCP is not connected at runtime:
 1. Claude writes `gamma-prompt.md` using the template in `assets/gamma-prompt-template.md`.
@@ -175,7 +244,7 @@ Unchanged from v2.1.
 
 ## 5. Building the summary (summary.md)
 
-### Template (v2.4)
+### Template (v2.5)
 
 ```markdown
 [Client first name] שלום,
@@ -204,7 +273,7 @@ Unchanged from v2.1.
 - **גרסת PowerPoint (PPTX):** מצורפת, לעריכה חופשית בצד הלקוח
 
 **מצורפים נוספים:**
-- תקציב מפורט (Excel)
+- תקציב מפורט (Excel, פורמט "טמפלט תקציב 01" הקנוני של Bold)
 - KPIs scorecard (Markdown)
 - סרטון האווירה (MP4)
 
@@ -223,15 +292,24 @@ Unchanged from v2.1. Card goes into "Bold, Debriefs" board with due date = event
 
 ---
 
-## Final QA checklist (v2.4)
+## Final QA checklist (v2.5)
 
 - [ ] Premium deck PDF opens and renders on macOS Preview and Adobe Acrobat
-- [ ] Deck has exactly 16 slides (or 8 for sub-₪25K fallback)
+- [ ] Deck has exactly 16 slides (or 8 for sub-₪25K fallback, or 28 for long form)
+- [ ] Deck aspect ratio 4:3 (14.22 x 10.66 inches)
+- [ ] Title font Tahoma Hebrew / Verdana English, bold 35pt
+- [ ] Cover slide (1) uses `bold-black-opening.jpg` or hero mockup, NO footer
+- [ ] Closing slide (last) uses `bold-closing.mp4` first frame with ▶ overlay in PDF, NO footer
+- [ ] All body slides carry the three-element footer: white Bold logo bottom-left, `A Bold Presentation© [current year]` center, client logo bottom-right
+- [ ] Client logo present (or blank bottom-right slot + flag to Hemi if missing)
+- [ ] Year in footer matches current year, NOT event year
 - [ ] Deck palette matches brand-system.md (not default)
 - [ ] PDF fonts embedded
-- [ ] Excel totals match the deck's investment slide
+- [ ] Excel produced via `build_budget_xlsx.py` v3.0
 - [ ] Excel uses Bold's canonical 6-category tree with single "דמי ארגון והפקה" line
+- [ ] Excel totals match the deck's investment slide
 - [ ] Gamma deck generated successfully (status=completed, gammaUrl present)
+- [ ] Gamma cardDimensions = "4x3" (not 16x9)
 - [ ] Gamma PPTX downloaded successfully from exportUrl, opens in PowerPoint
 - [ ] Gamma deck's investment slide total matches budget.xlsx total
 - [ ] Gamma deck's KPI slide matches scorecard
@@ -245,13 +323,13 @@ Unchanged from v2.1. Card goes into "Bold, Debriefs" board with due date = event
 - [ ] All client-facing surfaces are Hebrew-first
 - [ ] No em-dash or en-dash anywhere
 - [ ] No banned clichés
-- [ ] No Bold credits on client-facing surfaces
+- [ ] No Bold credits outside the footer stripe
 
 ---
 
 ## Present-files call
 
-At the end, call `present_files` with these five files in this order (the Gamma live URL is in summary.md, not a file):
+At the end, call `present_files` with these five files in this order:
 
 ```
 [
@@ -273,17 +351,24 @@ Then output one-line completion marker including Trello card URL, Gamma URL, and
 
 ---
 
-## What changed from v2.3
+## What changed from v2.4
 
-- Gamma now exports to PPTX (not PDF); client receives three complementary surfaces instead of two redundant PDFs
-- `proposal.pptx` added to the present-files list
-- Summary template restructured to highlight the three surfaces
-- QA checklist adds PPTX download verification
+- Gamma cardDimensions corrected from 16x9 to 4x3 (Bold's longstanding template is 4:3)
+- XLSX script bumped to v3.0, now matches Bold's canonical template byte-for-byte
+- Explicit references to the new assets: `budget-categories-reference.md`, `bold-presentation-template-spec.md`, `logos/` folder
+- Footer composition rules spelled out: white logo bottom-left, A Bold Presentation© center, client logo bottom-right
+- Cover and closing treated as unique no-footer layouts (per Bold template)
+- QA checklist expanded with aspect ratio, font, footer composition, cover/closing rules
 
 ## Dependencies
 
 This stage requires:
 - `premium-deck-strategist` skill, for the flagship PDF
 - Bold Gamma MCP server connected at `gamma-mcp-server-production-959b.up.railway.app/sse`, for the live Gamma deck and PPTX export
+- `scripts/build_budget_xlsx.py` v3.0 in the skill package
+- `assets/budget-categories-reference.md` for Stage 5 category validation
+- `assets/bold-presentation-template-spec.md` for the type system and layout rules
+- `assets/logos/bold-black-opening.jpg` and `bold-white-footer.jpg` in the .skill package (binaries not in Git)
+- Access to `bold-closing.mp4` on Bold's Drive (30MB, fetched at Stage 6 time)
 
-If either is missing, Claude warns, falls back (standard `pdf` skill for the deck; prompt-paste flow for Gamma with PPTX produced manually by Hemi), and continues without blocking.
+If either the premium-deck-strategist or Gamma MCP is missing, Claude warns, falls back (standard `pdf` skill for the deck; prompt-paste flow for Gamma with PPTX produced manually by Hemi), and continues without blocking.
