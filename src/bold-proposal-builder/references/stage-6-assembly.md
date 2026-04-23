@@ -1,216 +1,208 @@
-# Stage 6, Assembly Reference (v2.2)
+# Stage 6, Assembly Reference (v2.3)
 
 ## Purpose
 
 Stage 6 is production, not thinking. The thinking happened in stages 1 to 5. Stage 6 takes the artifacts and builds six final deliverables:
 
-1. `proposal.pdf`, the designed client-facing PDF (built via **premium-deck-strategist**, v2.2)
+1. `proposal.pdf`, exported from Gamma after the Gamma deck is built and reviewed
 2. `budget.xlsx`, the detailed Excel budget with formulas
-3. `gamma-prompt.md`, the ready-to-paste prompt for Gamma.app (interactive version)
+3. Gamma deck URL (live, interactive, shareable)
 4. `summary.md`, a 1-page executive summary for intro messages
 5. `kpis-scorecard.md`, a standalone KPI measurement plan
-6. Trello debrief card, created in the "Bold, Debriefs" board, due the day after the event
+6. Trello debrief card, due the day after the event
 
-Order: XLSX first (numbers lock), PDF second (via premium-deck-strategist, uses locked numbers), then Gamma prompt, then KPIs scorecard, then summary, then Trello card.
+**Key change in v2.3:** The designed proposal PDF comes from Gamma's PDF export, not from a hand-built PDF. Gamma is the single source of truth for the designed deck. This gives Bold and the client both: a live interactive link AND a PDF attachment, both visually identical.
+
+---
+
+## Pipeline order (v2.3)
+
+```
+Stage 5 budget.json finalized
+          ↓
+Build XLSX budget (local)
+          ↓
+Call premium-deck-strategist with all Stage 1-5 artifacts
+          ↓ (returns structured slide-by-slide spec)
+Convert spec to Gamma prompt
+          ↓
+Create Gamma deck via Canva MCP or Gamma MCP (read-only) / manual paste
+          ↓ (Hemi reviews deck in Gamma, optionally tweaks)
+Export deck from Gamma to PDF
+          ↓
+Attach exported PDF to Bold's outputs
+          ↓
+Build summary.md with Gamma link + PDF attached
+          ↓
+Build kpis-scorecard.md
+          ↓
+Create Trello debrief card
+          ↓
+Present files to Hemi
+```
 
 ---
 
 ## 1. Building the Excel budget (budget.xlsx)
 
-### Inputs
-- `05-budget/budget.json` (source of truth)
-- Bold brand palette from Stage 3 `brand-system.md` (for XLSX header styling)
-
-### Method
+Unchanged from v2.2. See:
 
 ```bash
-python3 /home/claude/skills/bold-proposal-builder/scripts/build_budget_xlsx.py \
-  --input <path-to-budget.json> \
-  --output <path-to-output>/budget.xlsx
+python3 scripts/build_budget_xlsx.py --input 05-budget/budget.json --output 06-assembly/budget.xlsx
 ```
 
-Three sheets: `סיכום`, `פירוט תקציב`, `שורות מותנות`. Formulas, not hardcoded numbers. RTL for Hebrew.
-
-### Post-build QA
-- Total matches summary.total_pre_vat
-- Formulas reference correct ranges
-- Conditional items on their own sheet
+Three sheets: `סיכום`, `פירוט תקציב`, `שורות מותנות`. Formulas, not hardcoded. Bold palette. RTL.
 
 ---
 
-## 2. Building the PDF via premium-deck-strategist (v2.2 change)
+## 2. Calling premium-deck-strategist to design the deck structure
 
-### Why premium-deck-strategist
-Bold's proposals are design-sensitive. Writing raw HTML/CSS or markdown-to-PDF for every proposal produces inconsistent results. `premium-deck-strategist` is a skill designed precisely for premium presentation-style documents, with:
+`premium-deck-strategist` produces the slide-by-slide spec. It does NOT create the PDF itself; it produces a structured specification that Claude then converts to a Gamma prompt.
 
-- Slide-by-slide breakdown, not prose blocks
-- Rule of Three methodology
-- Max 5 words per on-slide bullet (forces concision)
-- Visual layout specs per slide
-- Speaker notes separated from slide text
-- Professional minimalist design language
-
-This matches how Bold proposals should read, short, punchy, designed.
-
-### How to invoke it
-
-At Stage 6, Claude invokes `premium-deck-strategist` with these inputs assembled from prior stages:
+### The prompt Claude constructs for premium-deck-strategist
 
 ```
-PREMIUM-DECK-STRATEGIST INVOCATION
+בנה לי premium deck להצעת אירוע של Bold Productions ללקוח [Client Name].
 
-Topic: [event name] הצעה, [client name]
-Audience: [from brief.md field 6, primary audience]
-Goals: [from brief.md field 3, the four-category goal classification]
-Length: 15-23 slides (see structure below)
+הקונטקסט:
+- שם האירוע: [Event Name]
+- תאריך: [Date]
+- כמות אורחים: [N]
+- השקעה: ₪[Subtotal] + מע"מ
+- תוקף ההצעה: עד [Valid Until]
 
-BRAND OVERRIDE (v2.2, critical):
-Override premium-deck-strategist's default Deep Blue palette with this event's palette from brand-system.md:
-- Primary: [hex from brand-system.md field 4]
-- Secondary: [hex]
+עקרונות סגנון:
+- Hebrew RTL throughout
+- Deep Blue language, OVERRIDE palette with Bold's brand-system palette:
+  - Primary: [hex from brand-system.md field 4]
+  - Secondary: [hex]
+  - Accent: [hex]
+  - Neutral: [hex]
+- Typography: [Display + Body from brand-system.md field 5]
+- No Bold logos or credits
+- No em-dashes or en-dashes
+- Rule of Three per slide
+
+מבנה הדק (18-21 slides, סדר קשיח):
+
+1. Cover (client name, event name, date, hero mockup as background)
+2. About the event (type, reason-why, 3 keywords)
+3-4. Strategic reading (from challenges.md)
+5-7. The creative concept (name, manifesto, 3 keywords with anchors)
+8-12. Visualization (one mockup per slide, full-bleed)
+13. The experience (agenda highlights)
+14. Operations (venue, flow, key vendors)
+15-17. Investment (category table, conditional items, total)
+18. KPIs and success measurement
+19. Timeline (milestones now to event day)
+20. About Bold (optional)
+21. Next steps (decision date, contact)
+
+עבור כל slide:
+- Max 5 words per bullet
+- Max 3 bullets per slide
+- Speaker notes: 2-4 sentences
+
+פלט רצוי: structured output, לכל slide:
+- Slide number and title
+- Layout type (full-bleed image, left-image-right-text, centered title, table)
+- On-slide text (title + bullets, max 5 words each)
+- Speaker notes
+- Image reference (path to mockup if applicable)
+- Specific color/typography notes if non-default
+```
+
+### After premium-deck-strategist returns
+
+Claude saves the spec to `06-assembly/deck-spec.md` as an internal artifact (not shared with client). This is the source of truth for the Gamma prompt.
+
+---
+
+## 3. Creating the Gamma deck
+
+Gamma's web interface is the target. Two paths:
+
+### Path A (default): automated via Canva MCP
+If the Canva MCP supports Gamma-like structured deck creation, use `Canva:request-outline-review` to preview the outline, then `Canva:generate-design-structured` with design_type="presentation". This gives an editable presentation that Hemi can refine before exporting.
+
+NOTE: Canva is not Gamma. If Hemi specifically requires Gamma (for the card-based layout, interactive embeds, or responsive web view), use Path B.
+
+### Path B (preferred when Gamma is required): structured prompt for manual paste
+Claude converts the deck spec into a Gamma-formatted prompt and saves it to `06-assembly/gamma-prompt.md`. Hemi opens Gamma, starts a new presentation, pastes the prompt, and Gamma generates the deck.
+
+The gamma-prompt.md format:
+
+```
+Create a 21-card presentation in Hebrew (RTL) for Bold Productions event proposal.
+
+Theme settings:
+- Primary color: [hex]
 - Accent: [hex]
-- Neutral: [hex]
+- Font: [display font], [body font]
+- Layout mode: Presentation (not document)
 
-Typography: Use brand-system.md field 5 (Display + Body fonts).
-Language: Hebrew-first, RTL. Numbers Western digits. Dates DD.MM.YYYY.
-Voice: Apply voice rules from SKILL.md (no clichés, no em-dashes, specific numbers).
+Card 1: Cover
+- Title: [Event Name]
+- Subtitle: [Client Name] | [Date]
+- Background image: [path/URL to hero mockup]
+- Layout: full-bleed image with title bottom-left
 
-DECK STRUCTURE (required spine):
+Card 2: About the event
+- Title: [reason-why one-liner]
+- 3 bullets: [keyword 1], [keyword 2], [keyword 3]
+- Layout: centered title, bullets below
 
-Slide 1: Cover
-  Title: [event name]
-  Subtitle: [client name + date]
-  Visual: hero mockup from Stage 4a (direction-chosen-hero.png)
+Card 3-4: Strategic reading
+...
 
-Slide 2: About the event
-  Three bullets from brief field 1 (reason why)
-  Speaker notes: 2-3 sentences from challenges.md strategic reading
+[continues for all 21 cards, each with layout spec, title, bullets, image references]
 
-Slide 3-4: Strategic reading (challenges.md)
-  Slide 3: "מה באמת נמכר כאן" + tensions
-  Slide 4: Goals served + risks/opportunities (Rule of Three)
-
-Slide 5-7: The creative concept (brand-system.md)
-  Slide 5: Concept name + manifesto
-  Slide 6: Three keywords (Rule of Three applied literally)
-  Slide 7: Tone + forbidden elements
-
-Slide 8-12: Visualization (mockup set from Stage 4a)
-  One slide per mockup, title = moment name, visual = mockup image
-  Speaker notes: mood-direction.md excerpts
-
-Slide 13-14: The experience
-  Slide 13: Agenda overview (agenda.md)
-  Slide 14: Culinary narrative (menu.md top-level)
-
-Slide 15-16: Operations
-  Slide 15: Venue + logistics (logistics.md key points)
-  Slide 16: Team + timeline
-
-Slide 17-18: Investment
-  Slide 17: Total + per-guest breakdown (big numbers)
-  Slide 18: What's included vs. conditional
-
-Slide 19: KPIs and success measurement (NEW v2)
-  Table from kpis-scorecard.md
-  Closing line: "debrief 24 שעות אחרי האירוע"
-
-Slide 20: Timeline
-  Milestones from deadline through event day
-
-Slide 21: Next steps
-  Three actions (Rule of Three)
-  Valid-until date
-  Contact: Hemi Michaeli
-
-OPTIONAL:
-Slide 22: About Bold (only if client is new)
+Export as PDF when done. Use Share > Export > PDF.
 ```
 
-### Output file
-
-premium-deck-strategist produces PPTX or PDF. Bold's proposal needs PDF for client delivery, so:
-- If output is PPTX, convert via LibreOffice: `soffice --headless --convert-to pdf proposal.pptx`
-- If output is already PDF, save directly
-
-Save to: `06-assembly/proposal.pdf`
-
-### Brand override enforcement
-
-After premium-deck-strategist produces the file, Claude verifies:
-- [ ] Primary brand color appears, not Deep Blue
-- [ ] Font family matches brand-system.md
-- [ ] Hebrew RTL renders correctly
-- [ ] No "premium-deck-strategist" or Deep Blue branding visible
-
-If any fail, regenerate with stronger brand override in the prompt.
-
-### Fallback
-
-If premium-deck-strategist is not available (shouldn't happen, it's a user skill), fall back to:
-- Proposals ≤ ₪50K: markdown-to-PDF via `pdf` public skill
-- Proposals > ₪50K: `canvas-design` cover + markdown body
+### Page setup for PDF export
+Before exporting, Gamma's page setup must be configured. Set Format > Document > Letter (8.5x11) and enable "Scale content to fit" to avoid cards getting cut off on export. Alternatively use Presentation format (16:9) for a landscape PDF that matches the slide feel.
 
 ---
 
-## 3. Building the Gamma prompt (gamma-prompt.md)
+## 4. Exporting Gamma to PDF
 
-Gamma is the interactive companion, separate from the PDF. Same content structure but optimized for web presentation.
+Hemi does this step directly in Gamma:
+1. Open the generated deck in Gamma
+2. Click Share in the top-right
+3. Click Export
+4. Choose PDF
+5. Download the file
 
-The v2 template includes a KPIs slide between Investment and Timeline (slide 13b in Gamma numbering, matching the PDF spine).
+Claude instructs Hemi with this exact sequence when presenting the Gamma link.
 
-See `assets/gamma-prompt-template.md` for the full template. Structure should mirror the 21-slide PDF spine above, since both communicate the same proposal.
+### If Bold has Gamma Plus or Pro
+The exported PDF has no "Made with Gamma" watermark. Attach directly to outputs as `proposal.pdf`.
 
----
+### If Bold is on Gamma Free
+The PDF will have a "Made with Gamma" watermark on each card. For a Bold client proposal, this looks unprofessional. Recommend Plus or Pro subscription (~$10/month) before sending out proposals. If budget-constrained, use Path A (Canva) instead.
 
-## 4. Building the KPIs scorecard (kpis-scorecard.md)
+### After Hemi exports
+Hemi places the PDF at `06-assembly/proposal.pdf`. Claude detects the file and continues with step 5 (summary).
 
-Standalone artifact at `06-assembly/kpis-scorecard.md`. Two audiences:
-1. The client, for post-event tracking
-2. Stage 7, Claude reads this at debrief
-
-### Template
-
-```markdown
-# Scorecard, [Event Name]
-**לקוח:** [name]
-**תאריך האירוע:** [date]
-**תאריך הפקת לקחים:** [date + 1 day]
-
-## מטרות האירוע
-[Goals from brief field 3, classified by category]
-
-## KPIs
-
-### KPI 1: [metric name]
-- קטגוריה: שיווקית / Fun / מכירתית / תדמיתית
-- מדד: [what is being counted]
-- Baseline: [pre-event number]
-- יעד: [target]
-- חלון מדידה: [when]
-- מקור נתונים: [how]
-- אחראי לאיסוף: [name]
-
-(One section per KPI)
-
-## פגישת Debrief
-- מתי: [date + 1 day]
-- משך: 30-45 דקות
-- פלט: debrief-[event-slug].md
-```
+Alternative: Claude can instruct Hemi to share the Gamma deck URL, and Claude uses `web_fetch` on the URL to confirm the deck exists, then proceeds with summary assuming Hemi will handle the PDF export and send to the client.
 
 ---
 
 ## 5. Building the summary (summary.md)
+
+Template (v2.3, includes both Gamma link and PDF reference):
 
 ```markdown
 [Client first name] שלום,
 
 הנה ההצעה שלנו ל-[Event Name].
 
-**הקונספט בקצרה:** [Concept sentence]
+**הקונספט בקצרה:**
+[Concept sentence from brand-system.md manifesto]
 
-**מה יחוו האורחים:** [3-4 sentences]
+**מה יחוו האורחים:**
+[3-4 sentences]
 
 **מספרים מרכזיים:**
 - מוזמנים: [X]
@@ -222,11 +214,13 @@ Standalone artifact at `06-assembly/kpis-scorecard.md`. Two audiences:
 הגדרנו [N] מדדי הצלחה בהתאם למטרות שהעלית. פירוט ב-kpis-scorecard.md המצורף.
 24 שעות אחרי האירוע, נעשה debrief מסודר ותקבל דוח מול המדדים.
 
-**מצורפים:**
-- הצעה מעוצבת מלאה (PDF)
+**להצעה המלאה:**
+- גרסה אינטראקטיבית (מומלץ לצפייה): [Gamma link]
+- PDF להדפסה / צירוף למיילים: מצורף
+
+**קבצים נוספים מצורפים:**
 - תקציב מפורט (Excel)
-- KPIs scorecard (Markdown)
-- מצגת אינטראקטיבית (Gamma, קישור יישלח)
+- KPIs scorecard
 - סרטון האווירה (MP4)
 
 שמח לדבר מתי שיתאים.
@@ -236,72 +230,69 @@ Standalone artifact at `06-assembly/kpis-scorecard.md`. Two audiences:
 
 ---
 
-## 6. Creating the Trello debrief card
+## 6. Building KPIs scorecard (kpis-scorecard.md)
 
-Use the Trello MCP server. Check for "Bold, Debriefs" board; create if missing with list "ממתין להפקת לקחים".
+Unchanged from v2.2. Template in brief.md field 16 format.
 
-Card:
-```
-Title: הפקת לקחים, [Event Name]
-Description:
-  לקוח: [client]
-  תאריך האירוע: [event date]
-  תאריך ההפקת לקחים: [event date + 1]
-  
-  קבצי המקור:
-  - הצעה: [link]
-  - בריף: [link]
-  - KPIs: [link]
-  
-  ---
-  פרומפט מוכן:
-  הפק לקחים לאירוע [Event Name] של [Client] שהתקיים ב-[Event Date].
-  תעבור איתי מדד-מדד לפי kpis-scorecard.md.
+---
 
-Due date: [event date + 1 day], 10:00
-Labels: "Debrief" (yellow), "[client]"
-```
+## 7. Creating the Trello debrief card
 
-Store card URL in summary.md.
+Unchanged from v2.2. Board: "Bold, Debriefs". Due date: event date + 1 day.
 
-Fallback if Trello MCP unavailable: `DEBRIEF-REMINDER.md` file + Gmail reminder day before.
+---
+
+## Dependencies required for Stage 6 (v2.3)
+
+| Dependency | Purpose | Fallback if missing |
+|---|---|---|
+| premium-deck-strategist skill | Slide-by-slide spec | Claude builds spec generically (lower polish) |
+| Gamma account (Plus or Pro) | Deck creation + PDF export without watermark | Gamma Free with watermark, or Canva Path A |
+| Canva MCP | Alternative deck creation if Gamma unavailable | Markdown to PDF via `pdf` skill |
+| Trello MCP | Debrief card | DEBRIEF-REMINDER.md + Gmail reminder |
+
+If Gamma is unavailable (no account, no access), fall back to Canva (Path A). If Canva is also unavailable, build a generic markdown-to-PDF with the brand palette as a last resort, and flag to Hemi that the output is not designed-deck quality.
 
 ---
 
 ## Final QA checklist
 
-- [ ] PDF generated via premium-deck-strategist with event's brand palette, NOT Deep Blue
-- [ ] PDF opens correctly on macOS Preview and Adobe Acrobat
-- [ ] Hebrew RTL renders correctly
-- [ ] 21-slide spine followed (with optional slide 22 for new clients)
-- [ ] Excel totals match PDF summary slide
+- [ ] Excel totals match deck's investment slides
 - [ ] Excel has 3 sheets with correct tab names
-- [ ] Gamma prompt mirrors the PDF spine
+- [ ] Gamma deck structure mirrors premium-deck-strategist spec
+- [ ] Bold palette applied in Gamma (not Deep Blue default)
+- [ ] Gamma deck tested in Present mode (no card overflows)
+- [ ] PDF exported from Gamma without watermark (Plus/Pro only)
+- [ ] PDF opens correctly on macOS Preview and Adobe Acrobat
 - [ ] KPIs scorecard matches brief.md field 16 exactly
-- [ ] KPI slide in PDF matches scorecard
+- [ ] KPI slide in deck matches scorecard
 - [ ] Summary.md word count under 250 words
-- [ ] Valid-until date consistent everywhere
-- [ ] Event name and client name spelled identically across all files
-- [ ] Trello card created, URL in summary.md
+- [ ] Summary.md includes both Gamma link and PDF reference
+- [ ] Valid-until date consistent across all files
+- [ ] Event name and client name spelled identically across files
+- [ ] Trello card created with URL captured in summary.md
 
 ---
 
 ## Present-files call
 
-Final step:
+At the end, call `present_files` with:
 
 ```
-present_files([
+[
   "proposals/<slug>/06-assembly/proposal.pdf",
   "proposals/<slug>/06-assembly/budget.xlsx",
   "proposals/<slug>/06-assembly/kpis-scorecard.md",
-  "proposals/<slug>/06-assembly/gamma-prompt.md",
   "proposals/<slug>/06-assembly/summary.md"
-])
+]
 ```
 
-Then one-line completion:
+`gamma-prompt.md` is not presented (internal artifact). Instead, the Gamma deck URL is embedded in summary.md.
+
+Then output completion marker:
 
 ```
-✓ ההצעה מוכנה. Trello debrief card: [URL]
+✓ ההצעה מוכנה.
+   Gamma deck: [URL]
+   Trello debrief card: [URL]
 ```
