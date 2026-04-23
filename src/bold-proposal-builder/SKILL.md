@@ -20,20 +20,8 @@ A 7-stage orchestrator for producing premium event proposals for Bold Production
 | 4c | Operations | `references/stage-4c-operations.md` | `logistics.md` |
 | 4d | Culinary | `references/stage-4d-culinary.md` | `menu.md` |
 | 5 | Budget | `references/stage-5-budget.md` | `budget.json` (uses `data/vendor-registry.json`) |
-| 6 | Assembly | `references/stage-6-assembly.md` | PDF (via premium-deck-strategist), XLSX, KPIs scorecard, Gamma prompt, summary, Trello card |
+| 6 | Assembly | `references/stage-6-assembly.md` | **Premium deck PDF** (via premium-deck-strategist), XLSX, KPIs scorecard, Gamma prompt, summary, Trello card |
 | 7 | Debrief | `references/stage-7-debrief.md` | `debrief-[event].md`, client profile, preferences update, skill PR |
-
-## Required companion skills
-
-This skill invokes other skills at specific stages. Install all of them:
-
-| Skill | Used at | What for |
-|---|---|---|
-| `nano-banana` | Stage 3, Stage 4a | Generate reference images and hero mockups |
-| `veo-video-creator` | Stage 4a | Generate 10-15 second atmosphere video |
-| `premium-deck-strategist` | Stage 6 | Build the designed PDF proposal (brand palette overridden per event) |
-
-If any is missing, the relevant stage cannot run.
 
 ## The four goal categories
 
@@ -42,7 +30,7 @@ If any is missing, the relevant stage cannot run.
 3. מכירתית (Sales)
 4. תדמיתית (Reputation)
 
-## The three-directions principle (v2.1)
+## The three-directions principle
 
 Both Stage 3 and Stage 4a propose three distinct directions along a chosen axis. Each direction has a visual representation. Hemi picks one. If none land, Claude asks one clarifying question, picks a different axis, proposes three new. Max 3 rejection cycles per stage. Stretch policy: always one stretch direction per set.
 
@@ -66,8 +54,20 @@ Every selection logged to `data/hemi-preferences.md`. Read at start of every Sta
 - Gate 4a→rest: One visual direction picked; full mockup set + video + mood-direction.md.
 - Gate 4→5: All specialists reference brand system + visual.
 - Gate 5→6: 70%+ lines reference vendor registry.
-- Gate 6→done: Six Stage 6 artifacts + Trello debrief card; PDF uses event brand palette, not Deep Blue default.
+- Gate 6→done: Six Stage 6 artifacts + Trello debrief card (deck built via premium-deck-strategist).
 - Gate 7: Runs 24h after event from Trello card.
+
+## Required sibling skills
+
+This skill orchestrates other skills. All must be installed:
+
+| Skill | Used in | Role |
+|---|---|---|
+| `nano-banana` | Stage 3, 4a | Visual reference images, mockups |
+| `veo-video-creator` | Stage 4a | Atmosphere video |
+| `premium-deck-strategist` | Stage 6 | Premium proposal deck (PDF), Deep Blue default, Rule of Three |
+
+If any is missing at runtime, Stage that depends on it cannot complete. Claude warns and prompts installation.
 
 ## Session start
 
@@ -75,7 +75,8 @@ Every selection logged to `data/hemi-preferences.md`. Read at start of every Sta
 2. Read client profile if known.
 3. Read hemi-preferences.md.
 4. Verify vendor registry.
-5. Begin Stage 1.
+5. Verify required sibling skills present.
+6. Begin Stage 1.
 
 ## Success
 
