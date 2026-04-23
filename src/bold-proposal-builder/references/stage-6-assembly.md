@@ -2,19 +2,18 @@
 
 ## Purpose
 
-Stage 6 is production, not thinking. The thinking happened in stages 1 to 5. Stage 6 takes the artifacts and builds seven final deliverables:
+Stage 6 is production, not thinking. The thinking happened in stages 1 to 5. Stage 6 takes the artifacts and builds six final deliverables:
 
-1. **Premium proposal deck** (PDF), built via `premium-deck-strategist` skill, brand system from Stage 3 applied
+1. **Premium proposal deck** (PDF), built via `premium-deck-strategist` skill, brand system from Stage 3 applied. The flagship, polished, committee-ready.
 2. `budget.xlsx`, the detailed Excel in Bold's canonical template format
-3. **Live Gamma deck** (URL), generated via `gamma_generate` MCP tool, client-viewable and commentable
-4. **`proposal.pptx`**, downloadable PowerPoint file, same source as the Gamma deck (single MCP call produces both)
-5. `summary.md`, a 1-page executive summary for intro messages
-6. `kpis-scorecard.md`, a standalone KPI measurement plan (also embedded in the deck)
-7. Trello debrief card, created in the "Bold, Debriefs" board, due the day after the event
+3. **Live Gamma deck + editable PPTX**, generated together via the custom Gamma MCP (`gamma_generate` with `exportAs: "pptx"`). One call returns both the live URL and a downloadable PowerPoint file.
+4. `summary.md`, a 1-page executive summary for intro messages
+5. `kpis-scorecard.md`, a standalone KPI measurement plan (also embedded in the deck)
+6. Trello debrief card, created in the "Bold, Debriefs" board, due the day after the event
 
-**v2.4 change:** The Gamma generation now requests `exportAs: "pptx"` instead of `"pdf"`. A single `gamma_generate` call returns **both** the live `gammaUrl` and a PPTX `exportUrl` to download. Client gets two interactive formats to choose from: live Gamma for commenting, PPTX for offline editing. The polished PDF continues to come from `premium-deck-strategist`, unchanged.
+**v2.4 change:** Gamma now exports to PPTX instead of PDF. Rationale: the PDF surface is already covered by premium-deck-strategist at higher design quality; the Gamma PPTX is additive, gives the client an editable file they can open in PowerPoint or Google Slides and comment directly. Three complementary surfaces, not two redundant ones.
 
-Order: XLSX first (numbers lock), then premium deck PDF (tells the story with numbers confirmed), then Gamma+PPTX in one call (interactive + offline companion), then KPIs scorecard, then summary, then Trello card.
+Order: XLSX first (numbers lock), then premium PDF (tells the story with numbers confirmed), then live Gamma deck + PPTX export (interactive + editable), then KPIs scorecard, then summary (links all three surfaces), then Trello card.
 
 ---
 
@@ -33,22 +32,15 @@ For proposals under ₪25K, premium-deck-strategist is overkill. Fall back to a 
 
 ---
 
-## 3. Building the Gamma deck and PPTX [v2.4, dual-format single call]
+## 3. Building the live Gamma deck + PPTX export [v2.4, MCP-native]
 
-### Why both formats from one call
+### Three surfaces, one call
 
-The client receives the proposal in three forms:
-- **PDF** (premium-deck-strategist), the polished read-only pitch
-- **Live Gamma URL**, for interactive viewing and comments in the browser
-- **PPTX file**, for offline editing, insertion into the client's own deck, or email attachment
-
-Gamma's API returns both the live URL (`gammaUrl`) and the PPTX download URL (`exportUrl`) in a single response when `exportAs: "pptx"` is set. One generation, two deliverables, one credit charge.
-
-If the client ever requests PDF-from-Gamma specifically (rare, the premium PDF is usually what they want), Claude can make a second `gamma_generate` call with `exportAs: "pdf"`. Not the default flow.
+`gamma_generate` with `exportAs: "pptx"` and `wait: true` returns a result object containing both `gammaUrl` (the live, shareable, commentable Gamma page) and `exportUrl` (a signed URL to the PPTX file, valid ~1 week). Single MCP call, two artifacts.
 
 ### Precondition
 
-Before calling `gamma_generate`, verify the Gamma MCP is connected. If the `gamma_generate` tool is not available in the current session, fall back to the v2.2 flow (write `gamma-prompt.md` and instruct Hemi to paste into Gamma manually; PPTX then comes from Gamma's UI Export button).
+Before calling `gamma_generate`, verify the Gamma MCP is connected. If the `gamma_generate` tool is not available in the current session, fall back to the v2.2 flow (write `gamma-prompt.md` and instruct Hemi to paste it into Gamma manually; no PPTX in this path).
 
 ### Theme resolution
 
@@ -72,9 +64,7 @@ gamma_generate(
   },
   imageOptions: {
     source: "aiGenerated",
-    stylePreset: <photorealistic | illustration | abstract | 3D | lineArt | custom>,
-    style: <from brand-system.md §8, e.g. "editorial photography, shallow depth, warm light">,
-    model: <optional, e.g. "gemini-3-pro-image" for photo-real, "flux-2-pro" for illustrative>
+    style: <from brand-system.md §8, e.g. "editorial photography, shallow depth, warm light">
   },
   additionalInstructions: "Hebrew-first. No em-dash. No clichés. Specific numbers not adjectives. No Bold credits.",
   exportAs: "pptx",
@@ -83,14 +73,9 @@ gamma_generate(
 )
 ```
 
-### Saving the PPTX to disk
+### After the call
 
-After `gamma_generate` returns with `status: "completed"`:
-
-1. Extract `exportUrl` from the response (this is the PPTX download URL, expires in ~1 week).
-2. Download the binary file: `curl -L -o proposals/<slug>/06-assembly/proposal.pptx "<exportUrl>"` or equivalent.
-3. Verify the file: check `file proposal.pptx` shows "Microsoft PowerPoint 2007+" and size is non-trivial (typically 2-15 MB for 16 slides with images).
-4. The `gammaUrl` goes straight into `summary.md` (no download needed, it's a live link).
+Claude downloads the PPTX from `exportUrl` and saves it to `proposals/<slug>/06-assembly/proposal.pptx`. The `gammaUrl` is embedded in `summary.md`. Both are captured alongside the premium PDF, so the client receives all three surfaces.
 
 ### Structured inputText (16 cards)
 
@@ -148,24 +133,18 @@ Claude assembles `inputText` with explicit card breaks (`---`) so Gamma's autosp
 
 On return from `gamma_generate`, Claude verifies:
 - `status == "completed"`
-- `gammaUrl` present (live Gamma deck)
-- `exportUrl` present (PPTX download link from `exportAs: "pptx"`)
-- `gammaId` captured for future `gamma_generate_from_template` remix
+- `gammaUrl` present
+- `exportUrl` present and downloads successfully (non-empty PPTX)
 - Credits deducted as expected (log for cost tracking)
 
-After downloading the PPTX file, Claude verifies:
-- File exists at `proposals/<slug>/06-assembly/proposal.pptx`
-- File size > 500 KB (smaller typically means broken export)
-- MIME type is `application/vnd.openxmlformats-officedocument.presentationml.presentation`
-
-If `status == "failed"`, Claude reads `error.message`, fixes the obvious issue (invalid themeId, numCards over cap, etc.), and retries once. If the second attempt fails, fall back to the v2.2 prompt-paste path and continue.
+If `status == "failed"`, Claude reads `error.message`, fixes the obvious issue (invalid themeId, numCards over cap, etc.), and retries once. If the second attempt fails, fall back to the v2.2 prompt-paste path and continue (PPTX will not be available in the fallback).
 
 ### For returning clients: `gamma_generate_from_template`
 
 When the event is for a returning client (Phoenix, Keren, Efrat, etc.) AND a prior successful deck exists in the client profile:
 
 1. Stage 1 or Stage 3 reads the `gammaId` of the prior deck from `data/client-profiles/[client-slug].md`.
-2. At Stage 6, Claude calls `gamma_generate_from_template` instead of `gamma_generate`:
+2. At Stage 6, Claude calls `gamma_generate_from_template` instead of `gamma_generate`, same `exportAs: "pptx"`:
 
 ```
 gamma_generate_from_template(
@@ -177,15 +156,14 @@ gamma_generate_from_template(
 )
 ```
 
-This preserves the layout, visual system, and scale of the winning deck while swapping content. Still returns both `gammaUrl` and PPTX `exportUrl` in one call. Hemi's note: this single capability is why we run a custom MCP instead of Gamma's official connector.
+This preserves the layout, visual system, and scale of the winning deck while swapping content, and still delivers both the live URL and the PPTX export.
 
 ### Fallback: v2.2 prompt-paste path
 
 If the Gamma MCP is not connected at runtime:
-
 1. Claude writes `gamma-prompt.md` using the template in `assets/gamma-prompt-template.md`.
-2. `summary.md` references the prompt file instead of a live URL and notes "PPTX יישלח לאחר בנייה ידנית ב-Gamma".
-3. Hemi pastes into Gamma manually, then exports PPTX via the Gamma UI (Share → Export → PowerPoint).
+2. `summary.md` references the prompt file instead of a live URL, notes that PPTX is not produced in the fallback.
+3. Hemi pastes into Gamma manually, exports PPTX from the Gamma UI if desired.
 
 ---
 
@@ -220,10 +198,12 @@ Unchanged from v2.1.
 הגדרנו [N] מדדי הצלחה בהתאם למטרות שהעלית. פירוט ב-kpis-scorecard.md המצורף.
 24 שעות אחרי האירוע, נעשה debrief מסודר ותקבל דוח מול המדדים.
 
-**מצורפים:**
-- הצעה מעוצבת מלאה (PDF), נבנתה ב-premium-deck-strategist
-- **מצגת PowerPoint (PPTX)** לעריכה מקומית, מצורפת
-- **מצגת אינטראקטיבית ב-Gamma:** [gammaUrl from gamma_generate result]
+**הצעה בשלוש גרסאות משלימות:**
+- **הצעה מעוצבת מלאה (PDF)**, נבנתה ב-premium-deck-strategist, מיועדת לקריאה ולהפצה בוועדה
+- **מצגת אינטראקטיבית ב-Gamma:** [gammaUrl from gamma_generate result], לצפייה וויד ותגובות
+- **גרסת PowerPoint (PPTX):** מצורפת, לעריכה חופשית בצד הלקוח
+
+**מצורפים נוספים:**
 - תקציב מפורט (Excel)
 - KPIs scorecard (Markdown)
 - סרטון האווירה (MP4)
@@ -233,7 +213,7 @@ Unchanged from v2.1.
 [Signature]
 ```
 
-If the fallback path was used, replace the Gamma URL bullet with "מצגת Gamma: קישור יישלח אחרי בנייה" and the PPTX bullet with "PowerPoint יישלח לאחר ייצוא מ-Gamma".
+If the fallback path was used, replace the three-surfaces block with "מצגת Gamma: קישור יישלח אחרי בנייה; גרסת PowerPoint תופק ידנית מה-Gamma."
 
 ---
 
@@ -252,13 +232,11 @@ Unchanged from v2.1. Card goes into "Bold, Debriefs" board with due date = event
 - [ ] Excel totals match the deck's investment slide
 - [ ] Excel uses Bold's canonical 6-category tree with single "דמי ארגון והפקה" line
 - [ ] Gamma deck generated successfully (status=completed, gammaUrl present)
-- [ ] PPTX file downloaded to `proposals/<slug>/06-assembly/proposal.pptx`
-- [ ] PPTX opens in PowerPoint/Keynote without errors
-- [ ] PPTX file size above 500 KB
+- [ ] Gamma PPTX downloaded successfully from exportUrl, opens in PowerPoint
 - [ ] Gamma deck's investment slide total matches budget.xlsx total
 - [ ] Gamma deck's KPI slide matches scorecard
 - [ ] Summary.md word count under 250 words
-- [ ] Summary.md includes live Gamma URL AND references attached PPTX (or fallback notes)
+- [ ] Summary.md lists all three client-facing surfaces (PDF, Gamma URL, PPTX)
 - [ ] Valid-until date consistent across all files
 - [ ] Event name spelled identically across all files
 - [ ] Client name spelled identically
@@ -273,7 +251,7 @@ Unchanged from v2.1. Card goes into "Bold, Debriefs" board with due date = event
 
 ## Present-files call
 
-At the end, call `present_files` with these five files in this order. The Gamma URL is live, not a file, so it appears only in summary.md:
+At the end, call `present_files` with these five files in this order (the Gamma live URL is in summary.md, not a file):
 
 ```
 [
@@ -289,8 +267,7 @@ Then output one-line completion marker including Trello card URL, Gamma URL, and
 
 ```
 ✓ ההצעה מוכנה.
-  Gamma (live): [gammaUrl]
-  PowerPoint: proposal.pptx (attached)
+  Gamma: [gammaUrl]
   Trello debrief: [trelloUrl]
 ```
 
@@ -298,18 +275,15 @@ Then output one-line completion marker including Trello card URL, Gamma URL, and
 
 ## What changed from v2.3
 
-- `exportAs: "pptx"` replaces `"pdf"` in the `gamma_generate` call, so the same call produces both the live Gamma URL and a PPTX file
-- Claude downloads the PPTX from `exportUrl` and saves to `proposals/<slug>/06-assembly/proposal.pptx`
-- `summary.md` now references the PPTX as an attachment alongside the Gamma URL
-- `present_files` list expanded from 4 to 5 files (adds `proposal.pptx`)
-- Completion marker surfaces both the live Gamma URL and a note that PPTX is attached
-- Premium PDF path via `premium-deck-strategist` unchanged; it remains the polished client-facing document
+- Gamma now exports to PPTX (not PDF); client receives three complementary surfaces instead of two redundant PDFs
+- `proposal.pptx` added to the present-files list
+- Summary template restructured to highlight the three surfaces
+- QA checklist adds PPTX download verification
 
 ## Dependencies
 
 This stage requires:
-- `premium-deck-strategist` skill, for the PDF
-- Bold Gamma MCP server connected at `gamma-mcp-server-production-959b.up.railway.app/sse`, for the live Gamma deck AND the PPTX export
-- `curl` or equivalent HTTP client on the runtime, to download the PPTX from `exportUrl`
+- `premium-deck-strategist` skill, for the flagship PDF
+- Bold Gamma MCP server connected at `gamma-mcp-server-production-959b.up.railway.app/sse`, for the live Gamma deck and PPTX export
 
-If the Gamma MCP is missing, Claude warns, falls back to the v2.2 prompt-paste flow, and the PPTX must be exported manually from Gamma's UI.
+If either is missing, Claude warns, falls back (standard `pdf` skill for the deck; prompt-paste flow for Gamma with PPTX produced manually by Hemi), and continues without blocking.
