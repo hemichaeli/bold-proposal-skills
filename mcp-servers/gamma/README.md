@@ -2,12 +2,18 @@
 
 Bold's custom MCP server for the Gamma API. Exposes **all** Gamma API endpoints, including `from-template` remix which is **absent** from Gamma's official MCP server (`mcp.gamma.app/mcp`).
 
+## Production endpoint
+
+**`https://gamma-mcp-server-production-959b.up.railway.app/sse`**
+
+Live on Railway project `gamma-mcp-server` (ID `31caab7a-86cc-4767-81ed-6fa48c458e03`). Health check at `/health`.
+
 ## Why custom, not the official Gamma connector
 
 Gamma ships a first-party Claude Connector (Settings → Connectors → Browse → Gamma). It exposes only 3 tools: `generate`, `get_themes`, `get_folders`. Missing capabilities critical for Bold's flow:
 
 - **`generate_from_template`**, the remix endpoint. Used to replay a winning deck (e.g. Phoenix 2025 art event) as the scaffold for the next pitch (e.g. Keren 2026 launch), keeping layout and visual system while swapping content. The single most valuable endpoint for Bold's repeat-client pattern.
-- **Manual status polling**, `get_generation` by ID. Critical for long runs (30+ cards) where the default poll window isn't enough.
+- **Manual status polling**, `gamma_get_generation` by ID. Critical for long runs (30+ cards) where the default poll window isn't enough.
 - **Per-call control** over poll interval and timeout, via a `wait: true/false` flag and tunable `pollIntervalMs` + `pollTimeoutMs`.
 - **Pagination** on theme and folder listings via `after` / `nextCursor`.
 
@@ -30,20 +36,20 @@ This folder in `bold-proposal-skills` documents how Bold uses the server. The Ty
 
 All five return structured text with `generationId`, `status`, `gammaUrl`, `exportUrl`, and credit usage where relevant.
 
-## Deploy (one-time)
+## Installed and running
 
-1. Clone or fork `hemichaeli/gamma-mcp-server`.
-2. Railway → New → Deploy from GitHub repo → select it.
-3. Variables tab, add: `GAMMA_API_KEY` = key from https://gamma.app/settings/api-keys (requires Gamma Pro, Ultra, Teams, or Business).
-4. Settings → Networking → Generate Domain.
-5. Endpoint: `https://<your-service>.up.railway.app/sse`
-6. Claude.ai → Settings → Connectors → Add custom connector. Name "Gamma (Bold)", URL from step 5.
+The server is already deployed. To connect it to Claude:
+
+1. claude.ai → **Settings → Connectors** → **Add custom connector**
+2. Name: **Gamma (Bold)**
+3. URL: `https://gamma-mcp-server-production-959b.up.railway.app/sse`
+4. Save and start a new chat to see the 5 tools available.
 
 ## How `bold-proposal-builder` uses it
 
 ### Stage 6 (Assembly), deck generation
 
-The `bold-proposal-builder` skill's Stage 6 currently generates the client deck via `premium-deck-strategist`. With this MCP connected, Stage 6 can additionally (or instead) produce a native Gamma deck in one call:
+The `bold-proposal-builder` skill's Stage 6 generates the client deck. With this MCP connected, Stage 6 produces a native Gamma deck in one call:
 
 ```
 gamma_generate(
@@ -64,7 +70,7 @@ Returns a live Gamma URL the client can view and comment on, plus a PDF export f
 
 ### Stage 7 (Debrief), remixing into the next pitch
 
-When a new event begins for a returning client, Stage 1 of the next proposal can pull the previous successful deck's `gammaId` from the client profile and use:
+When a new event begins for a returning client, Stage 1 of the next proposal pulls the previous successful deck's `gammaId` from the client profile and uses:
 
 ```
 gamma_generate_from_template(
@@ -83,6 +89,10 @@ This is the capability the official Gamma connector does not have and the reason
 |---|---|---|
 | `GAMMA_API_KEY` | yes | Railway variables, never in chat or repo |
 | `PORT` | no | Railway sets automatically |
+
+## Rotating the API key
+
+The key is stored in Railway project variables. Rotate from gamma.app/settings/api-keys, then update in the Railway dashboard (project `gamma-mcp-server`, service variables). Railway redeploys automatically after variable change.
 
 ## Troubleshooting
 
