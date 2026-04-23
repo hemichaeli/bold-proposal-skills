@@ -1,24 +1,12 @@
 ---
 name: bold-proposal-builder
-description: Build premium event proposals for Bold Productions, a Tel-Aviv event production company, through a 7-stage flow, brief gathering, research, three-direction brand heart selection, three-direction visualization, content/operations/culinary specialists, budget, assembly, and post-event debrief. Use whenever Hemi Michaeli asks to build, draft, or prepare a proposal or event concept for a Bold client. Also triggers for "לבנות הצעה", "פיץ' לאירוע", "הצעת מחיר לכנס", "קונספט לאירוע של". Mentions of Phoenix, Keren, Efrat clients also trigger. Produces a client-facing package, strategy, brand system, mockups, atmosphere video, agenda, scripts, menu, operations, budget XLSX, designed PDF, Gamma prompt, KPIs scorecard, Trello debrief reminder. Requires nano-banana, veo-video-creator, and premium-deck-strategist skills.
+description: Build premium event proposals for Bold Productions, a Tel-Aviv event production company, through a 7-stage flow, brief gathering, research, three-direction brand heart selection, three-direction visualization, content/operations/culinary specialists, budget, assembly, and post-event debrief. Use whenever Hemi Michaeli asks to build, draft, or prepare a proposal or event concept for a Bold client. Also triggers for "לבנות הצעה", "פיץ' לאירוע", "הצעת מחיר לכנס", "קונספט לאירוע של". Mentions of Phoenix, Keren, Efrat clients also trigger. Produces a client-facing package, strategy, brand system, mockups, atmosphere video, agenda, scripts, menu, operations, budget XLSX, designed PDF, Gamma prompt, KPIs scorecard, Trello debrief reminder. Requires nano-banana and veo-video-creator skills for Stage 4.
 license: Proprietary
 ---
 
 # Bold Proposal Builder (v2.2)
 
 A 7-stage orchestrator for producing premium event proposals for Bold Productions. The skill does not improvise: each stage reads a reference file in `references/`, produces its artifacts, and hands off to the next. Skip stages and the final proposal fragments; the sequence is load-bearing.
-
-## Required companion skills
-
-This skill calls out to three other skills during the flow. All three must be installed:
-
-| Skill | Used in | Purpose |
-|---|---|---|
-| **nano-banana** | Stage 3, Stage 4a | Generate visual references and hero mockups for three-direction selection |
-| **veo-video-creator** | Stage 4a | Generate 10-15 second atmosphere video after visual direction is chosen |
-| **premium-deck-strategist** | Stage 6 | Build the slide-by-slide deck spec for `proposal.pdf` (Rule of Three, max 5 words per bullet, Bold palette override) |
-
-If any is missing, Claude warns Hemi at the start of the session and offers fallbacks where possible.
 
 ## The seven stages
 
@@ -32,7 +20,7 @@ If any is missing, Claude warns Hemi at the start of the session and offers fall
 | 4c | Operations | `references/stage-4c-operations.md` | `logistics.md` |
 | 4d | Culinary | `references/stage-4d-culinary.md` | `menu.md` |
 | 5 | Budget | `references/stage-5-budget.md` | `budget.json` (uses `data/vendor-registry.json`) |
-| 6 | Assembly | `references/stage-6-assembly.md` | PDF (via premium-deck-strategist), XLSX, KPIs scorecard, Gamma prompt, summary, Trello card |
+| 6 | Assembly | `references/stage-6-assembly.md` | **Premium deck PDF** (via premium-deck-strategist), XLSX, KPIs scorecard, Gamma prompt, summary, Trello card |
 | 7 | Debrief | `references/stage-7-debrief.md` | `debrief-[event].md`, client profile, preferences update, skill PR |
 
 ## The four goal categories
@@ -66,8 +54,20 @@ Every selection logged to `data/hemi-preferences.md`. Read at start of every Sta
 - Gate 4a→rest: One visual direction picked; full mockup set + video + mood-direction.md.
 - Gate 4→5: All specialists reference brand system + visual.
 - Gate 5→6: 70%+ lines reference vendor registry.
-- Gate 6→done: Six Stage 6 artifacts + Trello debrief card.
+- Gate 6→done: Six Stage 6 artifacts + Trello debrief card (deck built via premium-deck-strategist).
 - Gate 7: Runs 24h after event from Trello card.
+
+## Required sibling skills
+
+This skill orchestrates other skills. All must be installed:
+
+| Skill | Used in | Role |
+|---|---|---|
+| `nano-banana` | Stage 3, 4a | Visual reference images, mockups |
+| `veo-video-creator` | Stage 4a | Atmosphere video |
+| `premium-deck-strategist` | Stage 6 | Premium proposal deck (PDF), Deep Blue default, Rule of Three |
+
+If any is missing at runtime, Stage that depends on it cannot complete. Claude warns and prompts installation.
 
 ## Session start
 
@@ -75,7 +75,7 @@ Every selection logged to `data/hemi-preferences.md`. Read at start of every Sta
 2. Read client profile if known.
 3. Read hemi-preferences.md.
 4. Verify vendor registry.
-5. Verify companion skills present (nano-banana, veo-video-creator, premium-deck-strategist).
+5. Verify required sibling skills present.
 6. Begin Stage 1.
 
 ## Success
