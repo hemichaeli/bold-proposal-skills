@@ -1,12 +1,12 @@
 ---
 name: bold-proposal-builder
-description: Build premium event proposals for Bold Productions, a Tel-Aviv event production company, through a 7-stage flow, brief gathering, research, three-direction brand heart selection, three-direction visualization, content/operations/culinary specialists, budget, assembly, and post-event debrief. Use whenever Hemi Michaeli asks to build, draft, or prepare a proposal or event concept for a Bold client. Also triggers for "לבנות הצעה", "פיץ' לאירוע", "הצעת מחיר לכנס", "קונספט לאירוע של". Mentions of Phoenix, Keren, Efrat clients also trigger. Produces a client-facing package in three complementary surfaces (premium PDF + live Gamma URL + editable PPTX) matching Bold's canonical 4:3 template with Tahoma-based type system and fixed footer composition, with an optional fourth surface (Canva deck) when requested. Plus strategy, brand system, mockups, atmosphere video, agenda, scripts, menu, operations, budget XLSX in Bold's canonical 6-category template format, KPIs scorecard, and Trello debrief reminder. Requires nano-banana and veo-video-creator skills for Stage 4, premium-deck-strategist for Stage 6 PDF, and the Gamma MCP server for Stage 6 live deck + PPTX. Optional Canva MCP for the fourth surface.
+description: Build premium event proposals for Bold Productions, a Tel-Aviv event production company, through a 7-stage flow, brief gathering, research, three-direction brand heart selection, three-direction visualization, content/operations/culinary specialists, budget, assembly, and post-event debrief. Use whenever Hemi Michaeli asks to build, draft, or prepare a proposal or event concept for a Bold client. Also triggers for "לבנות הצעה", "פיץ' לאירוע", "הצעת מחיר לכנס", "קונספט לאירוע של". Mentions of Phoenix, Keren, Efrat clients also trigger. Produces a client-facing package in three default deck surfaces (live Canva deck + live Gamma deck + downloadable PowerPoint files from both), plus PDF export from Canva, plus strategy, brand system, mockups, atmosphere video, agenda, scripts, menu, operations, budget XLSX in Bold's canonical 6-category template format, KPIs scorecard, and Trello debrief reminder. Default aspect ratio is 16:9 (Canva and Gamma native). Requires nano-banana and veo-video-creator skills for Stage 4, the Gamma MCP server, and the Canva MCP server for Stage 6.
 license: Proprietary
 ---
 
-# Bold Proposal Builder (v2.6)
+# Bold Proposal Builder (v2.7)
 
-A 7-stage orchestrator for producing premium event proposals for Bold Productions. The skill does not improvise: each stage reads a reference file in `references/`, produces its artifacts, and hands off to the next. Skip stages and the final proposal fragments; the sequence is load-bearing.
+A 7-stage orchestrator for producing premium event proposals for Bold Productions. Each stage reads a reference file in `references/`, produces its artifacts, hands off. Skip stages and the final proposal fragments.
 
 ## The seven stages
 
@@ -14,14 +14,14 @@ A 7-stage orchestrator for producing premium event proposals for Bold Production
 |---|---|---|---|
 | 1 | Intake & Brief | `references/stage-1-intake.md` | `brief.md`, `challenges.md`, KPIs |
 | 2 | Research | `references/stage-2-research.md` | `trends.md`, `case-studies.md`, `inspiration.md` |
-| 3 | Brand heart, 3 directions | `references/stage-3-brand-heart.md` | `directions.md` then `brand-system.md` |
+| 3 | Brand heart, 3 directions | `references/stage-3-brand-heart.md` | `directions.md`, `brand-system.md` |
 | 4a | Visualization, 3 directions | `references/stage-4a-visualization.md` | hero mockups, full set, atmosphere video, `mood-direction.md` |
 | 4b | Content & experience | `references/stage-4b-content-experience.md` | `agenda.md`, `scripts.md` |
 | 4c | Operations | `references/stage-4c-operations.md` | `logistics.md` |
 | 4d | Culinary | `references/stage-4d-culinary.md` | `menu.md` |
 | 5 | Budget | `references/stage-5-budget.md` + `assets/budget-categories-reference.md` | `budget.json` (6-category canonical tree) |
-| 6 | Assembly | `references/stage-6-assembly.md` + `references/canva-deck-path.md` (optional) + `assets/bold-presentation-template-spec.md` + `assets/logos/` | **Premium PDF** (premium-deck-strategist, 4:3 Bold template) + **live Gamma URL** + **editable PPTX** (Gamma MCP `exportAs: "pptx"`) + **(optional) Canva deck** + XLSX (Bold canonical template via `scripts/build_budget_xlsx.py` v3.0), KPIs scorecard, summary, Trello card |
-| 7 | Debrief | `references/stage-7-debrief.md` | `debrief-[event].md`, client profile (including `gammaId` for remix), preferences update, skill PR |
+| 6 | Assembly | `references/stage-6-assembly.md` + `references/canva-deck-path.md` | **Canva deck** (URL + PDF + PPTX) + **Gamma deck** (URL + PPTX) + budget XLSX + scorecard + summary + Trello card |
+| 7 | Debrief | `references/stage-7-debrief.md` | `debrief-[event].md`, client profile (with `gammaId` and Canva `design_id`), preferences update |
 
 ## The four goal categories
 
@@ -48,64 +48,51 @@ Bold has used the same 6 top-level budget categories since 2010. Stage 5 does NO
 5. כח אדם ולוגיסטיקה (Staff & logistics)
 6. שונות (Miscellaneous)
 
-Underneath the six sit 30 sub-categories and ~140 typical line items. Full tree, including the sub-category to canonical mapping: `assets/budget-categories-reference.md` (sourced from "Copy of Copy of תבנית מתודולוגית לאירועים 4.xls" sheet 1, in use at Bold since 2004).
+Underneath the six sit 30 sub-categories and ~140 typical line items. Full tree in `assets/budget-categories-reference.md` (sourced from "Copy of Copy of תבנית מתודולוגית לאירועים 4.xls" sheet 1, in use at Bold since 2004).
 
-XLSX layout matches Bold's actual template "טמפלט תקציב 01" (in use since 2010): 13 columns RTL, single sheet "טמפלט ריק", main section + options section. Column map: vendor / invoice / actual spend / payment terms / unit cost / total cost / category / service / units / unit price / total charge / profitability / margin percent. Columns 1-6 and 12-13 are Bold-internal (vendor tracking + margin monitoring); columns 7-11 are client-facing.
+XLSX layout matches Bold's actual template "טמפלט תקציב 01" (in use since 2010): 13 columns RTL, single sheet "טמפלט ריק", main + options sections. Production fee: single "דמי ארגון והפקה" line at 15% after the six categories. Conditional items live in the options section under a single כללי marker. Script: `scripts/build_budget_xlsx.py` v3.0.
 
-Production fee: single "דמי ארגון והפקה" line at 15% after the six categories. This IS the margin. No separate "Bold רווח" category. Script: `scripts/build_budget_xlsx.py` v3.0.
+## The deck surfaces (Stage 6, v2.7)
 
-Conditional items live in the options section with their own 15% fee and separate total "סה\"כ חשבונית". They sit flat under a single כללי marker.
+Every Bold proposal ships in two default deck surfaces, producing five artifacts from two MCP calls:
 
-## The presentation template (Bold's canonical 4:3 deck)
+| Source | Live URL | PPTX | PDF |
+|---|---|---|---|
+| Canva (`generate-design-structured`) | yes | yes | yes |
+| Gamma (`gamma_generate`) | yes | yes (via `exportAs`) | no |
 
-Bold has produced 4:3 presentations (14.22 x 10.66 inches) with the same type system since 2007. Stage 6 MUST match this template. Full spec in `assets/bold-presentation-template-spec.md`. Highlights:
+The two are not redundant: Canva is the polished designed deck (visual flagship + printable PDF), Gamma is the interactive shareable deck (commentable, fast). Both are 16:9 (Canva and Gamma native).
 
-- Aspect ratio: **4:3**, NOT 16:9
-- Title font: **Tahoma bold 35pt** (Hebrew), Verdana bold 35pt (English), color `#000000`
-- Body font: Tahoma / Verdana 18-22pt, `#000000` or `#333333`
-- Footer text font: Verdana 14pt, gray `#808080`
+The historical Bold 4:3 template (`assets/bold-presentation-template-spec.md`) is preserved as a legacy reference file but no longer enforced. v2.7 dropped the 4:3 constraint.
 
-### Footer composition (every body slide)
+### Brand identity in the deck
 
-```
-[White Bold logo bottom-left]     A Bold Presentation© [YYYY]     [Client logo bottom-right]
-```
+Voice rules apply to all surfaces:
+- Hebrew-first
+- No em-dash, no en-dash
+- No clichés ("בלתי נשכח", "מרגש", "unforgettable", "חוגגים יחד", "once in a lifetime")
+- Specific numbers, not adjectives
+- Max 5-7 words per on-slide bullet
+- Bold credit only via the centered footer text "A Bold Presentation© [year]"
 
-- White logo: `assets/logos/bold-white-footer.jpg`
-- Center text: current year, populated at Stage 6 time
-- Client logo: requested in brief (Stage 1), stored as `proposals/<slug>/01-intake/client-logo.ext`
-- If client hasn't provided a logo, the bottom-right slot stays empty; Stage 6 flags to Hemi and continues
+Brand kit (Canva): if `data/canva-config.json` has a `brand_kit_id`, pass it. Brand consistency comes from there.
+Theme (Gamma): pick best match from `gamma_list_themes` against brand-system.md keywords.
 
-### Cover and closing (unique no-footer layouts)
+### Logo handling
 
-- **Cover (slide 1):** full-bleed background (hero mockup or black), `assets/logos/bold-black-opening.jpg` centered at 40-60% of slide width, event title below. NO footer.
-- **Closing (last slide):** full-bleed `bold-closing.mp4` (30MB, lives in Bold's Drive at `K:\My Drive\macshare\Booper` or similar, fetched at Stage 6 time, NOT in the .skill package). NO footer, NO text overlay.
+Logos still live in `assets/logos/` (`bold-black-opening.jpg`, `bold-white-footer.jpg`). They are no longer auto-placed at fixed coordinates. Use cases:
+- Canva: paste manually post-export if the Canva brand kit doesn't include them, or save once into the brand kit
+- Gamma: same, manual paste post-export if needed
+- Cover slide: the black logo can still be used as a reference for "what Bold's cover looks like"
 
-## The three-surface delivery (Stage 6)
-
-Every Bold proposal ships in three complementary surfaces by default, all driven by the same source material:
-
-| Surface | Produced by | Used for |
-|---|---|---|
-| `proposal.pdf` | `premium-deck-strategist` skill | Flagship, polished, committee-ready. The PDF the client prints or projects. |
-| Live Gamma URL | `gamma_generate` MCP call | Interactive, shareable, commentable. The link the client forwards around. |
-| `proposal.pptx` | Gamma `exportAs: "pptx"` export | Editable. The client opens it in PowerPoint or Google Slides to annotate or tweak. |
-
-The three are not redundant: PDF is polish, Gamma is interactivity, PPTX is editability. All three use the same 4:3 aspect ratio, the same Tahoma/Verdana type system, and the same footer composition.
-
-### Optional fourth surface: Canva
-
-When Hemi requests it, when the client uses Canva natively, or when a Bold Canva brand kit applies, Stage 6 also produces a Canva deck. Triggered by phrases like "תפיק גם גרסת קנבה", "want this in Canva too", or by a `prefers_canva: true` flag in the client profile. Full flow in `references/canva-deck-path.md`. Canva default aspect ratio is 16:9 (different from the other three surfaces); see canva-deck-path.md for the resize-design workaround if 4:3 is required.
-
-## Voice rules
+## Voice rules (apply everywhere)
 
 - Hebrew-first. Numbers Western. Dates DD.MM.YYYY.
 - No em-dash or en-dash.
-- No clichés ("בלתי נשכח", "מרגש", "unforgettable", "חוגגים יחד", "once in a lifetime").
+- No clichés.
 - Specific numbers, not adjectives.
-- No Bold credits/logos outside the footer stripe.
 - Short paragraphs.
-- Max 5-7 words per on-slide bullet; depth goes in speaker notes.
+- Max 5-7 words per on-slide bullet; depth in speaker notes.
 
 ## Gates
 
@@ -114,8 +101,8 @@ When Hemi requests it, when the client uses Canva natively, or when a Bold Canva
 - Gate 3→4: One direction picked from three-direction set; brand-system.md has 9 fields.
 - Gate 4a→rest: One visual direction picked; full mockup set + video + mood-direction.md.
 - Gate 4→5: All specialists reference brand system + visual.
-- Gate 5→6: Every line maps to one of the 6 canonical categories (per `assets/budget-categories-reference.md`); 70%+ lines reference vendor registry; no line without `source_deliverable`.
-- Gate 6→done: Six Stage 6 artifacts (PDF, PPTX, XLSX, scorecard, summary with Gamma URL, Trello card with `gammaId`); plus Canva PDF + PPTX + URL if the optional surface was activated. Deck matches 4:3 template; footer composition correct on body slides; cover and closing are unique layouts.
+- Gate 5→6: Every line maps to one of the 6 canonical categories; 70%+ lines reference vendor registry; no line without `source_deliverable`.
+- Gate 6→done: Six core artifacts (Canva URL+PDF+PPTX, Gamma URL+PPTX, XLSX, scorecard, summary, Trello card). If a deck MCP is unavailable at runtime, that surface is skipped (not blocked) and summary.md notes the gap.
 - Gate 7: Runs 24h after event from Trello card.
 
 ## Required sibling skills
@@ -124,48 +111,45 @@ When Hemi requests it, when the client uses Canva natively, or when a Bold Canva
 |---|---|---|
 | `nano-banana` | Stage 3, 4a | Visual reference images, mockups |
 | `veo-video-creator` | Stage 4a | Atmosphere video |
-| `premium-deck-strategist` | Stage 6 | Premium proposal deck (PDF), must be configured for 4:3 with Tahoma/Verdana per `bold-presentation-template-spec.md` |
-
-If any is missing at runtime, the Stage that depends on it cannot complete. Claude warns and prompts installation.
+| `premium-deck-strategist` | Legacy fallback only | Used if both Canva and Gamma MCPs are unavailable |
 
 ## Required MCP servers
 
-Stage 6 relies on a live external service. Source: `https://github.com/hemichaeli/gamma-mcp-server`. Production endpoint: `https://gamma-mcp-server-production-959b.up.railway.app/sse`.
+| MCP server | Used in | Role |
+|---|---|---|
+| Gamma (custom Bold-operated, `gamma-mcp-server-production-959b.up.railway.app/sse`) | Stage 6, Stage 7 | `gamma_generate` builds the live Gamma deck and the downloadable PPTX. `gamma_generate_from_template` remixes the prior deck for returning clients (Phoenix, Keren, Efrat) |
+| Canva (`mcp.canva.com/mcp`) | Stage 6 | `request-outline-review` → `generate-design-structured` → `create-design-from-candidate` → `export-design` produces the Canva deck with PDF + PPTX exports |
 
-| MCP server | Used in | Role | Required |
-|---|---|---|---|
-| Gamma (custom, Bold-operated) | Stage 6, Stage 7 | `gamma_generate` with `cardDimensions: "4x3"` and `exportAs: "pptx"` builds the live Gamma deck and the downloadable PPTX in one call; `gamma_generate_from_template` remixes the prior deck for returning clients (Phoenix, Keren, Efrat) | Yes (degrades to prompt-paste fallback if missing) |
-| Canva (`mcp.canva.com/mcp`) | Stage 6 | Optional fourth surface. `request-outline-review` -> `generate-design-structured` -> `create-design-from-candidate` -> `export-design` produces a Canva deck with PDF + PPTX exports. See `references/canva-deck-path.md` | No (skill skips Canva surface silently if not connected) |
-
-If the Gamma MCP is not connected in the current session, Stage 6 falls back: Claude writes `gamma-prompt.md` for Hemi to paste into Gamma.app manually. Not blocking, but the PPTX and live-URL delivery are lost; only the premium PDF ships. If the Canva MCP is not connected, the Canva surface is silently skipped; default three-surface delivery proceeds normally.
+If either MCP is missing at runtime, that surface is skipped silently and summary.md flags it. If both are missing, Stage 6 falls back to `premium-deck-strategist` PDF.
 
 ## Assets in the skill package
 
 | Asset | Purpose |
 |---|---|
 | `assets/bold-brand-guidelines.md` | Bold's verbal brand rules |
-| `assets/brief-form-original.md` | The original brief form Bold uses |
+| `assets/brief-form-original.md` | Bold's original 2001-era brief form |
 | `assets/gamma-prompt-template.md` | Fallback prompt template for Gamma when MCP is unavailable |
-| `assets/proposal-pdf-structure.md` | PDF structure reference |
-| `assets/budget-categories-reference.md` | The 6 canonical categories + 30 sub-categories + ~140 line items (sourced from "תבנית מתודולוגית לאירועים 4" sheet 1) |
-| `assets/bold-presentation-template-spec.md` | 4:3 aspect, Tahoma 35pt, 28-slide canonical sequence, footer/cover/closing rules (sourced from "BOLDpresentation - TEMPLATE.ppt" plus 2026 footer updates) |
-| `assets/logos/bold-black-opening.jpg` | Black Bold logo for cover slide (binary, packaged with .skill, not in Git) |
-| `assets/logos/bold-white-footer.jpg` | White Bold logo for footer bottom-left (binary, packaged with .skill, not in Git) |
-| `assets/logos/README.md` | Logo usage rules + reference to `bold-closing.mp4` on Drive |
-| `scripts/build_budget_xlsx.py` v3.0 | Produces budget.xlsx in Bold's exact canonical template format |
+| `assets/proposal-pdf-structure.md` | PDF structure reference (legacy) |
+| `assets/budget-categories-reference.md` | 6 canonical categories + 30 sub-categories + ~140 line items |
+| `assets/bold-presentation-template-spec.md` | **Legacy 4:3 template spec** (2007-2025). Kept for historical reference; no longer enforced as of v2.7 |
+| `assets/logos/bold-black-opening.jpg` | Black Bold logo (binary, packaged with .skill, not in Git) |
+| `assets/logos/bold-white-footer.jpg` | White Bold logo (binary, packaged with .skill, not in Git) |
+| `assets/logos/README.md` | Logo usage rules |
+| `scripts/build_budget_xlsx.py` v3.0 | Produces budget.xlsx in Bold's canonical template format |
 
 ## Session start
 
 1. Check for brief/transcript input.
-2. Read client profile if known (includes `gammaId` of prior deck for remix, `prefers_canva` flag for surface selection).
-3. Read hemi-preferences.md.
+2. Read client profile if known (includes `gammaId` of prior deck for remix, Canva `design_id` for reference).
+3. Read `data/hemi-preferences.md`.
 4. Verify vendor registry.
-5. Verify required sibling skills present (nano-banana, veo-video-creator, premium-deck-strategist).
-6. Verify Gamma MCP is connected (check for `gamma_generate` tool). If absent, note fallback path for Stage 6.
-7. Verify Canva MCP is connected if `prefers_canva` is true on the client profile or Hemi mentioned Canva. If absent, note that the Canva surface will be skipped.
-8. Verify critical assets present: `budget-categories-reference.md`, `bold-presentation-template-spec.md`, `logos/bold-black-opening.jpg`, `logos/bold-white-footer.jpg`. If logo binaries missing (skill installed without the binaries), flag to Hemi; Stage 6 can still proceed but the PDF will be missing the Bold logo.
-9. Begin Stage 1.
+5. Verify required sibling skills (nano-banana, veo-video-creator).
+6. Verify Gamma MCP is connected. If absent, note that the Gamma surface will be skipped.
+7. Verify Canva MCP is connected. If absent, note that the Canva surface will be skipped.
+8. If both Canva and Gamma MCPs are absent, verify `premium-deck-strategist` is installed for fallback.
+9. Verify `data/canva-config.json` exists or run `Canva:list-brand-kits` first time and cache.
+10. Begin Stage 1.
 
 ## Success
 
-Final deliverable: a client who, 30 days after the event, can say "Bold helped me hit these specific numbers". Secondary: over 5-10 events, three-direction sets land more often, but Claude never stops offering stretch directions. Tertiary: returning clients get increasingly well-tuned proposals because `gamma_generate_from_template` preserves what worked.
+Final deliverable: a client who, 30 days after the event, can say "Bold helped me hit these specific numbers". Secondary: over 5-10 events, three-direction sets land more often. Tertiary: returning clients get increasingly well-tuned proposals because `gamma_generate_from_template` and the Bold Canva brand kit preserve what worked.
