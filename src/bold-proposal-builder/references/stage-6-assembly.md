@@ -1,8 +1,8 @@
-# Stage 6, Assembly Reference (v2.5)
+# Stage 6, Assembly Reference (v2.6)
 
 ## Purpose
 
-Stage 6 is production, not thinking. The thinking happened in stages 1 to 5. Stage 6 takes the artifacts and builds six final deliverables:
+Stage 6 is production, not thinking. The thinking happened in stages 1 to 5. Stage 6 takes the artifacts and builds six core deliverables plus one optional fourth client-facing deck surface (Canva):
 
 1. **Premium proposal deck** (PDF), built via `premium-deck-strategist` skill, brand system from Stage 3 applied, Bold's canonical 28-slide structure (or 16-card compressed form), strict footer/cover/closing rules per `assets/bold-presentation-template-spec.md`
 2. `budget.xlsx`, the detailed Excel in Bold's canonical template format, produced by `scripts/build_budget_xlsx.py` from `budget.json`, matches "טמפלט תקציב 01" byte-for-byte in layout terms
@@ -10,6 +10,11 @@ Stage 6 is production, not thinking. The thinking happened in stages 1 to 5. Sta
 4. `summary.md`, a 1-page executive summary for intro messages
 5. `kpis-scorecard.md`, a standalone KPI measurement plan (also embedded in the deck)
 6. Trello debrief card in the "Bold, Debriefs" board, due the day after the event
+7. **(Optional) Canva deck**, produced via the Canva MCP server when Hemi requests it or the client uses Canva natively. Detailed flow in `references/canva-deck-path.md`. Aspect ratio 16:9 by default (Canva limitation), see canva-deck-path.md for the resize workaround.
+
+**v2.6 changes:**
+- Optional Canva surface added as a fourth client-facing deck. Detailed in the new `canva-deck-path.md` reference. Triggered by Hemi's explicit request, presence of a Bold Canva brand kit, or returning client preference. Default behavior unchanged: PDF + Gamma + PPTX still ship by default.
+- Canva integration currently lives inside bold-proposal-builder. When `premium-deck-strategist` is pushed to the repo, the Canva path moves there as a generic output mode and Stage 6 becomes a wrapper that picks `output_mode`.
 
 **v2.5 changes:** 
 - Gamma `cardDimensions` corrected from `"16x9"` to `"4x3"`. Bold has used 4:3 for two decades; 16:9 would break visual continuity with prior client work
@@ -18,7 +23,7 @@ Stage 6 is production, not thinking. The thinking happened in stages 1 to 5. Sta
 - Explicit references to `assets/logos/` for the three official logo assets
 - Mandatory footer composition: white Bold logo bottom-left + "A Bold Presentation© [current year]" center + client logo bottom-right
 
-Order: XLSX first (numbers lock), then premium PDF (tells the story with numbers confirmed), then live Gamma deck + PPTX export (interactive + editable), then KPIs scorecard, then summary (links all three surfaces), then Trello card.
+Order: XLSX first (numbers lock), then premium PDF (tells the story with numbers confirmed), then live Gamma deck + PPTX export (interactive + editable), then optionally Canva, then KPIs scorecard, then summary (links all surfaces), then Trello card.
 
 ---
 
@@ -148,55 +153,7 @@ Claude downloads the PPTX from `exportUrl` and saves it to `proposals/<slug>/06-
 
 ### Structured inputText (16 cards)
 
-Claude assembles `inputText` with explicit card breaks (`---`) so Gamma's autosplit cannot reorganize:
-
-```
-# [Event Name]
-[tagline from brand-system.md §3]
----
-# הרגע (The Moment)
-[one-paragraph reason-why from brief field 1]
----
-# קריאה אסטרטגית
-[3 bullets from challenges.md]
----
-# הקונספט
-[concept sentence + 2 unpack sentences from brand-system.md §1-2]
----
-# הגעה (arrival mockup caption)
-[caption from mood-direction.md]
----
-# הרגע המרכזי (hero mockup caption)
-[caption]
----
-# האולם
-[wide-shot caption]
----
-# הפרט
-[detail-shot caption]
----
-# הקולינרי
-[paragraph from menu.md intro]
----
-# החוויה
-[3 anchor moments from agenda.md block view]
----
-# התפעול
-[one paragraph: venue, technical dimensions, headcount]
----
-# השקעה
-[budget summary + conditional lines]
----
-# KPIs והצלחה
-[N KPIs from brief field 16, one line each]
----
-# לוח זמנים
-[milestones from today to event date]
----
-# הצעדים הבאים
-[decision points + contact]
----
-```
+Claude assembles `inputText` with explicit card breaks (`---`) so Gamma's autosplit cannot reorganize. See the existing v2.5 structured outline (unchanged in v2.6).
 
 ### Post-generation QA
 
@@ -213,17 +170,7 @@ If `status == "failed"`, Claude reads `error.message`, fixes the obvious issue (
 When the event is for a returning client (Phoenix, Keren, Efrat, etc.) AND a prior successful deck exists in the client profile:
 
 1. Stage 1 or Stage 3 reads the `gammaId` of the prior deck from `data/client-profiles/[client-slug].md`.
-2. At Stage 6, Claude calls `gamma_generate_from_template` instead of `gamma_generate`, same `exportAs: "pptx"`:
-
-```
-gamma_generate_from_template(
-  gammaId: <prior deck's ID>,
-  prompt: <the same structured inputText as above>,
-  themeId: <same or new>,
-  wait: true,
-  exportAs: "pptx"
-)
-```
+2. At Stage 6, Claude calls `gamma_generate_from_template` instead of `gamma_generate`, same `exportAs: "pptx"`.
 
 This preserves the layout, visual system, and scale of the winning deck while swapping content, and still delivers both the live URL and the PPTX export.
 
@@ -244,7 +191,7 @@ Unchanged from v2.1.
 
 ## 5. Building the summary (summary.md)
 
-### Template (v2.5)
+### Template (v2.6)
 
 ```markdown
 [Client first name] שלום,
@@ -267,10 +214,18 @@ Unchanged from v2.1.
 הגדרנו [N] מדדי הצלחה בהתאם למטרות שהעלית. פירוט ב-kpis-scorecard.md המצורף.
 24 שעות אחרי האירוע, נעשה debrief מסודר ותקבל דוח מול המדדים.
 
+[IF Canva surface NOT enabled, default 3-surface block:]
 **הצעה בשלוש גרסאות משלימות:**
 - **הצעה מעוצבת מלאה (PDF)**, נבנתה ב-premium-deck-strategist, מיועדת לקריאה ולהפצה בוועדה
-- **מצגת אינטראקטיבית ב-Gamma:** [gammaUrl from gamma_generate result], לצפייה וויד ותגובות
+- **מצגת אינטראקטיבית ב-Gamma:** [gammaUrl from gamma_generate result], לצפייה ותגובות
 - **גרסת PowerPoint (PPTX):** מצורפת, לעריכה חופשית בצד הלקוח
+
+[IF Canva surface IS enabled, 4-surface block:]
+**הצעה בארבע גרסאות משלימות:**
+- **הצעה מעוצבת מלאה (PDF)**, נבנתה ב-premium-deck-strategist, מיועדת לקריאה ולהפצה בוועדה
+- **מצגת אינטראקטיבית ב-Gamma:** [gammaUrl from gamma_generate result], לצפייה ותגובות
+- **גרסת PowerPoint (PPTX):** מצורפת, לעריכה חופשית בצד הלקוח
+- **גרסת Canva:** [canvaUrl from create-design-from-candidate], לעריכה ושיתוף בסביבת Canva של הלקוח
 
 **מצורפים נוספים:**
 - תקציב מפורט (Excel, פורמט "טמפלט תקציב 01" הקנוני של Bold)
@@ -282,17 +237,54 @@ Unchanged from v2.1.
 [Signature]
 ```
 
-If the fallback path was used, replace the three-surfaces block with "מצגת Gamma: קישור יישלח אחרי בנייה; גרסת PowerPoint תופק ידנית מה-Gamma."
+If the Gamma fallback path was used, replace the Gamma + PPTX bullets with "מצגת Gamma: קישור יישלח אחרי בנייה; גרסת PowerPoint תופק ידנית מה-Gamma."
 
 ---
 
 ## 6. Creating the Trello debrief card
 
-Unchanged from v2.1. Card goes into "Bold, Debriefs" board with due date = event date + 1. Include the `gammaId` of the generated deck in the card description so Stage 7 can pass it to `gamma_generate_from_template` when the next proposal for this client begins.
+Unchanged from v2.1. Card goes into "Bold, Debriefs" board with due date = event date + 1. Include the `gammaId` of the generated deck in the card description so Stage 7 can pass it to `gamma_generate_from_template` when the next proposal for this client begins. If a Canva surface was produced, also include the Canva `design_id` in the card description (no remix tool yet, but useful for manual reference).
 
 ---
 
-## Final QA checklist (v2.5)
+## 7. Building the Canva deck (optional fourth surface)
+
+When Hemi requests a Canva surface, or when the client uses Canva natively, Stage 6 produces a fourth deliverable in addition to the three default surfaces. Full flow in `references/canva-deck-path.md`.
+
+### Trigger conditions
+
+Canva surface activates when ANY of:
+- Hemi explicitly requests it: "תפיק גם גרסת קנבה", "בנה את ההצעה ב-Canva", "want this in Canva too"
+- Brief field 12 (design / brand guidelines) mentions Canva as the client's primary tool
+- The client profile in `data/client-profiles/[client-slug].md` has `prefers_canva: true`
+- Returning client whose prior deck was on Canva
+
+### High-level flow
+
+1. Resolve Bold brand kit ID from `data/canva-config.json` (or `Canva:list-brand-kits` if first run)
+2. `Canva:request-outline-review` with the 16-card outline (mandatory gateway, punctuation stripped)
+3. Wait for Hemi to approve in widget
+4. `Canva:generate-design-structured` returns design candidates
+5. Hemi picks one
+6. `Canva:create-design-from-candidate` returns `design_id`
+7. `Canva:export-design` twice: format `pdf` and format `pptx`
+8. Save outputs as `proposal-canva.pdf`, `proposal-canva.pptx`; capture Canva URL for `summary.md`
+
+### Aspect ratio note
+
+Canva default is 16:9. Bold canonical is 4:3. See `canva-deck-path.md` for the `resize-design` experimental workaround if 4:3 is required for the Canva surface.
+
+### Footer note
+
+Canva MCP cannot programmatically place custom logo footers. Center text "A Bold Presentation© [year]" gets injected via `additionalInstructions`; logos placed manually after export if needed.
+
+### Fallback
+
+If the Canva MCP is not connected at runtime, skill notes the limitation in `summary.md` and proceeds without the Canva surface. Not blocking.
+
+---
+
+## Final QA checklist (v2.6)
 
 - [ ] Premium deck PDF opens and renders on macOS Preview and Adobe Acrobat
 - [ ] Deck has exactly 16 slides (or 8 for sub-₪25K fallback, or 28 for long form)
@@ -313,13 +305,19 @@ Unchanged from v2.1. Card goes into "Bold, Debriefs" board with due date = event
 - [ ] Gamma PPTX downloaded successfully from exportUrl, opens in PowerPoint
 - [ ] Gamma deck's investment slide total matches budget.xlsx total
 - [ ] Gamma deck's KPI slide matches scorecard
-- [ ] Summary.md word count under 250 words
-- [ ] Summary.md lists all three client-facing surfaces (PDF, Gamma URL, PPTX)
+- [ ] (IF Canva surface enabled) Canva outline approved by Hemi via widget
+- [ ] (IF Canva surface enabled) Canva candidate picked by Hemi
+- [ ] (IF Canva surface enabled) Canva PDF + PPTX exports both downloaded
+- [ ] (IF Canva surface enabled) Canva URL captured in summary.md
+- [ ] (IF Canva surface enabled) Aspect ratio status flagged (16:9 default or 4:3 if resized)
+- [ ] (IF Canva surface enabled) Footer status flagged (incomplete/partial/manually completed)
+- [ ] Summary.md word count under 280 words (slightly higher cap when Canva surface adds a bullet)
+- [ ] Summary.md lists all enabled client-facing surfaces
 - [ ] Valid-until date consistent across all files
 - [ ] Event name spelled identically across all files
 - [ ] Client name spelled identically
 - [ ] Contact info correct
-- [ ] Trello card created, URL captured in summary.md, `gammaId` captured in card description
+- [ ] Trello card created, URL captured in summary.md, `gammaId` and (if applicable) Canva `design_id` captured in card description
 - [ ] All client-facing surfaces are Hebrew-first
 - [ ] No em-dash or en-dash anywhere
 - [ ] No banned clichés
@@ -329,7 +327,7 @@ Unchanged from v2.1. Card goes into "Bold, Debriefs" board with due date = event
 
 ## Present-files call
 
-At the end, call `present_files` with these five files in this order:
+At the end, call `present_files` with these files in this order:
 
 ```
 [
@@ -341,15 +339,32 @@ At the end, call `present_files` with these five files in this order:
 ]
 ```
 
-Then output one-line completion marker including Trello card URL, Gamma URL, and stop:
+If Canva surface was produced, append:
+
+```
+  "proposals/<slug>/06-assembly/proposal-canva.pdf",
+  "proposals/<slug>/06-assembly/proposal-canva.pptx"
+```
+
+Then output one-line completion marker including Trello card URL, Gamma URL, Canva URL (if any), and stop:
 
 ```
 ✓ ההצעה מוכנה.
   Gamma: [gammaUrl]
+  Canva: [canvaUrl]   (if surface enabled)
   Trello debrief: [trelloUrl]
 ```
 
 ---
+
+## What changed from v2.5
+
+- Added optional fourth client-facing deck surface: Canva. Detailed flow in new `references/canva-deck-path.md`. Default 3-surface delivery unchanged.
+- New section 7 in this file describes trigger conditions and high-level Canva flow
+- QA checklist gains conditional Canva items
+- Summary template gains a 4-surface variant
+- Trello card stores Canva `design_id` when applicable
+- Future: when `premium-deck-strategist` is pushed to the repo, the Canva path migrates there as a generic output mode and Stage 6 becomes a wrapper
 
 ## What changed from v2.4
 
@@ -371,4 +386,7 @@ This stage requires:
 - `assets/logos/bold-black-opening.jpg` and `bold-white-footer.jpg` in the .skill package (binaries not in Git)
 - Access to `bold-closing.mp4` on Bold's Drive (30MB, fetched at Stage 6 time)
 
-If either the premium-deck-strategist or Gamma MCP is missing, Claude warns, falls back (standard `pdf` skill for the deck; prompt-paste flow for Gamma with PPTX produced manually by Hemi), and continues without blocking.
+Optional dependency:
+- **Canva MCP** (`mcp.canva.com/mcp`), required only if the Canva surface is enabled. Without it, Stage 6 ships the default three surfaces and skips Canva silently.
+
+If `premium-deck-strategist` or the Gamma MCP is missing, Claude warns, falls back (standard `pdf` skill for the deck; prompt-paste flow for Gamma with PPTX produced manually), and continues without blocking. Same for Canva: missing MCP means Canva surface is skipped, not blocked.
