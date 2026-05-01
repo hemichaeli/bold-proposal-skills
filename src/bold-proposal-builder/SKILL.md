@@ -73,17 +73,38 @@ Voice rules apply to all surfaces:
 - No clichés ("בלתי נשכח", "מרגש", "unforgettable", "חוגגים יחד", "once in a lifetime")
 - Specific numbers, not adjectives
 - Max 5-7 words per on-slide bullet
-- Bold credit only via the centered footer text "A Bold Presentation© [year]"
 
 Brand kit (Canva): if `data/canva-config.json` has a `brand_kit_id`, pass it. Brand consistency comes from there.
 Theme (Gamma): pick best match from `gamma_list_themes` against brand-system.md keywords.
 
-### Logo handling
+### Logo and footer handling
 
-Logos still live in `assets/logos/` (`bold-black-opening.jpg`, `bold-white-footer.jpg`). They are no longer auto-placed at fixed coordinates. Use cases:
-- Canva: paste manually post-export if the Canva brand kit doesn't include them, or save once into the brand kit
-- Gamma: same, manual paste post-export if needed
-- Cover slide: the black logo can still be used as a reference for "what Bold's cover looks like"
+Bold's canonical per-slide-type logo and footer spec, in use since 2010:
+
+| Slide type | Hero / main visual | Bottom-left | Bottom-right | Centered footer text |
+|---|---|---|---|---|
+| Opening | `bold-black-opening.jpg` (full bleed, centered on black background) | none | none | none |
+| Body slides | content | `bold-white-footer.jpg` (small, ~120-150px wide) | client logo (small) | `A Bold Presentation© [year]` |
+| Closing | `bold-closing.mp4` (full bleed, autoplay, animated) | none | none | none |
+
+The `[year]` token is replaced with the event year (4 digits, Western numerals) at deck-assembly time. Footer text rendered Verdana 14pt, gray `#808080`, horizontally centered.
+
+#### Asset locations and source of truth
+
+| File | Repo location | Source of truth | Travel mechanism |
+|---|---|---|---|
+| `bold-black-opening.jpg` | `assets/logos/` | packaged with .skill | binary, not in Git, manual placement at build time |
+| `bold-white-footer.jpg` | `assets/logos/` | packaged with .skill | binary, not in Git, manual placement at build time |
+| `bold-closing.mp4` | `assets/logos/` (fallback only) | Bold's Google Drive | binary, not in Git. Stage 6 fetches from Drive at runtime; if fetch fails, falls back to the packaged copy |
+| Client logo | `data/client-assets/<slug>/` | client-provided | requested in brief at Stage 1 |
+
+#### Placement at build time
+
+Canva: a properly configured brand kit handles bottom-left + footer text + bottom-right slot automatically. If the kit lacks any of them, paste manually post-export. Insert the closing MP4 as a video element on the last slide.
+
+Gamma: paste the bottom-left, bottom-right, and footer text manually post-export if the chosen theme does not supply them. Insert the closing MP4 on the last slide.
+
+In both surfaces: opening and closing slides do NOT carry the body-slide footer stripe. Their hero asset (black JPG / animated MP4) is the entire slide.
 
 ## Voice rules (apply everywhere)
 
@@ -132,9 +153,10 @@ If either MCP is missing at runtime, that surface is skipped silently and summar
 | `assets/proposal-pdf-structure.md` | PDF structure reference (legacy) |
 | `assets/budget-categories-reference.md` | 6 canonical categories + 30 sub-categories + ~140 line items |
 | `assets/bold-presentation-template-spec.md` | **Legacy 4:3 template spec** (2007-2025). Kept for historical reference; no longer enforced as of v2.7 |
-| `assets/logos/bold-black-opening.jpg` | Black Bold logo (binary, packaged with .skill, not in Git) |
-| `assets/logos/bold-white-footer.jpg` | White Bold logo (binary, packaged with .skill, not in Git) |
-| `assets/logos/README.md` | Logo usage rules |
+| `assets/logos/bold-black-opening.jpg` | Black Bold logo for opening slide hero (binary, packaged with .skill, not in Git) |
+| `assets/logos/bold-white-footer.jpg` | White Bold logo for body-slide bottom-left (binary, packaged with .skill, not in Git) |
+| `assets/logos/bold-closing.mp4` | Animated closing-slide hero (binary, packaged as fallback only; Bold's Google Drive is source of truth) |
+| `assets/logos/README.md` | Logo and footer placement rules |
 | `scripts/build_budget_xlsx.py` v3.0 | Produces budget.xlsx in Bold's canonical template format |
 
 ## Session start
