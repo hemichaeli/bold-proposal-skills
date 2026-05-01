@@ -153,3 +153,55 @@ If either MCP is missing at runtime, that surface is skipped silently and summar
 ## Success
 
 Final deliverable: a client who, 30 days after the event, can say "Bold helped me hit these specific numbers". Secondary: over 5-10 events, three-direction sets land more often. Tertiary: returning clients get increasingly well-tuned proposals because `gamma_generate_from_template` and the Bold Canva brand kit preserve what worked.
+
+## Hebrew/RTL OOXML Authoring Rules
+
+When the deck is in Hebrew (or any RTL language), follow these rules to prevent bidi/spell-check defects. Every rule was learned from a real defect in production decks.
+
+### 1. `lang` attribute on every run
+Every `<a:rPr>` must declare a language. Hebrew runs: `lang="he-IL"`. English/numeric/punctuation-only runs: `lang="en-US"`. **Missing `lang` causes red spell-check squiggles AND breaks the bidi engine's ordering.**
+
+### 2. Never split a Hebrew word across runs
+A single Hebrew word = a single `<a:r>`. Splitting "מוסדי" across two runs lets the bidi engine treat the two halves as independent segments and any punctuation between them lands in the wrong visual position.
+
+### 3. Punctuation belongs in the Hebrew run
+Commas, periods, colons, semicolons, quotation marks adjacent to Hebrew text must live **inside the same `<a:r>` as the Hebrew text**, not in a separate `lang="en-US"` run.
+- Wrong: `<a:r he-IL>אמנים</a:r><a:r en-US>, </a:r><a:r he-IL>צעירים</a:r>`
+- Right: `<a:r he-IL>אמנים, צעירים</a:r>`
+
+### 4. Prefer one Hebrew run per phrase
+When you author or rewrite a Hebrew sentence, write the entire sentence as a single `<a:r lang="he-IL">` whenever possible. Per-word splitting is the #1 source of bidi defects.
+
+### 5. Strip `err="1"`
+Never write `err="1"` on `<a:rPr>` — it's a spell-check flag that produces visible red wavy underlines. When editing existing text, remove it.
+
+### 6. Mixed numeric + Hebrew titles ("06 / הרגעים החיים")
+Use exactly two runs:
+```xml
+<a:p><a:pPr algn="r" rtl="1">...</a:pPr>
+  <a:r><a:rPr lang="en-US" .../><a:t>06 /</a:t></a:r>
+  <a:r><a:rPr lang="he-IL" .../><a:t> הרגעים החיים</a:t></a:r>
+</a:p>
+```
+**The space MUST be at the start of the Hebrew run** (after `lang="he-IL"`), never at the end of the English run. Otherwise the bidi reorder collapses it and you get `06הרגעים`.
+
+### 7. Hebrew paragraphs need `algn="r" rtl="1"` on `<a:pPr>`
+Every paragraph containing Hebrew must declare both. Missing `rtl="1"` makes punctuation float to the wrong edge.
+
+### 8. Tables: `cell.text =` does NOT persist
+Office.js `cell.text` setter returns `success: true` but the value is lost on slide re-export. To change table cell text, use `edit_slide_xml` and rewrite the `<a:txBody>` inside the target `<a:tc>`. Style/fill/font properties via Office.js still work — only text content is broken.
+
+### 9. ASCII punctuation only
+Replace before final export:
+- `—` (em-dash, U+2014) → `-`
+- `–` (en-dash, U+2013) → `-`
+- `'` (curly apostrophe, U+2019) → `'`
+- `"` `"` (curly quotes, U+201C/D) → `"`
+
+### 10. Don't add `<a:latin>` unless changing the font
+The theme's `<a:fontScheme>` already supplies majorFont/minorFont. A run-level `<a:latin>` overrides the theme and may reference a font not installed on the user's machine, breaking rendering.
+
+### Final QA pass before delivery
+1. Run regex `/[\u2014\u2013\u2019\u201C\u201D]/g` across all slide XML and replace with ASCII equivalents.
+2. Sweep every `<a:rPr>` in Hebrew text — must have `lang="he-IL"`, no `err="1"`.
+3. Spot-check 2-3 dense paragraphs visually for misplaced commas/periods.
