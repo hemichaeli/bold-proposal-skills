@@ -4,9 +4,23 @@ description: Build premium event proposals for Bold Productions, a Tel-Aviv even
 license: Proprietary
 ---
 
-# Bold Proposal Builder (v2.7)
+# Bold Proposal Builder (v2.8)
 
 A 7-stage orchestrator for producing premium event proposals for Bold Productions. Each stage reads a reference file in `references/`, produces its artifacts, hands off. Skip stages and the final proposal fragments.
+
+## Branding mode (ask first)
+
+At session start, before Stage 1, ask Hemi:
+
+> Apply the full Bold-branded layout (logos + footer), or produce a clean unbranded deck?
+
+If **Bold-branded** (the default for any client-facing proposal): apply the per-slide-type spec described in the `Logo and footer handling` section below. Use the Bold Canva brand kit if available. Pick a Bold-aligned Gamma theme.
+
+If **clean / unbranded** (used for early internal drafts before client sign-off, white-label events Bold is producing under the client's own brand, or any deck that should not visibly read as "by Bold"): skip the entire logo and footer apparatus. No `bold-black-opening.jpg` on the opening slide, no `bold-white-footer.jpg` bottom-left, no centered footer text, no `bold-closing.mp4` on the closing slide. Voice rules and the seven-stage flow still apply; only the visible Bold branding is suppressed.
+
+The answer is recorded in `proposals/<slug>/summary.md` as `branding_mode: bold-branded | clean`.
+
+Default: ask, do not assume.
 
 ## The seven stages
 
@@ -52,7 +66,7 @@ Underneath the six sit 30 sub-categories and ~140 typical line items. Full tree 
 
 XLSX layout matches Bold's actual template "טמפלט תקציב 01" (in use since 2010): 13 columns RTL, single sheet "טמפלט ריק", main + options sections. Production fee: single "דמי ארגון והפקה" line at 15% after the six categories. Conditional items live in the options section under a single כללי marker. Script: `scripts/build_budget_xlsx.py` v3.0.
 
-## The deck surfaces (Stage 6, v2.7)
+## The deck surfaces (Stage 6, v2.8)
 
 Every Bold proposal ships in two default deck surfaces, producing five artifacts from two MCP calls:
 
@@ -79,7 +93,7 @@ Theme (Gamma): pick best match from `gamma_list_themes` against brand-system.md 
 
 ### Logo and footer handling
 
-Bold's canonical per-slide-type logo and footer spec, in use since 2010:
+Bold's canonical per-slide-type logo and footer spec, in use since 2010. **Applied only when `branding_mode = bold-branded`.** When `branding_mode = clean`, the entire spec is suppressed.
 
 | Slide type | Hero / main visual | Bottom-left | Bottom-right | Centered footer text |
 |---|---|---|---|---|
@@ -117,6 +131,7 @@ In both surfaces: opening and closing slides do NOT carry the body-slide footer 
 
 ## Gates
 
+- Gate 0→1: Branding mode answered (bold-branded or clean).
 - Gate 1→2: Brief fields 1, 3, 6, 14, 16 filled.
 - Gate 2→3: 3 trends + 3 case studies + 5 inspirations.
 - Gate 3→4: One direction picked from three-direction set; brand-system.md has 9 fields.
@@ -161,16 +176,17 @@ If either MCP is missing at runtime, that surface is skipped silently and summar
 
 ## Session start
 
-1. Check for brief/transcript input.
-2. Read client profile if known (includes `gammaId` of prior deck for remix, Canva `design_id` for reference).
-3. Read `data/hemi-preferences.md`.
-4. Verify vendor registry.
-5. Verify required sibling skills (nano-banana, veo-video-creator).
-6. Verify Gamma MCP is connected. If absent, note that the Gamma surface will be skipped.
-7. Verify Canva MCP is connected. If absent, note that the Canva surface will be skipped.
-8. If both Canva and Gamma MCPs are absent, verify `premium-deck-strategist` is installed for fallback.
-9. Verify `data/canva-config.json` exists or run `Canva:list-brand-kits` first time and cache.
-10. Begin Stage 1.
+1. Ask the branding mode question (see `## Branding mode (ask first)` above). Record the answer in the proposal's `summary.md`.
+2. Check for brief/transcript input.
+3. Read client profile if known (includes `gammaId` of prior deck for remix, Canva `design_id` for reference).
+4. Read `data/hemi-preferences.md`.
+5. Verify vendor registry.
+6. Verify required sibling skills (nano-banana, veo-video-creator).
+7. Verify Gamma MCP is connected. If absent, note that the Gamma surface will be skipped.
+8. Verify Canva MCP is connected. If absent, note that the Canva surface will be skipped.
+9. If both Canva and Gamma MCPs are absent, verify `premium-deck-strategist` is installed for fallback.
+10. Verify `data/canva-config.json` exists or run `Canva:list-brand-kits` first time and cache.
+11. Begin Stage 1.
 
 ## Success
 
@@ -195,7 +211,7 @@ Commas, periods, colons, semicolons, quotation marks adjacent to Hebrew text mus
 When you author or rewrite a Hebrew sentence, write the entire sentence as a single `<a:r lang="he-IL">` whenever possible. Per-word splitting is the #1 source of bidi defects.
 
 ### 5. Strip `err="1"`
-Never write `err="1"` on `<a:rPr>` — it's a spell-check flag that produces visible red wavy underlines. When editing existing text, remove it.
+Never write `err="1"` on `<a:rPr>`. It is a spell-check flag that produces visible red wavy underlines. When editing existing text, remove it.
 
 ### 6. Mixed numeric + Hebrew titles ("06 / הרגעים החיים")
 Use exactly two runs:
@@ -211,7 +227,7 @@ Use exactly two runs:
 Every paragraph containing Hebrew must declare both. Missing `rtl="1"` makes punctuation float to the wrong edge.
 
 ### 8. Tables: `cell.text =` does NOT persist
-Office.js `cell.text` setter returns `success: true` but the value is lost on slide re-export. To change table cell text, use `edit_slide_xml` and rewrite the `<a:txBody>` inside the target `<a:tc>`. Style/fill/font properties via Office.js still work — only text content is broken.
+Office.js `cell.text` setter returns `success: true` but the value is lost on slide re-export. To change table cell text, use `edit_slide_xml` and rewrite the `<a:txBody>` inside the target `<a:tc>`. Style/fill/font properties via Office.js still work; only text content is broken.
 
 ### 9. ASCII punctuation only
 Replace before final export:
@@ -225,5 +241,5 @@ The theme's `<a:fontScheme>` already supplies majorFont/minorFont. A run-level `
 
 ### Final QA pass before delivery
 1. Run regex `/[\u2014\u2013\u2019\u201C\u201D]/g` across all slide XML and replace with ASCII equivalents.
-2. Sweep every `<a:rPr>` in Hebrew text — must have `lang="he-IL"`, no `err="1"`.
+2. Sweep every `<a:rPr>` in Hebrew text. Must have `lang="he-IL"`, no `err="1"`.
 3. Spot-check 2-3 dense paragraphs visually for misplaced commas/periods.
