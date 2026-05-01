@@ -84,7 +84,7 @@ The historical Bold 4:3 template (`assets/bold-presentation-template-spec.md`) i
 Voice rules apply to all surfaces:
 - Hebrew-first
 - No em-dash, no en-dash
-- No clichés ("בלתי נשכח", "מרגש", "unforgettable", "חוגגים יחד", "once in a lifetime")
+- No cliches ("בלתי נשכח", "מרגש", "unforgettable", "חוגגים יחד", "once in a lifetime")
 - Specific numbers, not adjectives
 - Max 5-7 words per on-slide bullet
 
@@ -124,21 +124,21 @@ In both surfaces: opening and closing slides do NOT carry the body-slide footer 
 
 - Hebrew-first. Numbers Western. Dates DD.MM.YYYY.
 - No em-dash or en-dash.
-- No clichés.
+- No cliches.
 - Specific numbers, not adjectives.
 - Short paragraphs.
 - Max 5-7 words per on-slide bullet; depth in speaker notes.
 
 ## Gates
 
-- Gate 0→1: Branding mode answered (bold-branded or clean).
-- Gate 1→2: Brief fields 1, 3, 6, 14, 16 filled.
-- Gate 2→3: 3 trends + 3 case studies + 5 inspirations.
-- Gate 3→4: One direction picked from three-direction set; brand-system.md has 9 fields.
-- Gate 4a→rest: One visual direction picked; full mockup set + video + mood-direction.md.
-- Gate 4→5: All specialists reference brand system + visual.
-- Gate 5→6: Every line maps to one of the 6 canonical categories; 70%+ lines reference vendor registry; no line without `source_deliverable`.
-- Gate 6→done: Six core artifacts (Canva URL+PDF+PPTX, Gamma URL+PPTX, XLSX, scorecard, summary, Trello card). If a deck MCP is unavailable at runtime, that surface is skipped (not blocked) and summary.md notes the gap.
+- Gate 0->1: Branding mode answered (bold-branded or clean).
+- Gate 1->2: Brief fields 1, 3, 6, 14, 16 filled.
+- Gate 2->3: 3 trends + 3 case studies + 5 inspirations.
+- Gate 3->4: One direction picked from three-direction set; brand-system.md has 9 fields.
+- Gate 4a->rest: One visual direction picked; full mockup set + video + mood-direction.md.
+- Gate 4->5: All specialists reference brand system + visual.
+- Gate 5->6: Every line maps to one of the 6 canonical categories; 70%+ lines reference vendor registry; no line without `source_deliverable`.
+- Gate 6->done: Six core artifacts (Canva URL+PDF+PPTX, Gamma URL+PPTX, XLSX, scorecard, summary, Trello card). If a deck MCP is unavailable at runtime, that surface is skipped (not blocked) and summary.md notes the gap.
 - Gate 7: Runs 24h after event from Trello card.
 
 ## Required sibling skills
@@ -154,7 +154,7 @@ In both surfaces: opening and closing slides do NOT carry the body-slide footer 
 | MCP server | Used in | Role |
 |---|---|---|
 | Gamma (custom Bold-operated, `gamma-mcp-server-production-959b.up.railway.app/sse`) | Stage 6, Stage 7 | `gamma_generate` builds the live Gamma deck and the downloadable PPTX. `gamma_generate_from_template` remixes the prior deck for returning clients (Phoenix, Keren, Efrat) |
-| Canva (`mcp.canva.com/mcp`) | Stage 6 | `request-outline-review` → `generate-design-structured` → `create-design-from-candidate` → `export-design` produces the Canva deck with PDF + PPTX exports |
+| Canva (`mcp.canva.com/mcp`) | Stage 6 | `request-outline-review` -> `generate-design-structured` -> `create-design-from-candidate` -> `export-design` produces the Canva deck with PDF + PPTX exports |
 
 If either MCP is missing at runtime, that surface is skipped silently and summary.md flags it. If both are missing, Stage 6 falls back to `premium-deck-strategist` PDF.
 
@@ -245,13 +245,14 @@ Every paragraph containing Hebrew must declare both. Missing `rtl="1"` makes pun
 Office.js `cell.text` setter returns `success: true` but the value is lost on slide re-export. To change table cell text, use `edit_slide_xml` and rewrite the `<a:txBody>` inside the target `<a:tc>`. Style/fill/font properties via Office.js still work; only text content is broken.
 
 ### 9. ASCII punctuation only
-Replace before final export:
-- `—` (em-dash, U+2014) → `-`
-- `–` (en-dash, U+2013) → `-`
-- `'` (curly apostrophe, U+2019) → `'`
-- `"` `"` (curly quotes, U+201C/D) → `"`
-- `·` (middle-dot, U+00B7) → `-`
-- `•` (bullet, U+2022) → `-`
+Replace before final export. Characters listed by Unicode codepoint to keep this file ASCII-clean:
+
+- U+2014 em-dash         -> `-`
+- U+2013 en-dash         -> `-`
+- U+2019 curly apostrophe -> ASCII `'`
+- U+201C, U+201D curly double quotes -> ASCII `"`
+- U+00B7 middle-dot      -> `-`
+- U+2022 bullet          -> `-`
 
 ### 10. Don't add `<a:latin>` unless changing the font
 The theme's `<a:fontScheme>` already supplies majorFont/minorFont. A run-level `<a:latin>` overrides the theme and may reference a font not installed on the user's machine, breaking rendering. Exception: when the theme defaults are inappropriate for Hebrew (e.g., Calibri produces poor Hebrew rendering), an intentional override to a Hebrew-friendly typeface is justified.
