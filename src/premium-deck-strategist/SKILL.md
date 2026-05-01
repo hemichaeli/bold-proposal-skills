@@ -19,7 +19,7 @@ Three branches:
 
 - **Bold + client-facing event proposal** (Phoenix, Keren, Efrat, or any external client event): stop, do not generate slides here, hand off to `bold-proposal-builder` instead. That skill has the canonical 7-stage flow, the 6-category budget spine, and the per-slide-type logo and footer rules.
 
-- **Bold + internal** (training, retro, strategy, Bold team-only deck, or pitch to Bold's own leadership): proceed with the Deep Blue palette below, but apply Bold's voice rules: Hebrew-first, no em-dash, no en-dash, no clichés, specific numbers not adjectives, max 5 to 7 words per on-slide bullet. No Bold logo on slides; the deck is for internal eyes.
+- **Bold + internal** (training, retro, strategy, Bold team-only deck, or pitch to Bold's own leadership): proceed with the Deep Blue palette below, but apply Bold's voice rules: Hebrew-first, no em-dash, no en-dash, no cliches, specific numbers not adjectives, max 5 to 7 words per on-slide bullet. No Bold logo on slides; the deck is for internal eyes.
 
 - **Generic** (any non-Bold audience): proceed with the standard Deep Blue palette and methodology described below. No Bold-specific overrides.
 
@@ -112,7 +112,7 @@ Avoid vague verbs (understand, know, consider, explore), marketing fluff (levera
 
 Choose the model that fits the content. Do not invent new ones.
 
-- **Process**: Linear arrow chain, A → B → C. Use for sequential steps where order matters.
+- **Process**: Linear arrow chain, A -> B -> C. Use for sequential steps where order matters.
 - **Cycle**: Circular arrow loop. Use for recurring workflows or continuous improvement.
 - **Matrix**: 2x2 grid with labeled axes. Use for comparisons such as cost vs benefit or speed vs quality.
 - **Pyramid**: Stacked horizontal layers. Use for hierarchies, priorities, or Maslow-style needs.
@@ -229,14 +229,29 @@ When you author or rewrite a Hebrew sentence, write the entire sentence as a sin
 Never write `err="1"` on `<a:rPr>`. It is a spell-check flag that produces visible red wavy underlines. When editing existing text, remove it.
 
 ### 6. Mixed numeric + Hebrew titles ("06 / הרגעים החיים")
-Use exactly two runs:
+
+Bold's convention: in a section-marker title like "06 / הרגעים החיים", the Hebrew topic word sits at the visual right edge of the slide (where Hebrew reading begins). The numeric prefix trails on the left visually. Reading right-to-left as Hebrew naturally does: number, separator, Hebrew topic.
+
+To produce this layout, write the LOGICAL text with the Hebrew portion FIRST, then the separator and number, in a single `lang="he-IL"` run:
+
 ```xml
 <a:p><a:pPr algn="r" rtl="1">...</a:pPr>
-  <a:r><a:rPr lang="en-US" .../><a:t>06 /</a:t></a:r>
-  <a:r><a:rPr lang="he-IL" .../><a:t> הרגעים החיים</a:t></a:r>
+  <a:r><a:rPr lang="he-IL" .../><a:t>הרגעים החיים / 06</a:t></a:r>
 </a:p>
 ```
-**The space MUST be at the start of the Hebrew run** (after `lang="he-IL"`), never at the end of the English run. Otherwise the bidi reorder collapses it and you get `06הרגעים`.
+
+DO NOT write logical "06 / הרגעים החיים" with the number first, even when split across en-US and he-IL runs. The bidi algorithm places the LTR sub-string "06 /" at the start of the RTL line, which puts the number at the visual right and the Hebrew word to its left. That is the inverted layout. Symptom: open the slide, the title looks like `<Hebrew word> 06 /` reading left-to-right, with `/` hugging the right edge of the slide.
+
+If the numeric prefix needs distinct styling (different color, weight, or font) from the Hebrew word, use TWO runs but still in Hebrew-first logical order:
+
+```xml
+<a:r><a:rPr lang="he-IL" .../><a:t>הרגעים החיים</a:t></a:r>
+<a:r><a:rPr lang="en-US" .../><a:t> / 06</a:t></a:r>
+```
+
+The leading space on the en-US run is a logical separator and renders correctly between the two visual blocks.
+
+When verifying, check: in proper Hebrew right-to-left reading, the title should read as "{number} / {Hebrew topic}", with the Hebrew topic word's first letter sitting at the visual right edge of the line.
 
 ### 7. Hebrew paragraphs need `algn="r" rtl="1"` on `<a:pPr>`
 Every paragraph containing Hebrew must declare both. Missing `rtl="1"` makes punctuation float to the wrong edge.
@@ -245,16 +260,20 @@ Every paragraph containing Hebrew must declare both. Missing `rtl="1"` makes pun
 Office.js `cell.text` setter returns `success: true` but the value is lost on slide re-export. To change table cell text, use `edit_slide_xml` and rewrite the `<a:txBody>` inside the target `<a:tc>`. Style/fill/font properties via Office.js still work; only text content is broken.
 
 ### 9. ASCII punctuation only
-Replace before final export:
-- `—` (em-dash, U+2014) → `-`
-- `–` (en-dash, U+2013) → `-`
-- `'` (curly apostrophe, U+2019) → `'`
-- `"` `"` (curly quotes, U+201C/D) → `"`
+Replace before final export. Characters listed by Unicode codepoint to keep this file ASCII-clean:
+
+- U+2014 em-dash         -> `-`
+- U+2013 en-dash         -> `-`
+- U+2019 curly apostrophe -> ASCII `'`
+- U+201C, U+201D curly double quotes -> ASCII `"`
+- U+00B7 middle-dot      -> `-`
+- U+2022 bullet          -> `-`
 
 ### 10. Don't add `<a:latin>` unless changing the font
-The theme's `<a:fontScheme>` already supplies majorFont/minorFont. A run-level `<a:latin>` overrides the theme and may reference a font not installed on the user's machine, breaking rendering.
+The theme's `<a:fontScheme>` already supplies majorFont/minorFont. A run-level `<a:latin>` overrides the theme and may reference a font not installed on the user's machine, breaking rendering. Exception: when the theme defaults are inappropriate for Hebrew (e.g., Calibri produces poor Hebrew rendering), an intentional override to a Hebrew-friendly typeface is justified.
 
 ### Final QA pass before delivery
-1. Run regex `/[\u2014\u2013\u2019\u201C\u201D]/g` across all slide XML and replace with ASCII equivalents.
+1. Run regex `/[\u2014\u2013\u2019\u201C\u201D\u00B7\u2022]/g` across all slide XML and replace with ASCII equivalents.
 2. Sweep every `<a:rPr>` in Hebrew text. Must have `lang="he-IL"`, no `err="1"`.
-3. Spot-check 2-3 dense paragraphs visually for misplaced commas/periods.
+3. For every "{number} / {Hebrew topic}" title, confirm the logical text in `<a:t>` is `{Hebrew topic} / {number}` (Hebrew-first), not `{number} / {Hebrew topic}` (number-first). Number-first logical order produces inverted visual layout.
+4. Spot-check 2-3 dense paragraphs visually for misplaced commas/periods.
