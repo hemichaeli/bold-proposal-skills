@@ -214,14 +214,29 @@ When you author or rewrite a Hebrew sentence, write the entire sentence as a sin
 Never write `err="1"` on `<a:rPr>`. It is a spell-check flag that produces visible red wavy underlines. When editing existing text, remove it.
 
 ### 6. Mixed numeric + Hebrew titles ("06 / הרגעים החיים")
-Use exactly two runs:
+
+Bold's convention: in a section-marker title like "06 / הרגעים החיים", the Hebrew topic word sits at the visual right edge of the slide (where Hebrew reading begins). The numeric prefix trails on the left visually. Reading right-to-left as Hebrew naturally does: number, separator, Hebrew topic.
+
+To produce this layout, write the LOGICAL text with the Hebrew portion FIRST, then the separator and number, in a single `lang="he-IL"` run:
+
 ```xml
 <a:p><a:pPr algn="r" rtl="1">...</a:pPr>
-  <a:r><a:rPr lang="en-US" .../><a:t>06 /</a:t></a:r>
-  <a:r><a:rPr lang="he-IL" .../><a:t> הרגעים החיים</a:t></a:r>
+  <a:r><a:rPr lang="he-IL" .../><a:t>הרגעים החיים / 06</a:t></a:r>
 </a:p>
 ```
-**The space MUST be at the start of the Hebrew run** (after `lang="he-IL"`), never at the end of the English run. Otherwise the bidi reorder collapses it and you get `06הרגעים`.
+
+DO NOT write logical "06 / הרגעים החיים" with the number first, even when split across en-US and he-IL runs. The bidi algorithm places the LTR sub-string "06 /" at the start of the RTL line, which puts the number at the visual right and the Hebrew word to its left. That is the inverted layout. Symptom: open the slide, the title looks like `<Hebrew word> 06 /` reading left-to-right, with `/` hugging the right edge of the slide.
+
+If the numeric prefix needs distinct styling (different color, weight, or font) from the Hebrew word, use TWO runs but still in Hebrew-first logical order:
+
+```xml
+<a:r><a:rPr lang="he-IL" .../><a:t>הרגעים החיים</a:t></a:r>
+<a:r><a:rPr lang="en-US" .../><a:t> / 06</a:t></a:r>
+```
+
+The leading space on the en-US run is a logical separator and renders correctly between the two visual blocks.
+
+When verifying, check: in proper Hebrew right-to-left reading, the title should read as "{number} / {Hebrew topic}", with the Hebrew topic word's first letter sitting at the visual right edge of the line.
 
 ### 7. Hebrew paragraphs need `algn="r" rtl="1"` on `<a:pPr>`
 Every paragraph containing Hebrew must declare both. Missing `rtl="1"` makes punctuation float to the wrong edge.
@@ -235,11 +250,14 @@ Replace before final export:
 - `–` (en-dash, U+2013) → `-`
 - `'` (curly apostrophe, U+2019) → `'`
 - `"` `"` (curly quotes, U+201C/D) → `"`
+- `·` (middle-dot, U+00B7) → `-`
+- `•` (bullet, U+2022) → `-`
 
 ### 10. Don't add `<a:latin>` unless changing the font
-The theme's `<a:fontScheme>` already supplies majorFont/minorFont. A run-level `<a:latin>` overrides the theme and may reference a font not installed on the user's machine, breaking rendering.
+The theme's `<a:fontScheme>` already supplies majorFont/minorFont. A run-level `<a:latin>` overrides the theme and may reference a font not installed on the user's machine, breaking rendering. Exception: when the theme defaults are inappropriate for Hebrew (e.g., Calibri produces poor Hebrew rendering), an intentional override to a Hebrew-friendly typeface is justified.
 
 ### Final QA pass before delivery
-1. Run regex `/[\u2014\u2013\u2019\u201C\u201D]/g` across all slide XML and replace with ASCII equivalents.
+1. Run regex `/[\u2014\u2013\u2019\u201C\u201D\u00B7\u2022]/g` across all slide XML and replace with ASCII equivalents.
 2. Sweep every `<a:rPr>` in Hebrew text. Must have `lang="he-IL"`, no `err="1"`.
-3. Spot-check 2-3 dense paragraphs visually for misplaced commas/periods.
+3. For every "{number} / {Hebrew topic}" title, confirm the logical text in `<a:t>` is `{Hebrew topic} / {number}` (Hebrew-first), not `{number} / {Hebrew topic}` (number-first). Number-first logical order produces inverted visual layout.
+4. Spot-check 2-3 dense paragraphs visually for misplaced commas/periods.
