@@ -44,6 +44,30 @@ Default: ask, do not assume.
 3. מכירתית (Sales)
 4. תדמיתית (Reputation)
 
+## Marketing moves - when to invoke marketing-council
+
+At Stage 1 intake, identify whether the event has a **שיווקית (Marketing)** goal or requires marketing moves before, during, or after the event. Examples:
+
+- Pre-event: awareness campaign, email invitations, social media, paid ads, press
+- During event: live social content, UGC activation, influencer presence
+- Post-event: media coverage, recap content, lead nurturing from attendees
+
+If marketing moves are part of the proposal scope, **invoke `marketing-council`** after Stage 1 (or after Gate 3 once the brand heart is chosen) to build the marketing layer alongside the event plan.
+
+`marketing-council` produces a MARKETING-PLAN.md that becomes an appendix to the Bold proposal package. The brand system and visual direction from Stage 3 are passed to marketing-council as the creative foundation - so the marketing assets are consistent with the event concept.
+
+When to invoke:
+- Client explicitly requests marketing deliverables as part of the proposal
+- Goal category is primarily or partially שיווקית
+- Event has a pre-event awareness or ticket-sales phase
+- Client is a brand (not an internal corporate event) that needs content amplification
+- Budget includes a line for "תקשור מקדים" beyond simple digital invitations
+
+When NOT to invoke:
+- Internal corporate event (no external audience)
+- Event is fully closed / VIP with no amplification need
+- Client explicitly said marketing is handled by their own team
+
 ## The three-directions principle
 
 Both Stage 3 and Stage 4a propose three distinct directions along a chosen axis. Each direction has a visual representation. Hemi picks one. If none land, Claude asks one clarifying question, picks a different axis, proposes three new. Max 3 rejection cycles per stage. Stretch policy: always one stretch direction per set.
@@ -147,6 +171,7 @@ In both surfaces: opening and closing slides do NOT carry the body-slide footer 
 |---|---|---|
 | `nano-banana` | Stage 3, 4a | Visual reference images, mockups |
 | `veo-video-creator` | Stage 4a | Atmosphere video |
+| `marketing-council` | Stage 1 (conditional) | Full marketing plan when proposal has marketing scope - see "Marketing moves" section above |
 | `premium-deck-strategist` | Legacy fallback only | Used if both Canva and Gamma MCPs are unavailable |
 
 ## Required MCP servers
@@ -200,24 +225,20 @@ When the deck is in Hebrew (or any RTL language), follow these rules to prevent 
 Every `<a:rPr>` must declare a language. Hebrew runs: `lang="he-IL"`. English/numeric/punctuation-only runs: `lang="en-US"`. **Missing `lang` causes red spell-check squiggles AND breaks the bidi engine's ordering.**
 
 ### 2. Never split a Hebrew word across runs
-A single Hebrew word = a single `<a:r>`. Splitting "מוסדי" across two runs lets the bidi engine treat the two halves as independent segments and any punctuation between them lands in the wrong visual position.
+A single Hebrew word = a single `<a:r>`. Splitting across two runs lets the bidi engine treat the two halves as independent segments and any punctuation between them lands in the wrong visual position.
 
 ### 3. Punctuation belongs in the Hebrew run
 Commas, periods, colons, semicolons, quotation marks adjacent to Hebrew text must live **inside the same `<a:r>` as the Hebrew text**, not in a separate `lang="en-US"` run.
-- Wrong: `<a:r he-IL>אמנים</a:r><a:r en-US>, </a:r><a:r he-IL>צעירים</a:r>`
-- Right: `<a:r he-IL>אמנים, צעירים</a:r>`
 
 ### 4. Prefer one Hebrew run per phrase
-When you author or rewrite a Hebrew sentence, write the entire sentence as a single `<a:r lang="he-IL">` whenever possible. Per-word splitting is the #1 source of bidi defects.
+Write the entire sentence as a single `<a:r lang="he-IL">` whenever possible. Per-word splitting is the #1 source of bidi defects.
 
 ### 5. Strip `err="1"`
-Never write `err="1"` on `<a:rPr>`. It is a spell-check flag that produces visible red wavy underlines. When editing existing text, remove it.
+Never write `err="1"` on `<a:rPr>`. It produces visible red wavy underlines. When editing existing text, remove it.
 
-### 6. Mixed numeric + Hebrew titles ("06 / הרגעים החיים")
+### 6. Mixed numeric + Hebrew titles
 
-Bold's convention: in a section-marker title like "06 / הרגעים החיים", the Hebrew topic word sits at the visual right edge of the slide (where Hebrew reading begins). The numeric prefix trails on the left visually. Reading right-to-left as Hebrew naturally does: number, separator, Hebrew topic.
-
-To produce this layout, write the LOGICAL text with the Hebrew portion FIRST, then the separator and number, in a single `lang="he-IL"` run:
+Bold's convention: Hebrew topic word at visual right, numeric prefix at visual left. Write logical text Hebrew-first in a single `lang="he-IL"` run:
 
 ```xml
 <a:p><a:pPr algn="r" rtl="1">...</a:pPr>
@@ -225,40 +246,23 @@ To produce this layout, write the LOGICAL text with the Hebrew portion FIRST, th
 </a:p>
 ```
 
-DO NOT write logical "06 / הרגעים החיים" with the number first, even when split across en-US and he-IL runs. The bidi algorithm places the LTR sub-string "06 /" at the start of the RTL line, which puts the number at the visual right and the Hebrew word to its left. That is the inverted layout. Symptom: open the slide, the title looks like `<Hebrew word> 06 /` reading left-to-right, with `/` hugging the right edge of the slide.
-
-If the numeric prefix needs distinct styling (different color, weight, or font) from the Hebrew word, use TWO runs but still in Hebrew-first logical order:
-
-```xml
-<a:r><a:rPr lang="he-IL" .../><a:t>הרגעים החיים</a:t></a:r>
-<a:r><a:rPr lang="en-US" .../><a:t> / 06</a:t></a:r>
-```
-
-The leading space on the en-US run is a logical separator and renders correctly between the two visual blocks.
-
-When verifying, check: in proper Hebrew right-to-left reading, the title should read as "{number} / {Hebrew topic}", with the Hebrew topic word's first letter sitting at the visual right edge of the line.
+DO NOT write number-first logical order. It inverts the visual layout.
 
 ### 7. Hebrew paragraphs need `algn="r" rtl="1"` on `<a:pPr>`
-Every paragraph containing Hebrew must declare both. Missing `rtl="1"` makes punctuation float to the wrong edge.
 
 ### 8. Tables: `cell.text =` does NOT persist
-Office.js `cell.text` setter returns `success: true` but the value is lost on slide re-export. To change table cell text, use `edit_slide_xml` and rewrite the `<a:txBody>` inside the target `<a:tc>`. Style/fill/font properties via Office.js still work; only text content is broken.
+Use `edit_slide_xml` to rewrite `<a:txBody>` inside `<a:tc>`.
 
 ### 9. ASCII punctuation only
-Replace before final export. Characters listed by Unicode codepoint to keep this file ASCII-clean:
-
-- U+2014 em-dash         -> `-`
-- U+2013 en-dash         -> `-`
-- U+2019 curly apostrophe -> ASCII `'`
-- U+201C, U+201D curly double quotes -> ASCII `"`
-- U+00B7 middle-dot      -> `-`
-- U+2022 bullet          -> `-`
+- U+2014 em-dash -> `-`
+- U+2013 en-dash -> `-`
+- U+2019 curly apostrophe -> `'`
+- U+201C, U+201D curly double quotes -> `"`
 
 ### 10. Don't add `<a:latin>` unless changing the font
-The theme's `<a:fontScheme>` already supplies majorFont/minorFont. A run-level `<a:latin>` overrides the theme and may reference a font not installed on the user's machine, breaking rendering. Exception: when the theme defaults are inappropriate for Hebrew (e.g., Calibri produces poor Hebrew rendering), an intentional override to a Hebrew-friendly typeface is justified.
 
 ### Final QA pass before delivery
-1. Run regex `/[\u2014\u2013\u2019\u201C\u201D\u00B7\u2022]/g` across all slide XML and replace with ASCII equivalents.
-2. Sweep every `<a:rPr>` in Hebrew text. Must have `lang="he-IL"`, no `err="1"`.
-3. For every "{number} / {Hebrew topic}" title, confirm the logical text in `<a:t>` is `{Hebrew topic} / {number}` (Hebrew-first), not `{number} / {Hebrew topic}` (number-first). Number-first logical order produces inverted visual layout.
-4. Spot-check 2-3 dense paragraphs visually for misplaced commas/periods.
+1. Regex `/[\u2014\u2013\u2019\u201C\u201D\u00B7\u2022]/g` across all slide XML.
+2. Sweep every `<a:rPr>` in Hebrew text: `lang="he-IL"`, no `err="1"`.
+3. Every "{number} / {Hebrew topic}" title: confirm logical text is Hebrew-first.
+4. Spot-check 2-3 dense paragraphs visually for misplaced punctuation.
