@@ -1,0 +1,202 @@
+{
+  "_meta": {
+    "version": "2.0",
+    "schema_note": "SEED FILE - extracted from real Bold Drive quotes May 2026. Copy to vendor-registry.json to activate. All unit_cost_ils values are supplier costs before Bold margin. Do not store client prices here.",
+    "last_scan_utc": "2026-05-21T12:00:00Z",
+    "source_folders": [
+      "0B7TFmdvhXcItS1JxM2xIZG5YeUU",
+      "0B7TFmdvhXcItZnVaVllQZmZOS0U"
+    ],
+    "files_seen": [
+      "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
+      "1dxVmUZ-1V4geMBl5P1IjjvzwjvV2JWUu",
+      "1chyNYuMQkzvvSh8skvpmgrtZQJe6em78",
+      "1lvhEjMEFpuDaDOv0UeLipMV-RRe9SE6M"
+    ],
+    "parse_errors": [],
+    "cpi_adjustment_table": "data/cpi-israel.json"
+  },
+  "vendors": [
+    {
+      "vendor_name": "ארגוני במות",
+      "primary_category": "טכני",
+      "contact": {
+        "name": "רינת טרמין",
+        "email": "rinat@irgunei-bamot.co.il",
+        "phone": "08-9445772",
+        "fax": "08-9445774"
+      },
+      "address": "ת.ד 259 קיבוץ חולדה 7684200",
+      "tax_id": "515891786",
+      "notes": "במות, הסילוק, ציחמ/תחלוקה. מחיר אינו כולל אישור מהנדס קונסטרוקציה וחישובים סטטיים.",
+      "items": [
+        {
+          "item_name": "פודיום יחיד 1.22x1.22 מ', גובה 0.60 מ'",
+          "unit": "יחידה",
+          "unit_cost_ils": 800,
+          "quote_date": "2026-04-23",
+          "source_drive_file_id": "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
+          "source_drive_file_name": "1904 - אופציה 1 - אירוע אוקטובר 2026 - ראשלצ.pdf",
+          "notes": "מחיר מחושב: 6 יחידות ב-4800 ש\"ח. כולל ציפוי שטיח שחור לחיטוי שחור.",
+          "ingested_utc": "2026-05-21T12:00:00Z"
+        },
+        {
+          "item_name": "במת ישיבה מדורגת 5.49 מ' רוחב - גבהים 0.20/0.40/0.60/0.80",
+          "unit": "אירוע",
+          "unit_cost_ils": 4800,
+          "quote_date": "2026-04-23",
+          "source_drive_file_id": "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
+          "source_drive_file_name": "1904 - אופציה 1 - אירוע אוקטובר 2026 - ראשלצ.pdf",
+          "notes": "4 יחידות של 5.49x0.80 מ'. ללא מזרנים.",
+          "ingested_utc": "2026-05-21T12:00:00Z"
+        },
+        {
+          "item_name": "במת ישיבה מדורגת פירמידה עם עמוד מרכזי",
+          "unit": "אירוע",
+          "unit_cost_ils": 15200,
+          "quote_date": "2026-04-23",
+          "source_drive_file_id": "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
+          "source_drive_file_name": "1904 - אופציה 1 - אירוע אוקטובר 2026 - ראשלצ.pdf",
+          "notes": "בסיס 7.72x7.72 מ', עומק 1.22 מ', גובה 0.20 מ'. כולל ציפוי שטיח שחור לחיטוי שחור.",
+          "ingested_utc": "2026-05-21T12:00:00Z"
+        },
+        {
+          "item_name": "קיר הסילוק לבן דו-צדדי R-צורה 3 מ' רוחב 4 מ' גובה",
+          "unit": "אירוע",
+          "unit_cost_ils": 6900,
+          "quote_date": "2026-04-23",
+          "source_drive_file_id": "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
+          "source_drive_file_name": "1904 - אופציה 1 - אירוע אוקטובר 2026 - ראשלצ.pdf",
+          "notes": "כולל משקולות. נבנה בשטח החיצוני של המבנה.",
+          "ingested_utc": "2026-05-21T12:00:00Z"
+        },
+        {
+          "item_name": "קיר הסילוק לבן דו-צדדי 6.10 מ' רוחב 4 מ' גובה + פתח מעבר",
+          "unit": "אירוע",
+          "unit_cost_ils": 13700,
+          "quote_date": "2026-04-23",
+          "source_drive_file_id": "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
+          "source_drive_file_name": "1904 - אופציה 1 - אירוע אוקטובר 2026 - ראשלצ.pdf",
+          "notes": "כולל פתח מעבר 2.44 מ' גובה x 1.22 מ' רוחב. דו-צדדי. כולל משקולות.",
+          "ingested_utc": "2026-05-21T12:00:00Z"
+        },
+        {
+          "item_name": "במת גובה מינימום 6.10x3.05 מ' ציפוי שטיח שחור",
+          "unit": "אירוע",
+          "unit_cost_ils": 3400,
+          "quote_date": "2026-04-23",
+          "source_drive_file_id": "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
+          "source_drive_file_name": "1904 - אופציה 1 - אירוע אוקטובר 2026 - ראשלצ.pdf",
+          "notes": "כולל ציפוי שטיח שחור לחיטוי שחור.",
+          "ingested_utc": "2026-05-21T12:00:00Z"
+        },
+        {
+          "item_name": "קירות הסילוק לבנים לתערוכה - חבילה קטנה (14.64 מ' + 8 מחיצות)",
+          "unit": "אירוע",
+          "unit_cost_ils": 18000,
+          "quote_date": "2026-04-23",
+          "source_drive_file_id": "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
+          "source_drive_file_name": "1904 - אופציה 1 - אירוע אוקטובר 2026 - ראשלצ.pdf",
+          "notes": "1 קיר 14.64 מ' + 8 מחיצות 1.22 מ' רוחב x 2.44 מ' גובה. ללא גיתוג.",
+          "ingested_utc": "2026-05-21T12:00:00Z"
+        },
+        {
+          "item_name": "קירות הסילוק לבנים לתערוכה - חבילה בינונית (29.28 מ' + 14 מחיצות)",
+          "unit": "אירוע",
+          "unit_cost_ils": 34000,
+          "quote_date": "2026-04-23",
+          "source_drive_file_id": "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
+          "source_drive_file_name": "1904 - אופציה 1 - אירוע אוקטובר 2026 - ראשלצ.pdf",
+          "notes": "1 קיר 29.28 מ' + 14 מחיצות 1.22 מ' רוחב x 2.44 מ' גובה. ללא גיתוג.",
+          "ingested_utc": "2026-05-21T12:00:00Z"
+        },
+        {
+          "item_name": "קירות הסילוק לבנים לתערוכה - חבילה גדולה (39.04 מ' + 20 מחיצות)",
+          "unit": "אירוע",
+          "unit_cost_ils": 46000,
+          "quote_date": "2026-04-23",
+          "source_drive_file_id": "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
+          "source_drive_file_name": "1904 - אופציה 1 - אירוע אוקטובר 2026 - ראשלצ.pdf",
+          "notes": "1 קיר 39.04 מ' + 20 מחיצות 1.22 מ' רוחב x 2.44 מ' גובה. ללא גיתוג.",
+          "ingested_utc": "2026-05-21T12:00:00Z"
+        },
+        {
+          "item_name": "קירות הסילוק לבנים כפולים לתליית אמנות - 20 יח' 2.44x2.44 מ'",
+          "unit": "אירוע",
+          "unit_cost_ils": 40000,
+          "quote_date": "2026-04-23",
+          "source_drive_file_id": "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
+          "source_drive_file_name": "1904 - אופציה 1 - אירוע אוקטובר 2026 - ראשלצ.pdf",
+          "notes": "20 יח' לבנים כפולים. כולל רגליות סגירה. ייעוד: תליית יצירות אמנות.",
+          "ingested_utc": "2026-05-21T12:00:00Z"
+        },
+        {
+          "item_name": "הובלות ולוגיסטיקה - אירוע סטנדרטי",
+          "unit": "אירוע",
+          "unit_cost_ils": 15000,
+          "quote_date": "2026-04-23",
+          "source_drive_file_id": "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
+          "source_drive_file_name": "1904 - אופציה 1 - אירוע אוקטובר 2026 - ראשלצ.pdf",
+          "notes": "הובלה מ/אל חולדה + כוח אדם הקמה. לא כולל אישור מהנדס.",
+          "ingested_utc": "2026-05-21T12:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "The Way",
+      "primary_category": "מיתוג ושילוט",
+      "contact": {
+        "name": "איתי גנור / אריאל שפירא",
+        "email": "itay@thewayto.co.il"
+      },
+      "notes": "אסטרטגיה ופיתוח מותג. לא עיצוב גרפי - משרד אסטרטגיה. מלווה גם ספקי פרסום ודיגיטל.",
+      "items": [
+        {
+          "item_name": "פיתוח מותג מלא - 6 שלבים (מחקר, אסטרטגיה, שפה, בריפים, כלים, מדריך)",
+          "unit": "פרויקט",
+          "unit_cost_ils": 50000,
+          "quote_date": "2026-04-14",
+          "source_drive_file_id": "1chyNYuMQkzvvSh8skvpmgrtZQJe6em78",
+          "source_drive_file_name": "פיתוח מותג_תערוכת אומנות הפניקס 14.pdf",
+          "notes": "לא כולל רכישת תמונות/איורים. לא כולל הוצאות נסיעה לחו\"ל אם נדרש. ציר זמן: שלבים א-ב - 14 יום, שלב ג - 30 יום, שלב ד - 7-14 יום.",
+          "ingested_utc": "2026-05-21T12:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "טריגר - שירותי לויד וקידום מכירות",
+      "primary_category": "כח אדם ולוגיסטיקה",
+      "contact": {
+        "name": "אפרת (Bold) - efrat@bebold.co.il",
+        "notes": "הצעה הוגשה לאפרת בנובמבר 2019. יש לאמת עמידה בתמחור נוכחי."
+      },
+      "tax_id": "513101261",
+      "bank": "מרכנתיל סניף 647 נתניה ח/ן 62360",
+      "notes": "STALE - הצעה מ-2019. יש לבקש עדכון תמחור לפני שימוש. 25 סניפים בארץ.",
+      "items": [
+        {
+          "item_name": "לויד/ית שעה - תעריף בסיס",
+          "unit": "שעה",
+          "unit_cost_ils": 75,
+          "quote_date": "2019-11-01",
+          "source_drive_file_id": "1lvhEjMEFpuDaDOv0UeLipMV-RRe9SE6M",
+          "source_drive_file_name": "מחירון דיילות.pdf",
+          "notes": "מינימום 4 שעות. שעות נוספות: +25% לשתי שעות ראשונות, +50% מעבר. אחרי 22:00 בחול: +25%. שבת/חג: +50%. ללא מע\"מ.",
+          "stale_warning": true,
+          "ingested_utc": "2026-05-21T12:00:00Z"
+        },
+        {
+          "item_name": "דמי ניהול - שירותי לויד",
+          "unit": "אחוז",
+          "unit_cost_ils": null,
+          "quote_date": "2019-11-01",
+          "source_drive_file_id": "1lvhEjMEFpuDaDOv0UeLipMV-RRe9SE6M",
+          "source_drive_file_name": "מחירון דיילות.pdf",
+          "notes": "5% מעל עלות הלויד. תחבורה 30 ש\"ח נוסף. ללא מע\"מ.",
+          "stale_warning": true,
+          "ingested_utc": "2026-05-21T12:00:00Z"
+        }
+      ]
+    }
+  ]
+}
