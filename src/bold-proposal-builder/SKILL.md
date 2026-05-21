@@ -1,6 +1,6 @@
 ---
 name: bold-proposal-builder
-description: Build premium event proposals for Bold Productions, a Tel-Aviv event production company, through a 7-stage flow, brief gathering, research, three-direction brand heart selection, three-direction visualization, content/operations/culinary specialists, budget, assembly, and post-event debrief. Use whenever Hemi Michaeli asks to build, draft, or prepare a proposal or event concept for a Bold client. Also triggers for "לבנות הצעה", "פיץ' לאירוע", "הצעת מחיר לכנס", "קונספט לאירוע של". Mentions of Phoenix, Keren, Efrat clients also trigger. Produces a client-facing package across three deck surfaces (live Canva deck, live Gamma deck, downloadable PPTX from both), PDF export, strategy, brand system, mockups, atmosphere video, agenda, scripts, menu, operations, budget XLSX in Bold's canonical 6-category format, KPIs scorecard, and Trello debrief reminder. Default 16:9. Requires nano-banana, veo-video-creator, plus Gamma and Canva MCP servers.
+description: Build premium event proposals for Bold Productions, a Tel-Aviv event production company, through a 7-stage flow, brief gathering, research, three-direction brand heart selection, three-direction visualization, content/operations/culinary specialists, budget, assembly, and post-event debrief. Use whenever Hemi Michaeli asks to build, draft, or prepare a proposal or event concept for a Bold client. Also triggers for "לבנות הצעה", "פיץ' לאירוע", "הצעת מחיר לכנס", "קונספט לאירוע של". Mentions of Phoenix, Keren, Efrat clients also trigger. Produces a client-facing package in default deck surfaces (live Canva deck + live Gamma deck + downloadable PowerPoint files from both, plus PDF export from Canva), plus strategy, brand system, mockups, atmosphere video, agenda, scripts, menu, operations, budget XLSX in Bold's canonical 13-column RTL template with dual-layer margin (15% per-line embedded plus 15% production fee), KPIs scorecard, and Trello debrief reminder. At Stage 5 the skill auto-syncs vendor quotes from two Drive folders into data/vendor-registry.json. Requires nano-banana and veo-video-creator skills for Stage 4, the Gamma MCP server, and the Canva MCP server for Stage 6.
 license: Proprietary
 ---
 
@@ -8,19 +8,16 @@ license: Proprietary
 
 A 7-stage orchestrator for producing premium event proposals for Bold Productions. Each stage reads a reference file in `references/`, produces its artifacts, hands off. Skip stages and the final proposal fragments.
 
-## Branding mode (ask first)
+## What changed in v2.8
 
-At session start, before Stage 1, ask Hemi:
+The budget margin model is now correctly described as dual-layer:
 
-> Apply the full Bold-branded layout (logos + footer), or produce a clean unbranded deck?
+1. **15% per-line embedded markup** (invisible to client). Built into the client unit price in the XLSX. Surfaces only in the gray profit columns L-M.
+2. **15% production fee** ("דמי ארגון והפקה") visible at the bottom of each section.
 
-If **Bold-branded** (the default for any client-facing proposal): apply the per-slide-type spec described in the `Logo and footer handling` section below. Use the Bold Canva brand kit if available. Pick a Bold-aligned Gamma theme.
+Effective Bold margin: ~32% (1.15 * 1.15 = 1.3225). The v2.7 description ("production fee IS the margin, no other markup") was incorrect and has been removed.
 
-If **clean / unbranded** (used for early internal drafts before client sign-off, white-label events Bold is producing under the client's own brand, or any deck that should not visibly read as "by Bold"): skip the entire logo and footer apparatus. No `bold-black-opening.jpg` on the opening slide, no `bold-white-footer.jpg` bottom-left, no centered footer text, no `bold-closing.mp4` on the closing slide. Voice rules and the seven-stage flow still apply; only the visible Bold branding is suppressed.
-
-The answer is recorded in `proposals/<slug>/summary.md` as `branding_mode: bold-branded | clean`.
-
-Default: ask, do not assume.
+Also new: vendor-quote monitoring at Stage 5 open. The skill scans two Drive folders for new supplier quotes since the last sync and updates `data/vendor-registry.json` automatically. See `references/vendor-quote-monitoring.md`. Build script bumped to `scripts/build_budget_xlsx.py` v4.0 to support the formula-driven dual-margin layout.
 
 ## The seven stages
 
@@ -33,8 +30,8 @@ Default: ask, do not assume.
 | 4b | Content & experience | `references/stage-4b-content-experience.md` | `agenda.md`, `scripts.md` |
 | 4c | Operations | `references/stage-4c-operations.md` | `logistics.md` |
 | 4d | Culinary | `references/stage-4d-culinary.md` | `menu.md` |
-| 5 | Budget | `references/stage-5-budget.md` + `assets/budget-categories-reference.md` | `budget.json` (6-category canonical tree) |
-| 6 | Assembly | `references/stage-6-assembly.md` + `references/canva-deck-path.md` | **Canva deck** (URL + PDF + PPTX) + **Gamma deck** (URL + PPTX) + budget XLSX + scorecard + summary + Trello card |
+| 5 | Budget | `references/stage-5-budget.md` + `references/vendor-quote-monitoring.md` + `assets/budget-categories-reference.md` | `budget.json` (supplier costs only; script derives client prices) |
+| 6 | Assembly | `references/stage-6-assembly.md` + `references/canva-deck-path.md` | Canva deck (URL + PDF + PPTX), Gamma deck (URL + PPTX), `budget.xlsx`, KPI scorecard, summary, Trello card |
 | 7 | Debrief | `references/stage-7-debrief.md` | `debrief-[event].md`, client profile (with `gammaId` and Canva `design_id`), preferences update |
 
 ## The four goal categories
@@ -44,40 +41,15 @@ Default: ask, do not assume.
 3. מכירתית (Sales)
 4. תדמיתית (Reputation)
 
-## Marketing moves - when to invoke marketing-council
-
-At Stage 1 intake, identify whether the event has a **שיווקית (Marketing)** goal or requires marketing moves before, during, or after the event. Examples:
-
-- Pre-event: awareness campaign, email invitations, social media, paid ads, press
-- During event: live social content, UGC activation, influencer presence
-- Post-event: media coverage, recap content, lead nurturing from attendees
-
-If marketing moves are part of the proposal scope, **invoke `marketing-council`** after Stage 1 (or after Gate 3 once the brand heart is chosen) to build the marketing layer alongside the event plan.
-
-`marketing-council` produces a MARKETING-PLAN.md that becomes an appendix to the Bold proposal package. The brand system and visual direction from Stage 3 are passed to marketing-council as the creative foundation - so the marketing assets are consistent with the event concept.
-
-When to invoke:
-- Client explicitly requests marketing deliverables as part of the proposal
-- Goal category is primarily or partially שיווקית
-- Event has a pre-event awareness or ticket-sales phase
-- Client is a brand (not an internal corporate event) that needs content amplification
-- Budget includes a line for "תקשור מקדים" beyond simple digital invitations
-
-When NOT to invoke:
-- Internal corporate event (no external audience)
-- Event is fully closed / VIP with no amplification need
-- Client explicitly said marketing is handled by their own team
-
 ## The three-directions principle
 
-Both Stage 3 and Stage 4a propose three distinct directions along a chosen axis. Each direction has a visual representation. Hemi picks one. If none land, Claude asks one clarifying question, picks a different axis, proposes three new. Max 3 rejection cycles per stage. Stretch policy: always one stretch direction per set.
+Stages 3 and 4a each propose three distinct directions along a chosen axis. Each direction has a visual representation. Hemi picks one. If none land, Claude asks one clarifying question, picks a different axis, proposes three new. Max 3 rejection cycles per stage. Stretch policy: always one stretch direction per set.
 
-### Learning Hemi over time
 Every selection logged to `data/hemi-preferences.md`. Read at start of every Stage 3 and Stage 4a session.
 
 ## The budget spine (Bold's canonical 6-category tree)
 
-Bold has used the same 6 top-level budget categories since 2010. Stage 5 does NOT invent categories; it picks from this spine:
+Bold has used the same 6 top-level budget categories since 2010. Stage 5 does NOT invent categories.
 
 1. כללי (General)
 2. תקשור מקדים (Pre-event communications)
@@ -86,83 +58,77 @@ Bold has used the same 6 top-level budget categories since 2010. Stage 5 does NO
 5. כח אדם ולוגיסטיקה (Staff & logistics)
 6. שונות (Miscellaneous)
 
-Underneath the six sit 30 sub-categories and ~140 typical line items. Full tree in `assets/budget-categories-reference.md` (sourced from "Copy of Copy of תבנית מתודולוגית לאירועים 4.xls" sheet 1, in use at Bold since 2004).
+Full taxonomy (30 sub-categories, ~140 line items) in `assets/budget-categories-reference.md`.
 
-XLSX layout matches Bold's actual template "טמפלט תקציב 01" (in use since 2010): 13 columns RTL, single sheet "טמפלט ריק", main + options sections. Production fee: single "דמי ארגון והפקה" line at 15% after the six categories. Conditional items live in the options section under a single כללי marker. Script: `scripts/build_budget_xlsx.py` v3.0.
+## The budget XLSX layout (Bold's canonical 13-column RTL template)
 
-## The deck surfaces (Stage 6, v2.8)
+Single sheet "טמפלט ריק", 13 columns, RTL.
 
-Every Bold proposal ships in two default deck surfaces, producing five artifacts from two MCP calls:
+Right side (columns A-F, visible on the right in RTL view): **supplier data**.
+- A vendor name
+- B invoice
+- C actual spend (filled post-event)
+- D payment terms
+- E supplier unit cost
+- F total cost = qty * unit cost
+
+Middle (columns G-K): **client-facing**.
+- G category
+- H description
+- I qty
+- J client unit price = supplier unit cost * 1.15 (the per-line markup, never labeled)
+- K total charge = qty * unit price
+
+Left side (columns L-M, gray fill): **profit, Bold internal**.
+- L profit = total charge - total cost
+- M margin % = profit / total charge
+
+After all line items in a section: subtotal row, then "דמי ארגון והפקה" row (15% of section subtotal), then "סה\"כ חשבונית" grand total.
+
+Conditional items live in a separate "אופציות" section below the main, flat under a single כללי marker, with its own 15% production fee and grand total.
+
+All cells use Excel formulas (not static values), so editing a supplier price in column E live-updates every downstream cell.
+
+## Vendor quote auto-sync (v2.8)
+
+At Stage 1 close-out or Stage 5 open (whichever comes first), the skill performs a vendor-quote delta check against the two Drive source folders:
+
+- `https://drive.google.com/drive/folders/0B7TFmdvhXcItS1JxM2xIZG5YeUU`
+- `https://drive.google.com/drive/folders/0B7TFmdvhXcItZnVaVllQZmZOS0U`
+
+New quotes since `data/vendor-registry.json` `_meta.last_scan_utc` are parsed and ingested. Stage 5 then queries the registry by category + keyword to populate `unit_cost` for each line. Full protocol in `references/vendor-quote-monitoring.md`. The 15% per-line markup is applied by the script at XLSX render time, NEVER stored in `vendor-registry.json` or `budget.json`.
+
+## The deck surfaces (Stage 6)
+
+Two default deck surfaces, five artifacts from two MCP calls:
 
 | Source | Live URL | PPTX | PDF |
 |---|---|---|---|
 | Canva (`generate-design-structured`) | yes | yes | yes |
 | Gamma (`gamma_generate`) | yes | yes (via `exportAs`) | no |
 
-The two are not redundant: Canva is the polished designed deck (visual flagship + printable PDF), Gamma is the interactive shareable deck (commentable, fast). Both are 16:9 (Canva and Gamma native).
+Both 16:9 (Canva and Gamma native). The historical Bold 4:3 template (`assets/bold-presentation-template-spec.md`) is preserved as a legacy reference only.
 
-The historical Bold 4:3 template (`assets/bold-presentation-template-spec.md`) is preserved as a legacy reference file but no longer enforced. v2.7 dropped the 4:3 constraint.
-
-### Brand identity in the deck
-
-Voice rules apply to all surfaces:
-- Hebrew-first
-- No em-dash, no en-dash
-- No cliches ("בלתי נשכח", "מרגש", "unforgettable", "חוגגים יחד", "once in a lifetime")
-- Specific numbers, not adjectives
-- Max 5-7 words per on-slide bullet
-
-Brand kit (Canva): if `data/canva-config.json` has a `brand_kit_id`, pass it. Brand consistency comes from there.
-Theme (Gamma): pick best match from `gamma_list_themes` against brand-system.md keywords.
-
-### Logo and footer handling
-
-Bold's canonical per-slide-type logo and footer spec, in use since 2010. **Applied only when `branding_mode = bold-branded`.** When `branding_mode = clean`, the entire spec is suppressed.
-
-| Slide type | Hero / main visual | Bottom-left | Bottom-right | Centered footer text |
-|---|---|---|---|---|
-| Opening | `bold-black-opening.jpg` (full bleed, centered on black background) | none | none | none |
-| Body slides | content | `bold-white-footer.jpg` (small, ~120-150px wide) | client logo (small) | `A Bold Presentation© [year]` |
-| Closing | `bold-closing.mp4` (full bleed, autoplay, animated) | none | none | none |
-
-The `[year]` token is replaced with the event year (4 digits, Western numerals) at deck-assembly time. Footer text rendered Verdana 14pt, gray `#808080`, horizontally centered.
-
-#### Asset locations and source of truth
-
-| File | Repo location | Source of truth | Travel mechanism |
-|---|---|---|---|
-| `bold-black-opening.jpg` | `assets/logos/` | packaged with .skill | binary, not in Git, manual placement at build time |
-| `bold-white-footer.jpg` | `assets/logos/` | packaged with .skill | binary, not in Git, manual placement at build time |
-| `bold-closing.mp4` | `assets/logos/` (fallback only) | Bold's Google Drive | binary, not in Git. Stage 6 fetches from Drive at runtime; if fetch fails, falls back to the packaged copy |
-| Client logo | `data/client-assets/<slug>/` | client-provided | requested in brief at Stage 1 |
-
-#### Placement at build time
-
-Canva: a properly configured brand kit handles bottom-left + footer text + bottom-right slot automatically. If the kit lacks any of them, paste manually post-export. Insert the closing MP4 as a video element on the last slide.
-
-Gamma: paste the bottom-left, bottom-right, and footer text manually post-export if the chosen theme does not supply them. Insert the closing MP4 on the last slide.
-
-In both surfaces: opening and closing slides do NOT carry the body-slide footer stripe. Their hero asset (black JPG / animated MP4) is the entire slide.
-
-## Voice rules (apply everywhere)
+## Voice rules
 
 - Hebrew-first. Numbers Western. Dates DD.MM.YYYY.
 - No em-dash or en-dash.
-- No cliches.
+- No clichés ("בלתי נשכח", "מרגש", "חוגגים יחד", "unforgettable", "once in a lifetime").
 - Specific numbers, not adjectives.
 - Short paragraphs.
 - Max 5-7 words per on-slide bullet; depth in speaker notes.
+- **Budget**: never mention the 15% per-line markup. Anywhere. Not in client decks, not in summary.md, not in PDF, not in conversation with the client. The production fee at the bottom is the only 15% the client ever sees.
 
 ## Gates
 
-- Gate 0->1: Branding mode answered (bold-branded or clean).
-- Gate 1->2: Brief fields 1, 3, 6, 14, 16 filled.
-- Gate 2->3: 3 trends + 3 case studies + 5 inspirations.
-- Gate 3->4: One direction picked from three-direction set; brand-system.md has 9 fields.
-- Gate 4a->rest: One visual direction picked; full mockup set + video + mood-direction.md.
-- Gate 4->5: All specialists reference brand system + visual.
-- Gate 5->6: Every line maps to one of the 6 canonical categories; 70%+ lines reference vendor registry; no line without `source_deliverable`.
-- Gate 6->done: Six core artifacts (Canva URL+PDF+PPTX, Gamma URL+PPTX, XLSX, scorecard, summary, Trello card). If a deck MCP is unavailable at runtime, that surface is skipped (not blocked) and summary.md notes the gap.
+- Gate 1→2: Brief fields 1, 3, 6, 14, 16 filled.
+- Gate 2→3: 3 trends + 3 case studies + 5 inspirations.
+- Gate 3→4: One direction picked from three-direction set; brand-system.md has 9 fields.
+- Gate 4a→rest: One visual direction picked; full mockup set + video + mood-direction.md.
+- Gate 4→5: All specialists reference brand system + visual.
+- Gate 4→5 additional: vendor-quote delta check has run successfully; `vendor-registry.json` `_meta.last_scan_utc` is from this session.
+- Gate 5→6: Every line maps to one of the 6 canonical categories; 70%+ lines reference `source_vendor_registry`; no line has a manual `unit_price` field; no line description contains "דמי ארגון" or "production fee" (the script adds that row automatically).
+- Gate 6→done: Six core artifacts. If a deck MCP is unavailable, that surface is skipped and summary.md notes the gap.
 - Gate 7: Runs 24h after event from Trello card.
 
 ## Required sibling skills
@@ -171,17 +137,15 @@ In both surfaces: opening and closing slides do NOT carry the body-slide footer 
 |---|---|---|
 | `nano-banana` | Stage 3, 4a | Visual reference images, mockups |
 | `veo-video-creator` | Stage 4a | Atmosphere video |
-| `marketing-council` | Stage 1 (conditional) | Full marketing plan when proposal has marketing scope - see "Marketing moves" section above |
 | `premium-deck-strategist` | Legacy fallback only | Used if both Canva and Gamma MCPs are unavailable |
 
 ## Required MCP servers
 
 | MCP server | Used in | Role |
 |---|---|---|
-| Gamma (custom Bold-operated, `gamma-mcp-server-production-959b.up.railway.app/sse`) | Stage 6, Stage 7 | `gamma_generate` builds the live Gamma deck and the downloadable PPTX. `gamma_generate_from_template` remixes the prior deck for returning clients (Phoenix, Keren, Efrat) |
-| Canva (`mcp.canva.com/mcp`) | Stage 6 | `request-outline-review` -> `generate-design-structured` -> `create-design-from-candidate` -> `export-design` produces the Canva deck with PDF + PPTX exports |
-
-If either MCP is missing at runtime, that surface is skipped silently and summary.md flags it. If both are missing, Stage 6 falls back to `premium-deck-strategist` PDF.
+| Gamma (custom Bold-operated, `gamma-mcp-server-production-959b.up.railway.app/sse`) | Stage 6, Stage 7 | Live Gamma deck + PPTX export, `gamma_generate_from_template` for returning clients |
+| Canva (`mcp.canva.com/mcp`) | Stage 6 | Canva deck + PDF + PPTX exports |
+| Google Drive (built-in) | Stage 5 vendor sync | Listing and fetching files from the two Drive source folders |
 
 ## Assets in the skill package
 
@@ -192,77 +156,26 @@ If either MCP is missing at runtime, that surface is skipped silently and summar
 | `assets/gamma-prompt-template.md` | Fallback prompt template for Gamma when MCP is unavailable |
 | `assets/proposal-pdf-structure.md` | PDF structure reference (legacy) |
 | `assets/budget-categories-reference.md` | 6 canonical categories + 30 sub-categories + ~140 line items |
-| `assets/bold-presentation-template-spec.md` | **Legacy 4:3 template spec** (2007-2025). Kept for historical reference; no longer enforced as of v2.7 |
-| `assets/logos/bold-black-opening.jpg` | Black Bold logo for opening slide hero (binary, packaged with .skill, not in Git) |
-| `assets/logos/bold-white-footer.jpg` | White Bold logo for body-slide bottom-left (binary, packaged with .skill, not in Git) |
-| `assets/logos/bold-closing.mp4` | Animated closing-slide hero (binary, packaged as fallback only; Bold's Google Drive is source of truth) |
-| `assets/logos/README.md` | Logo and footer placement rules |
-| `scripts/build_budget_xlsx.py` v3.0 | Produces budget.xlsx in Bold's canonical template format |
+| `assets/bold-presentation-template-spec.md` | Legacy 4:3 template (2007-2025), kept for historical reference only |
+| `assets/logos/bold-black-opening.jpg` | Black Bold logo (binary, not in Git) |
+| `assets/logos/bold-white-footer.jpg` | White Bold logo (binary, not in Git) |
+| `assets/logos/README.md` | Logo usage rules |
+| `scripts/build_budget_xlsx.py` v4.0 | Produces budget.xlsx with dual-layer margin, formula-driven |
+| `data/vendor-registry.json` | Working memory of supplier quotes, auto-updated at Stage 5 open |
 
 ## Session start
 
-1. Ask the branding mode question (see `## Branding mode (ask first)` above). Record the answer in the proposal's `summary.md`.
-2. Check for brief/transcript input.
-3. Read client profile if known (includes `gammaId` of prior deck for remix, Canva `design_id` for reference).
-4. Read `data/hemi-preferences.md`.
-5. Verify vendor registry.
-6. Verify required sibling skills (nano-banana, veo-video-creator).
-7. Verify Gamma MCP is connected. If absent, note that the Gamma surface will be skipped.
-8. Verify Canva MCP is connected. If absent, note that the Canva surface will be skipped.
-9. If both Canva and Gamma MCPs are absent, verify `premium-deck-strategist` is installed for fallback.
-10. Verify `data/canva-config.json` exists or run `Canva:list-brand-kits` first time and cache.
-11. Begin Stage 1.
+1. Check for brief/transcript input.
+2. Read client profile if known (includes `gammaId` and Canva `design_id` for remix).
+3. Read `data/hemi-preferences.md`.
+4. **Run vendor-quote delta sync** against the two Drive folders. Report new quotes count to Hemi. (See `references/vendor-quote-monitoring.md`.)
+5. Verify required sibling skills (nano-banana, veo-video-creator).
+6. Verify Gamma MCP connected. If absent, note that the Gamma surface will be skipped.
+7. Verify Canva MCP connected. If absent, note that the Canva surface will be skipped.
+8. If both Canva and Gamma MCPs absent, verify `premium-deck-strategist` for fallback.
+9. Verify `data/canva-config.json` or run `Canva:list-brand-kits` first time and cache.
+10. Begin Stage 1.
 
 ## Success
 
-Final deliverable: a client who, 30 days after the event, can say "Bold helped me hit these specific numbers". Secondary: over 5-10 events, three-direction sets land more often. Tertiary: returning clients get increasingly well-tuned proposals because `gamma_generate_from_template` and the Bold Canva brand kit preserve what worked.
-
-## Hebrew/RTL OOXML Authoring Rules
-
-When the deck is in Hebrew (or any RTL language), follow these rules to prevent bidi/spell-check defects. Every rule was learned from a real defect in production decks.
-
-### 1. `lang` attribute on every run
-Every `<a:rPr>` must declare a language. Hebrew runs: `lang="he-IL"`. English/numeric/punctuation-only runs: `lang="en-US"`. **Missing `lang` causes red spell-check squiggles AND breaks the bidi engine's ordering.**
-
-### 2. Never split a Hebrew word across runs
-A single Hebrew word = a single `<a:r>`. Splitting across two runs lets the bidi engine treat the two halves as independent segments and any punctuation between them lands in the wrong visual position.
-
-### 3. Punctuation belongs in the Hebrew run
-Commas, periods, colons, semicolons, quotation marks adjacent to Hebrew text must live **inside the same `<a:r>` as the Hebrew text**, not in a separate `lang="en-US"` run.
-
-### 4. Prefer one Hebrew run per phrase
-Write the entire sentence as a single `<a:r lang="he-IL">` whenever possible. Per-word splitting is the #1 source of bidi defects.
-
-### 5. Strip `err="1"`
-Never write `err="1"` on `<a:rPr>`. It produces visible red wavy underlines. When editing existing text, remove it.
-
-### 6. Mixed numeric + Hebrew titles
-
-Bold's convention: Hebrew topic word at visual right, numeric prefix at visual left. Write logical text Hebrew-first in a single `lang="he-IL"` run:
-
-```xml
-<a:p><a:pPr algn="r" rtl="1">...</a:pPr>
-  <a:r><a:rPr lang="he-IL" .../><a:t>הרגעים החיים / 06</a:t></a:r>
-</a:p>
-```
-
-DO NOT write number-first logical order. It inverts the visual layout.
-
-### 7. Hebrew paragraphs need `algn="r" rtl="1"` on `<a:pPr>`
-
-### 8. Tables: `cell.text =` does NOT persist
-Use `edit_slide_xml` to rewrite `<a:txBody>` inside `<a:tc>`.
-
-### 9. ASCII punctuation only
-- U+2014 em-dash -> `-`
-- U+2013 en-dash -> `-`
-- U+2019 curly apostrophe -> `'`
-- U+201C, U+201D curly double quotes -> `"`
-
-### 10. Don't add `<a:latin>` unless changing the font
-
-### Final QA pass before delivery
-1. Regex `/[\u2014\u2013\u2019\u201C\u201D\u00B7\u2022]/g` across all slide XML.
-2. Sweep every `<a:rPr>` in Hebrew text: `lang="he-IL"`, no `err="1"`.
-3. Every "{number} / {Hebrew topic}" title: confirm logical text is Hebrew-first.
-4. Spot-check 2-3 dense paragraphs visually for misplaced punctuation.
+Final deliverable: a client who, 30 days after the event, can say "Bold helped me hit these specific numbers". Secondary: over 5-10 events, three-direction sets land more often. Tertiary: returning clients get increasingly well-tuned proposals because `gamma_generate_from_template` and the Bold Canva brand kit preserve what worked. Quaternary: Bold's effective ~32% margin is preserved end-to-end with zero client-facing mention of the per-line 15%.
