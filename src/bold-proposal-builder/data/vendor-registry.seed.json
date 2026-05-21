@@ -1,22 +1,187 @@
 {
   "_meta": {
-    "version": "2.0",
-    "schema_note": "SEED FILE - extracted from real Bold Drive quotes May 2026. Copy to vendor-registry.json to activate. All unit_cost_ils values are supplier costs before Bold margin. Do not store client prices here.",
-    "last_scan_utc": "2026-05-21T12:00:00Z",
+    "version": "2.1",
+    "schema_note": "SEED FILE - all unit_cost_ils values are supplier costs (what Bold pays). Client price = unit_cost_ils * 1.15 (derived by script). NEVER store client prices here. Source events: רמלה 250p (Jan 2026), MAN 100-180p (Oct 2025 - Apr 2026), סופרין ירושלים 250p (Apr 2025), פניקס quotes (Apr 2026).",
+    "last_scan_utc": "2026-05-21T14:00:00Z",
     "source_folders": [
       "0B7TFmdvhXcItS1JxM2xIZG5YeUU",
       "0B7TFmdvhXcItZnVaVllQZmZOS0U"
     ],
     "files_seen": [
+      "1sFbRDhkrBUGf7_p6U2uHFIo6fr7c0Fkn",
+      "17Ws6copGFGCUInvvDXPWN8G46AoXHb_n",
+      "11KLMPrzyylNDJuTMUJc4BwjAA-tPeyIm",
+      "1yqIhTWKKy5sjFHtoLI7bhvm5UrVSbWgg",
       "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
       "1dxVmUZ-1V4geMBl5P1IjjvzwjvV2JWUu",
       "1chyNYuMQkzvvSh8skvpmgrtZQJe6em78",
       "1lvhEjMEFpuDaDOv0UeLipMV-RRe9SE6M"
     ],
     "parse_errors": [],
-    "cpi_adjustment_table": "data/cpi-israel.json"
+    "cpi_adjustment_table": "data/cpi-israel.json",
+    "pricing_notes": "Budget file columns: 'עלות יחידה' = supplier unit cost (used here). 'מחיר יח' = client price (NOT stored). Where a budget showed range across events, both values are captured as separate items with context in notes."
   },
   "vendors": [
+    {
+      "vendor_name": "ארז קומורובסקי + חנן",
+      "primary_category": "כללי",
+      "contact": {},
+      "notes": "Premium full-service catering. Price includes full waitstaff and event manager.",
+      "items": [
+        {
+          "item_name": "קייטרינג פרימיום - שירות מלא 25 מלצרים + מנהל",
+          "unit": "אורח",
+          "unit_cost_ils": 486,
+          "quote_date": "2026-01-13",
+          "source_drive_file_id": "1sFbRDhkrBUGf7_p6U2uHFIo6fr7c0Fkn",
+          "source_drive_file_name": "תקציב עבודה סופי.רובע הצעירים 013 06.01.xlsx",
+          "notes": "Derived: 121,500 ש\"ח for 250 guests. Includes 25 waiters and manager. Outdoor event (Ramla demolition party).",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "פריסטייל",
+      "primary_category": "כללי",
+      "contact": {},
+      "notes": "Mid-range catering. Price per guest. Staff included.",
+      "items": [
+        {
+          "item_name": "קייטרינג בשרי - ארוחה + צוות + כלים (6 שעות)",
+          "unit": "אורח",
+          "unit_cost_ils": 220,
+          "quote_date": "2026-04-12",
+          "source_drive_file_id": "17Ws6copGFGCUInvvDXPWN8G46AoXHb_n",
+          "source_drive_file_name": "MAN12.05.xlsx",
+          "notes": "100-180 guests. High-quality disposable tableware. Outdoor lawn setting.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "קייטרינג חלבי - מגשי אירוח + צוות + כלים",
+          "unit": "אורח",
+          "unit_cost_ils": 65,
+          "quote_date": "2026-04-12",
+          "source_drive_file_id": "17Ws6copGFGCUInvvDXPWN8G46AoXHb_n",
+          "source_drive_file_name": "MAN12.05.xlsx",
+          "notes": "Supplementary dairy trays. Used alongside meat offering.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "איט",
+      "primary_category": "כללי",
+      "contact": {},
+      "notes": "Cocktail-style catering (fork buffet). High-quality disposable tableware.",
+      "items": [
+        {
+          "item_name": "קוקטייל צלחת מזלג - חד\"פ איכותי + צוות",
+          "unit": "אורח",
+          "unit_cost_ils": 240,
+          "quote_date": "2025-04-21",
+          "source_drive_file_id": "11KLMPrzyylNDJuTMUJc4BwjAA-tPeyIm",
+          "source_drive_file_name": "תקציב סופי ללקוח מתחם התנופה 21.4.25.xlsx",
+          "notes": "250 guests. Includes reinforced service staff. Menu attached separately. Reusable glasses extra (25 ש\"ח/guest).",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "ניר דהן - קייטרינג בטוב טעם",
+      "primary_category": "כללי",
+      "contact": {
+        "phone": "089333817 / 0508533331",
+        "address": "יהודה הלוי 4, יבנה"
+      },
+      "notes": "Budget-tier catering. Price includes shawarma station, hot chips, sweets, full coffee bar, soft drinks. STALE - quote from 2023.",
+      "items": [
+        {
+          "item_name": "קוקטייל כולל שווארמה + ספיצ' + קפה + שתיה קלה",
+          "unit": "אורח",
+          "unit_cost_ils": 120,
+          "quote_date": "2023-02-21",
+          "source_drive_file_id": "1yqIhTWKKy5sjFHtoLI7bhvm5UrVSbWgg",
+          "source_drive_file_name": "ניר מפעם במאן.pdf",
+          "notes": "100 guests, 8-hour event. Includes shawarma (lamb/turkey/mixed), chips, 15 sweet varieties, espresso bar. Min 100 guests. Price from 2023 - apply CPI.",
+          "stale_warning": true,
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "בית הדבש נס ציונה",
+      "primary_category": "כללי",
+      "contact": {},
+      "notes": "Venue + full catering package (meat menu + staff + equipment for guests). Outdoor garden venue.",
+      "items": [
+        {
+          "item_name": "מתחם + קייטרינג בשרי + צוות וכלים - חבילה מלאה",
+          "unit": "אורח",
+          "unit_cost_ils": 414,
+          "quote_date": "2025-10-28",
+          "source_drive_file_id": "17Ws6copGFGCUInvvDXPWN8G46AoXHb_n",
+          "source_drive_file_name": "MAN12.05.xlsx",
+          "notes": "140 guests base. Extra guest: 420 ש\"ח. Beer supplement: 10 ש\"ח. Includes venue hire, meat menu, service.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "אוהד - בר שירות",
+      "primary_category": "כללי",
+      "contact": {},
+      "notes": "Bar service including staff and cups. Espresso bar always included.",
+      "items": [
+        {
+          "item_name": "בר - שתיה קלה + אספרסו + בירה (ללא יין)",
+          "unit": "אורח",
+          "unit_cost_ils": 25,
+          "quote_date": "2026-01-13",
+          "source_drive_file_id": "1sFbRDhkrBUGf7_p6U2uHFIo6fr7c0Fkn",
+          "source_drive_file_name": "תקציב עבודה סופי.רובע הצעירים 013 06.01.xlsx",
+          "notes": "250 guests = 6,250 ש\"ח. Includes espresso bar + staff. Disposable cups extra.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "בר - שתיה קלה + אספרסו + יין אדום + לבן + בירה",
+          "unit": "אירוע",
+          "unit_cost_ils": 7500,
+          "quote_date": "2025-04-21",
+          "source_drive_file_id": "11KLMPrzyylNDJuTMUJc4BwjAA-tPeyIm",
+          "source_drive_file_name": "תקציב סופי ללקוח מתחם התנופה 21.4.25.xlsx",
+          "notes": "250 guests. Full bar including wine. Reusable cups by Shar (separate).",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "בר - שתיה קלה + מוגזים + אספרסו (קטן)",
+          "unit": "אורח",
+          "unit_cost_ils": 30,
+          "quote_date": "2026-04-12",
+          "source_drive_file_id": "17Ws6copGFGCUInvvDXPWN8G46AoXHb_n",
+          "source_drive_file_name": "MAN12.05.xlsx",
+          "notes": "100-200 guests, outdoor event.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "כוסות רב פעמיות (ספקים שונים)",
+      "primary_category": "כללי",
+      "contact": {},
+      "notes": "Reusable cups supply and collection. Often via Shar or other equipment supplier.",
+      "items": [
+        {
+          "item_name": "כוסות רב פעמיות + צוות פינוי",
+          "unit": "כוס",
+          "unit_cost_ils": 7,
+          "quote_date": "2026-01-13",
+          "source_drive_file_id": "1sFbRDhkrBUGf7_p6U2uHFIo6fr7c0Fkn",
+          "source_drive_file_name": "תקציב עבודה סופי.רובע הצעירים 013 06.01.xlsx",
+          "notes": "Range seen: 6-8.5 ש\"ח/cup across events. 7 ש\"ח/cup is midpoint. Excludes wine glasses.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
     {
       "vendor_name": "ארגוני במות",
       "primary_category": "טכני",
@@ -28,117 +193,437 @@
       },
       "address": "ת.ד 259 קיבוץ חולדה 7684200",
       "tax_id": "515891786",
-      "notes": "במות, הסילוק, ציחמ/תחלוקה. מחיר אינו כולל אישור מהנדס קונסטרוקציה וחישובים סטטיים.",
+      "notes": "Stage and exhibition wall systems. Prices per quote from April 2026. Does NOT include structural engineering approval.",
       "items": [
         {
-          "item_name": "פודיום יחיד 1.22x1.22 מ', גובה 0.60 מ'",
+          "item_name": "אוהל ראשי + כניסה + לוגיסטיקה (אירוע גדול חוץ)",
+          "unit": "אירוע",
+          "unit_cost_ils": 111750,
+          "quote_date": "2026-04-23",
+          "source_drive_file_id": "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
+          "source_drive_file_name": "1904 - אופציה 1 - אירוע אוקטובר 2026 - ראשלצ.pdf",
+          "notes": "Full outdoor tent structure + entrance section. Includes transport + crew. Engineering approval not included.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "במה לדוברים + מסך לד (2.4x4.8 מ', גובה 50 ס\"מ)",
+          "unit": "אירוע",
+          "unit_cost_ils": 5500,
+          "quote_date": "2026-04-23",
+          "source_drive_file_id": "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
+          "source_drive_file_name": "1904 - אופציה 1 - אירוע אוקטובר 2026 - ראשלצ.pdf",
+          "notes": "Stage with black carpet cover. Dimensions 2.4x4.8m, 50cm height.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "פודיום יחיד 1.22x1.22 מ' גובה 60 ס\"מ",
           "unit": "יחידה",
           "unit_cost_ils": 800,
           "quote_date": "2026-04-23",
           "source_drive_file_id": "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
           "source_drive_file_name": "1904 - אופציה 1 - אירוע אוקטובר 2026 - ראשלצ.pdf",
-          "notes": "מחיר מחושב: 6 יחידות ב-4800 ש\"ח. כולל ציפוי שטיח שחור לחיטוי שחור.",
-          "ingested_utc": "2026-05-21T12:00:00Z"
+          "notes": "Includes black carpet cover and black fabric wrap.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
         },
         {
-          "item_name": "במת ישיבה מדורגת 5.49 מ' רוחב - גבהים 0.20/0.40/0.60/0.80",
+          "item_name": "במת ישיבה מדורגת 5.49 מ' - גבהים 0.20-0.80",
           "unit": "אירוע",
           "unit_cost_ils": 4800,
           "quote_date": "2026-04-23",
           "source_drive_file_id": "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
           "source_drive_file_name": "1904 - אופציה 1 - אירוע אוקטובר 2026 - ראשלצ.pdf",
-          "notes": "4 יחידות של 5.49x0.80 מ'. ללא מזרנים.",
-          "ingested_utc": "2026-05-21T12:00:00Z"
+          "notes": "4 sections 5.49x0.80m. No mattresses. Black carpet.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
         },
         {
-          "item_name": "במת ישיבה מדורגת פירמידה עם עמוד מרכזי",
-          "unit": "אירוע",
-          "unit_cost_ils": 15200,
-          "quote_date": "2026-04-23",
-          "source_drive_file_id": "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
-          "source_drive_file_name": "1904 - אופציה 1 - אירוע אוקטובר 2026 - ראשלצ.pdf",
-          "notes": "בסיס 7.72x7.72 מ', עומק 1.22 מ', גובה 0.20 מ'. כולל ציפוי שטיח שחור לחיטוי שחור.",
-          "ingested_utc": "2026-05-21T12:00:00Z"
-        },
-        {
-          "item_name": "קיר הסילוק לבן דו-צדדי R-צורה 3 מ' רוחב 4 מ' גובה",
-          "unit": "אירוע",
-          "unit_cost_ils": 6900,
-          "quote_date": "2026-04-23",
-          "source_drive_file_id": "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
-          "source_drive_file_name": "1904 - אופציה 1 - אירוע אוקטובר 2026 - ראשלצ.pdf",
-          "notes": "כולל משקולות. נבנה בשטח החיצוני של המבנה.",
-          "ingested_utc": "2026-05-21T12:00:00Z"
-        },
-        {
-          "item_name": "קיר הסילוק לבן דו-צדדי 6.10 מ' רוחב 4 מ' גובה + פתח מעבר",
-          "unit": "אירוע",
-          "unit_cost_ils": 13700,
-          "quote_date": "2026-04-23",
-          "source_drive_file_id": "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
-          "source_drive_file_name": "1904 - אופציה 1 - אירוע אוקטובר 2026 - ראשלצ.pdf",
-          "notes": "כולל פתח מעבר 2.44 מ' גובה x 1.22 מ' רוחב. דו-צדדי. כולל משקולות.",
-          "ingested_utc": "2026-05-21T12:00:00Z"
-        },
-        {
-          "item_name": "במת גובה מינימום 6.10x3.05 מ' ציפוי שטיח שחור",
-          "unit": "אירוע",
-          "unit_cost_ils": 3400,
-          "quote_date": "2026-04-23",
-          "source_drive_file_id": "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
-          "source_drive_file_name": "1904 - אופציה 1 - אירוע אוקטובר 2026 - ראשלצ.pdf",
-          "notes": "כולל ציפוי שטיח שחור לחיטוי שחור.",
-          "ingested_utc": "2026-05-21T12:00:00Z"
-        },
-        {
-          "item_name": "קירות הסילוק לבנים לתערוכה - חבילה קטנה (14.64 מ' + 8 מחיצות)",
+          "item_name": "קירות תערוכה לבנים - חבילה קטנה (14.64 מ')",
           "unit": "אירוע",
           "unit_cost_ils": 18000,
           "quote_date": "2026-04-23",
           "source_drive_file_id": "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
           "source_drive_file_name": "1904 - אופציה 1 - אירוע אוקטובר 2026 - ראשלצ.pdf",
-          "notes": "1 קיר 14.64 מ' + 8 מחיצות 1.22 מ' רוחב x 2.44 מ' גובה. ללא גיתוג.",
-          "ingested_utc": "2026-05-21T12:00:00Z"
+          "notes": "14.64m wall + 8 partition panels (1.22x2.44m). No branding. Transport included.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
         },
         {
-          "item_name": "קירות הסילוק לבנים לתערוכה - חבילה בינונית (29.28 מ' + 14 מחיצות)",
+          "item_name": "קירות תערוכה לבנים - חבילה בינונית (29.28 מ')",
           "unit": "אירוע",
           "unit_cost_ils": 34000,
           "quote_date": "2026-04-23",
           "source_drive_file_id": "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
           "source_drive_file_name": "1904 - אופציה 1 - אירוע אוקטובר 2026 - ראשלצ.pdf",
-          "notes": "1 קיר 29.28 מ' + 14 מחיצות 1.22 מ' רוחב x 2.44 מ' גובה. ללא גיתוג.",
-          "ingested_utc": "2026-05-21T12:00:00Z"
+          "notes": "29.28m wall + 14 partition panels. No branding. Transport included.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
         },
         {
-          "item_name": "קירות הסילוק לבנים לתערוכה - חבילה גדולה (39.04 מ' + 20 מחיצות)",
+          "item_name": "קירות תערוכה לבנים - חבילה גדולה (39.04 מ')",
           "unit": "אירוע",
           "unit_cost_ils": 46000,
           "quote_date": "2026-04-23",
           "source_drive_file_id": "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
           "source_drive_file_name": "1904 - אופציה 1 - אירוע אוקטובר 2026 - ראשלצ.pdf",
-          "notes": "1 קיר 39.04 מ' + 20 מחיצות 1.22 מ' רוחב x 2.44 מ' גובה. ללא גיתוג.",
-          "ingested_utc": "2026-05-21T12:00:00Z"
+          "notes": "39.04m wall + 20 partition panels. No branding. Transport included.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
         },
         {
-          "item_name": "קירות הסילוק לבנים כפולים לתליית אמנות - 20 יח' 2.44x2.44 מ'",
+          "item_name": "קירות הסילוק כפולים לתליית אמנות - 20 יח' 2.44x2.44 מ'",
           "unit": "אירוע",
           "unit_cost_ils": 40000,
           "quote_date": "2026-04-23",
           "source_drive_file_id": "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
           "source_drive_file_name": "1904 - אופציה 1 - אירוע אוקטובר 2026 - ראשלצ.pdf",
-          "notes": "20 יח' לבנים כפולים. כולל רגליות סגירה. ייעוד: תליית יצירות אמנות.",
-          "ingested_utc": "2026-05-21T12:00:00Z"
+          "notes": "Double-sided panels for art hanging. Side closures included.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
         },
         {
-          "item_name": "הובלות ולוגיסטיקה - אירוע סטנדרטי",
+          "item_name": "קיר חיצוני לבן R-צורה 3 מ' x 4 מ' גובה",
+          "unit": "אירוע",
+          "unit_cost_ils": 6900,
+          "quote_date": "2026-04-23",
+          "source_drive_file_id": "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
+          "source_drive_file_name": "1904 - אופציה 1 - אירוע אוקטובר 2026 - ראשלצ.pdf",
+          "notes": "With counterweights. Built on building exterior.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "קיר חיצוני לבן 6.10 מ' x 4 מ' גובה + פתח מעבר",
+          "unit": "אירוע",
+          "unit_cost_ils": 13700,
+          "quote_date": "2026-04-23",
+          "source_drive_file_id": "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
+          "source_drive_file_name": "1904 - אופציה 1 - אירוע אוקטובר 2026 - ראשלצ.pdf",
+          "notes": "Includes 2.44x1.22m passage opening. With counterweights.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "הובלות ולוגיסטיקה - ארגוני במות (אירוע ממוצע)",
           "unit": "אירוע",
           "unit_cost_ils": 15000,
           "quote_date": "2026-04-23",
           "source_drive_file_id": "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
           "source_drive_file_name": "1904 - אופציה 1 - אירוע אוקטובר 2026 - ראשלצ.pdf",
-          "notes": "הובלה מ/אל חולדה + כוח אדם הקמה. לא כולל אישור מהנדס.",
-          "ingested_utc": "2026-05-21T12:00:00Z"
+          "notes": "Transport to/from Holda + setup crew. Engineering approval NOT included.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "יניב בלומנפלד / אפקט",
+      "primary_category": "טכני",
+      "contact": {
+        "bank": "לאומי סניף 668 ח/ן 17650013"
+      },
+      "notes": "AV and electrical. Core technical vendor used across multiple Bold events.",
+      "items": [
+        {
+          "item_name": "הגברה לדוברים + מוסיקת רקע (אאוטדור, ללא תאורה)",
+          "unit": "אירוע",
+          "unit_cost_ils": 17500,
+          "quote_date": "2026-01-13",
+          "source_drive_file_id": "1sFbRDhkrBUGf7_p6U2uHFIo6fr7c0Fkn",
+          "source_drive_file_name": "תקציב עבודה סופי.רובע הצעירים 013 06.01.xlsx",
+          "notes": "Outdoor event 250p. Background music for speeches and walkabout.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "הגברה מוסיקת רקע + פריסות חשמל (אינדור, קטן)",
+          "unit": "אירוע",
+          "unit_cost_ils": 3000,
+          "quote_date": "2026-04-12",
+          "source_drive_file_id": "17Ws6copGFGCUInvvDXPWN8G46AoXHb_n",
+          "source_drive_file_name": "MAN12.05.xlsx",
+          "notes": "Indoor small event (100-180 guests). Background music only. Estimated in working budget.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "הגברה + תאורה + פריסות חשמל - מלא (אינדור, גדול)",
+          "unit": "אירוע",
+          "unit_cost_ils": 20000,
+          "quote_date": "2025-04-21",
+          "source_drive_file_id": "11KLMPrzyylNDJuTMUJc4BwjAA-tPeyIm",
+          "source_drive_file_name": "תקציב סופי ללקוח מתחם התנופה 21.4.25.xlsx",
+          "notes": "250p indoor event. Includes stage + kitchen power, lobby + outdoor lighting, full PA for speeches and band.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "תאורה לקיר/חזית בניין",
+          "unit": "אירוע",
+          "unit_cost_ils": 3500,
+          "quote_date": "2025-04-21",
+          "source_drive_file_id": "11KLMPrzyylNDJuTMUJc4BwjAA-tPeyIm",
+          "source_drive_file_name": "תקציב סופי ללקוח מתחם התנופה 21.4.25.xlsx",
+          "notes": "Exterior building facade lighting. Adds to base AV package.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "מסכי לד לבמה + עמדה שיווקית",
+          "unit": "אירוע",
+          "unit_cost_ils": 8500,
+          "quote_date": "2025-04-21",
+          "source_drive_file_id": "11KLMPrzyylNDJuTMUJc4BwjAA-tPeyIm",
+          "source_drive_file_name": "תקציב סופי ללקוח מתחם התנופה 21.4.25.xlsx",
+          "notes": "Stage LED screen + additional marketing display screen.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "לונדון סאונד לייט (פליקס)",
+      "primary_category": "טכני",
+      "contact": {
+        "bank": "בנק 31 סניף 035 ח/ן 646240"
+      },
+      "notes": "Outdoor LED screens specialist.",
+      "items": [
+        {
+          "item_name": "מסך לד אאוטדור",
+          "unit": "אירוע",
+          "unit_cost_ils": 5900,
+          "quote_date": "2026-01-13",
+          "source_drive_file_id": "1sFbRDhkrBUGf7_p6U2uHFIo6fr7c0Fkn",
+          "source_drive_file_name": "תקציב עבודה סופי.רובע הצעירים 013 06.01.xlsx",
+          "notes": "Outdoor LED screen. Used at Ramla event behind stage.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "מיכה - גנרטורים פלוס",
+      "primary_category": "טכני",
+      "contact": {
+        "bank": "דיסקונט 11 סניף 118 ח/ן 1256787"
+      },
+      "notes": "Generator rental including full power distribution setup.",
+      "items": [
+        {
+          "item_name": "גנרטור ראשי + פריסות חשמל מלאות",
+          "unit": "אירוע",
+          "unit_cost_ils": 5000,
+          "quote_date": "2026-01-13",
+          "source_drive_file_id": "1sFbRDhkrBUGf7_p6U2uHFIo6fr7c0Fkn",
+          "source_drive_file_name": "תקציב עבודה סופי.רובע הצעירים 013 06.01.xlsx",
+          "notes": "Includes power runs for sound, bar, screens, catering, toilets. Outdoor event 250p.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "גנרטור גיבוי",
+          "unit": "אירוע",
+          "unit_cost_ils": 3000,
+          "quote_date": "2026-01-13",
+          "source_drive_file_id": "1sFbRDhkrBUGf7_p6U2uHFIo6fr7c0Fkn",
+          "source_drive_file_name": "תקציב עבודה סופי.רובע הצעירים 013 06.01.xlsx",
+          "notes": "Backup only. Outdoor events only.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "רשגד ודודי - אישורי מהנדסים",
+      "primary_category": "טכני",
+      "contact": {
+        "bank": "פועלים סניף אזור 643 ח/ן 688889"
+      },
+      "notes": "Engineering approvals: structural, electrical, safety. Mandatory for outdoor structures.",
+      "items": [
+        {
+          "item_name": "אישורי מהנדסים - חשמל + קונסטרוקציה + בטיחות",
+          "unit": "אירוע",
+          "unit_cost_ils": 2500,
+          "quote_date": "2026-01-13",
+          "source_drive_file_id": "1sFbRDhkrBUGf7_p6U2uHFIo6fr7c0Fkn",
+          "source_drive_file_name": "תקציב עבודה סופי.רובע הצעירים 013 06.01.xlsx",
+          "notes": "Full package: electrical + structural + safety. Outdoor event.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "בדיקת קונסטרוקציה + אישור מהנדס",
+          "unit": "אירוע",
+          "unit_cost_ils": 1800,
+          "quote_date": "2026-04-12",
+          "source_drive_file_id": "17Ws6copGFGCUInvvDXPWN8G46AoXHb_n",
+          "source_drive_file_name": "MAN12.05.xlsx",
+          "notes": "Structural approval only. Indoor/semi-outdoor event.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "מהנדס חשמל + אישור",
+          "unit": "אירוע",
+          "unit_cost_ils": 1000,
+          "quote_date": "2026-04-12",
+          "source_drive_file_id": "17Ws6copGFGCUInvvDXPWN8G46AoXHb_n",
+          "source_drive_file_name": "MAN12.05.xlsx",
+          "notes": "Electrical approval only.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "2 אישורי מהנדסים (חשמל + קונסטרוקציה)",
+          "unit": "אירוע",
+          "unit_cost_ils": 1400,
+          "quote_date": "2025-04-21",
+          "source_drive_file_id": "11KLMPrzyylNDJuTMUJc4BwjAA-tPeyIm",
+          "source_drive_file_name": "תקציב סופי ללקוח מתחם התנופה 21.4.25.xlsx",
+          "notes": "Two engineer approvals combined.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "הצללה (ספקים שונים)",
+      "primary_category": "טכני",
+      "contact": {},
+      "notes": "Shade net for outdoor daytime events. Vendor varies by event.",
+      "items": [
+        {
+          "item_name": "רשת צל - 3 חלקים (אאוטדור, גדול)",
+          "unit": "אירוע",
+          "unit_cost_ils": 8500,
+          "quote_date": "2026-04-12",
+          "source_drive_file_id": "17Ws6copGFGCUInvvDXPWN8G46AoXHb_n",
+          "source_drive_file_name": "MAN12.05.xlsx",
+          "notes": "Shade net in 3 sections. Range seen 8,500-10,000 ש\"ח depending on area.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "כנען",
+      "primary_category": "מיתוג ושילוט",
+      "contact": {},
+      "notes": "Signage and flags. Often combined with other suppliers for printing.",
+      "items": [
+        {
+          "item_name": "שילוט הכוונה לחניון ולאירוע",
+          "unit": "אירוע",
+          "unit_cost_ils": 450,
+          "quote_date": "2026-04-12",
+          "source_drive_file_id": "17Ws6copGFGCUInvvDXPWN8G46AoXHb_n",
+          "source_drive_file_name": "MAN12.05.xlsx",
+          "notes": "Basic directional package. Seen 450-600 ש\"ח range.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "דגל סיני דו-צדדי כולל תורן",
+          "unit": "יחידה",
+          "unit_cost_ils": 350,
+          "quote_date": "2026-01-13",
+          "source_drive_file_id": "1sFbRDhkrBUGf7_p6U2uHFIo6fr7c0Fkn",
+          "source_drive_file_name": "תקציב עבודה סופי.רובע הצעירים 013 06.01.xlsx",
+          "notes": "Satin double-sided flag including pole. Seen 350-430 ש\"ח/flag.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "גב דיילות / באנר כניסה - דו-צדדי",
+          "unit": "יחידה",
+          "unit_cost_ils": 1600,
+          "quote_date": "2026-04-12",
+          "source_drive_file_id": "17Ws6copGFGCUInvvDXPWN8G46AoXHb_n",
+          "source_drive_file_name": "MAN12.05.xlsx",
+          "notes": "Hostess backdrop, double-sided. Range: 1,000-1,600 ש\"ח.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "גק רובינסון",
+      "primary_category": "מיתוג ושילוט",
+      "contact": {
+        "bank": "פועלים 12 סניף 778 ח/ן 203399"
+      },
+      "notes": "Large-format outdoor branding, building wraps, monumental elements.",
+      "items": [
+        {
+          "item_name": "עיטוף בניין - 3 רצועות + במת הרמה",
+          "unit": "אירוע",
+          "unit_cost_ils": 57000,
+          "quote_date": "2026-01-13",
+          "source_drive_file_id": "1sFbRDhkrBUGf7_p6U2uHFIo6fr7c0Fkn",
+          "source_drive_file_name": "תקציב עבודה סופי.רובע הצעירים 013 06.01.xlsx",
+          "notes": "7-story building wrap (3 strips) + stage frame. Ramla event. Premium high-impact element.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "באנקר",
+      "primary_category": "מיתוג ושילוט",
+      "contact": {},
+      "notes": "Branded wall systems for indoor events. Lobby/elevator/stage backdrops.",
+      "items": [
+        {
+          "item_name": "קירות ממותגים - חבילה מלאה (לובי + גב במה + עמדות)",
+          "unit": "אירוע",
+          "unit_cost_ils": 16300,
+          "quote_date": "2025-04-21",
+          "source_drive_file_id": "11KLMPrzyylNDJuTMUJc4BwjAA-tPeyIm",
+          "source_drive_file_name": "תקציב סופי ללקוח מתחם התנופה 21.4.25.xlsx",
+          "notes": "Comprehensive branded wall package: lobby, elevator area, stage backdrop, buffet backdrop, sales station. Indoor event.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "הבלון שלי",
+      "primary_category": "מיתוג ושילוט",
+      "contact": {
+        "bank": "דיסקונט סניף 123 כיכר היהלום ר\"ג ח/ן 31025"
+      },
+      "notes": "Helium balloons including inflation and installation.",
+      "items": [
+        {
+          "item_name": "בלוני הליום - ~300 כולל ניפוח והתקנה",
+          "unit": "אירוע",
+          "unit_cost_ils": 1500,
+          "quote_date": "2026-01-13",
+          "source_drive_file_id": "1sFbRDhkrBUGf7_p6U2uHFIo6fr7c0Fkn",
+          "source_drive_file_name": "תקציב עבודה סופי.רובע הצעירים 013 06.01.xlsx",
+          "notes": "~300 helium balloons including inflation and installation. Additional 3 balloon arch gates at 520 ש\"ח/gate.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "אדוה - עיצוב גרפי",
+      "primary_category": "מיתוג ושילוט",
+      "contact": {},
+      "notes": "Graphic design concept and print preparation.",
+      "items": [
+        {
+          "item_name": "עיצוב קונספט גרפי + הכנה לדפוס (שילוט ומיתוג)",
+          "unit": "פרויקט",
+          "unit_cost_ils": 2000,
+          "quote_date": "2026-04-12",
+          "source_drive_file_id": "17Ws6copGFGCUInvvDXPWN8G46AoXHb_n",
+          "source_drive_file_name": "MAN12.05.xlsx",
+          "notes": "Concept design + print-ready files for signage and branding. For medium-scale event.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "טל גבעון - עיצוב גרפי",
+      "primary_category": "מיתוג ושילוט",
+      "contact": {},
+      "notes": "Wall graphics design and print preparation.",
+      "items": [
+        {
+          "item_name": "עיצוב קירות + הכנה לדפוס מחומרים קיימים",
+          "unit": "פרויקט",
+          "unit_cost_ils": 1500,
+          "quote_date": "2026-01-13",
+          "source_drive_file_id": "1sFbRDhkrBUGf7_p6U2uHFIo6fr7c0Fkn",
+          "source_drive_file_name": "תקציב עבודה סופי.רובע הצעירים 013 06.01.xlsx",
+          "notes": "Using existing materials/assets. Range: 1,500 ש\"ח (existing materials) to 5,400 ש\"ח (full original design including invite + flags + signage).",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "עיצוב גרפי מלא - הזמנה + קירות + דגלים + שילוט",
+          "unit": "פרויקט",
+          "unit_cost_ils": 5400,
+          "quote_date": "2025-04-21",
+          "source_drive_file_id": "11KLMPrzyylNDJuTMUJc4BwjAA-tPeyIm",
+          "source_drive_file_name": "תקציב סופי ללקוח מתחם התנופה 21.4.25.xlsx",
+          "notes": "Full package: invitation design, branded walls, flags and signage. Print-ready files.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
         }
       ]
     },
@@ -149,52 +634,532 @@
         "name": "איתי גנור / אריאל שפירא",
         "email": "itay@thewayto.co.il"
       },
-      "notes": "אסטרטגיה ופיתוח מותג. לא עיצוב גרפי - משרד אסטרטגיה. מלווה גם ספקי פרסום ודיגיטל.",
+      "notes": "Brand strategy firm. Full brand development project. One-off for Phoenix art event. General vendor for branding projects.",
       "items": [
         {
-          "item_name": "פיתוח מותג מלא - 6 שלבים (מחקר, אסטרטגיה, שפה, בריפים, כלים, מדריך)",
+          "item_name": "פיתוח מותג מלא - 6 שלבים",
           "unit": "פרויקט",
           "unit_cost_ils": 50000,
           "quote_date": "2026-04-14",
           "source_drive_file_id": "1chyNYuMQkzvvSh8skvpmgrtZQJe6em78",
           "source_drive_file_name": "פיתוח מותג_תערוכת אומנות הפניקס 14.pdf",
-          "notes": "לא כולל רכישת תמונות/איורים. לא כולל הוצאות נסיעה לחו\"ל אם נדרש. ציר זמן: שלבים א-ב - 14 יום, שלב ג - 30 יום, שלב ד - 7-14 יום.",
-          "ingested_utc": "2026-05-21T12:00:00Z"
+          "notes": "Full brand strategy: research (14 days), brand strategy (14 days), brand language + name options (30 days), brand toolkit (7-14 days), vendor briefings, brand guide. Excludes image/illustration purchases and international travel.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
         }
       ]
     },
     {
-      "vendor_name": "טריגר - שירותי לויד וקידום מכירות",
-      "primary_category": "כח אדם ולוגיסטיקה",
+      "vendor_name": "ברק / טופאיוונט / אדנה (RSVP)",
+      "primary_category": "תקשור מקדים",
       "contact": {
-        "name": "אפרת (Bold) - efrat@bebold.co.il",
-        "notes": "הצעה הוגשה לאפרת בנובמבר 2019. יש לאמת עמידה בתמחור נוכחי."
+        "notes": "Multiple vendors provide this service. ברק=Barak, טופאיוונט=Topevents"
       },
-      "tax_id": "513101261",
-      "bank": "מרכנתיל סניף 647 נתניה ח/ן 62360",
-      "notes": "STALE - הצעה מ-2019. יש לבקש עדכון תמחור לפני שימוש. 25 סניפים בארץ.",
+      "notes": "RSVP management: WhatsApp blasts, phone confirmation, iPad check-in lists.",
       "items": [
         {
-          "item_name": "לויד/ית שעה - תעריף בסיס",
+          "item_name": "וידוא הגעה - עד 500 רשומות (שיחות + וואצאפ)",
+          "unit": "אירוע",
+          "unit_cost_ils": 1110,
+          "quote_date": "2026-01-13",
+          "source_drive_file_id": "1sFbRDhkrBUGf7_p6U2uHFIo6fr7c0Fkn",
+          "source_drive_file_name": "תקציב עבודה סופי.רובע הצעירים 013 06.01.xlsx",
+          "notes": "Up to 500 contacts. WhatsApp + phone calls. Syncs to iPad entry lists.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "וידוא הגעה - עד 1,500 רשומות (3 סבבי וואצאפ + 500 שיחות)",
+          "unit": "אירוע",
+          "unit_cost_ils": 3750,
+          "quote_date": "2026-04-12",
+          "source_drive_file_id": "17Ws6copGFGCUInvvDXPWN8G46AoXHb_n",
+          "source_drive_file_name": "MAN12.05.xlsx",
+          "notes": "3 WhatsApp rounds to 1,500 + phone calls to 500.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "וידוא הגעה + מערכת רישום - עד 350 רשומות",
+          "unit": "אירוע",
+          "unit_cost_ils": 1050,
+          "quote_date": "2025-04-21",
+          "source_drive_file_id": "11KLMPrzyylNDJuTMUJc4BwjAA-tPeyIm",
+          "source_drive_file_name": "תקציב סופי ללקוח מתחם התנופה 21.4.25.xlsx",
+          "notes": "Up to 350 records.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "תגי שם (ספקים שונים)",
+      "primary_category": "תקשור מקדים",
+      "contact": {},
+      "notes": "Printed name badges with lanyards.",
+      "items": [
+        {
+          "item_name": "תגי שם מודפסים במקום + שרוך לבן (200 תגים)",
+          "unit": "אירוע",
+          "unit_cost_ils": 1400,
+          "quote_date": "2026-04-12",
+          "source_drive_file_id": "17Ws6copGFGCUInvvDXPWN8G46AoXHb_n",
+          "source_drive_file_name": "MAN12.05.xlsx",
+          "notes": "200 name badges printed on-site + white lanyard.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "אקסמייל / אקסטרה - עמדות כניסה",
+      "primary_category": "כח אדם ולוגיסטיקה",
+      "contact": {},
+      "notes": "Entry station management with iPads, guest list system.",
+      "items": [
+        {
+          "item_name": "עמדת כניסה - 3 דיילות + לפטופים + מערכת רישום",
+          "unit": "אירוע",
+          "unit_cost_ils": 3350,
+          "quote_date": "2025-04-21",
+          "source_drive_file_id": "11KLMPrzyylNDJuTMUJc4BwjAA-tPeyIm",
+          "source_drive_file_name": "תקציב סופי ללקוח מתחם התנופה 21.4.25.xlsx",
+          "notes": "3 hostesses + laptops + guest registration system.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "עמדת רישום - 2 דיילות + אייפדים (2 מפגשים)",
+          "unit": "אירוע",
+          "unit_cost_ils": 1800,
+          "quote_date": "2026-04-12",
+          "source_drive_file_id": "17Ws6copGFGCUInvvDXPWN8G46AoXHb_n",
+          "source_drive_file_name": "MAN12.05.xlsx",
+          "notes": "2 sessions, 2 hostesses with iPads for guest verification.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "טריגר - שירותי לויד",
+      "primary_category": "כח אדם ולוגיסטיקה",
+      "contact": {
+        "bank": "מרכנתיל סניף 647 נתניה ח/ן 62360",
+        "tax_id": "513101261"
+      },
+      "notes": "STALE - 2019 price list. Must request updated pricing before use. 25 branches nationwide.",
+      "items": [
+        {
+          "item_name": "לויד/ית שעת עבודה - תעריף בסיס",
           "unit": "שעה",
           "unit_cost_ils": 75,
           "quote_date": "2019-11-01",
           "source_drive_file_id": "1lvhEjMEFpuDaDOv0UeLipMV-RRe9SE6M",
           "source_drive_file_name": "מחירון דיילות.pdf",
-          "notes": "מינימום 4 שעות. שעות נוספות: +25% לשתי שעות ראשונות, +50% מעבר. אחרי 22:00 בחול: +25%. שבת/חג: +50%. ללא מע\"מ.",
+          "notes": "Min 4 hours. Overtime +25% (first 2 extra hours), +50% beyond. After 22:00: +25%. Shabbat/holiday: +50%. Management fee: +5%. Transport: +30 ש\"ח. No VAT. STALE - must request 2025/2026 rate.",
           "stale_warning": true,
-          "ingested_utc": "2026-05-21T12:00:00Z"
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "בראשית / שירותים ניידים",
+      "primary_category": "כח אדם ולוגיסטיקה",
+      "contact": {},
+      "notes": "Portable toilet units. Indoor air-conditioned or outdoor models.",
+      "items": [
+        {
+          "item_name": "קרון שירותים מפואר - 4 תאים + איש שירות (חוץ)",
+          "unit": "אירוע",
+          "unit_cost_ils": 5800,
+          "quote_date": "2026-01-13",
+          "source_drive_file_id": "1sFbRDhkrBUGf7_p6U2uHFIo6fr7c0Fkn",
+          "source_drive_file_name": "תקציב עבודה סופי.רובע הצעירים 013 06.01.xlsx",
+          "notes": "Luxury trailer, 4 stalls, includes attendant. Outdoor event.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
         },
         {
-          "item_name": "דמי ניהול - שירותי לויד",
-          "unit": "אחוז",
-          "unit_cost_ils": null,
-          "quote_date": "2019-11-01",
-          "source_drive_file_id": "1lvhEjMEFpuDaDOv0UeLipMV-RRe9SE6M",
-          "source_drive_file_name": "מחירון דיילות.pdf",
-          "notes": "5% מעל עלות הלויד. תחבורה 30 ש\"ח נוסף. ללא מע\"מ.",
-          "stale_warning": true,
-          "ingested_utc": "2026-05-21T12:00:00Z"
+          "item_name": "קרון שירותים ממוזג (אינדור/סמי-חוץ)",
+          "unit": "אירוע",
+          "unit_cost_ils": 3000,
+          "quote_date": "2026-04-12",
+          "source_drive_file_id": "17Ws6copGFGCUInvvDXPWN8G46AoXHb_n",
+          "source_drive_file_name": "MAN12.05.xlsx",
+          "notes": "Air-conditioned portable toilet. Smaller event or semi-outdoor.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "משמר הבטחון / שניר אבטחה",
+      "primary_category": "כח אדם ולוגיסטיקה",
+      "contact": {},
+      "notes": "Security guards. Armed or unarmed depending on permit.",
+      "items": [
+        {
+          "item_name": "מאבטח חמוש - למשמרת אירוע",
+          "unit": "אדם-אירוע",
+          "unit_cost_ils": 1000,
+          "quote_date": "2025-04-21",
+          "source_drive_file_id": "11KLMPrzyylNDJuTMUJc4BwjAA-tPeyIm",
+          "source_drive_file_name": "תקציב סופי ללקוח מתחם התנופה 21.4.25.xlsx",
+          "notes": "Armed guard per event shift. Range: 1,000-1,200 ש\"ח/guard.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "שוטרים בשכר - דרך עירייה (4 שוטרים)",
+          "unit": "אירוע",
+          "unit_cost_ils": 6000,
+          "quote_date": "2026-01-13",
+          "source_drive_file_id": "1sFbRDhkrBUGf7_p6U2uHFIo6fr7c0Fkn",
+          "source_drive_file_name": "תקציב עבודה סופי.רובע הצעירים 013 06.01.xlsx",
+          "notes": "4 off-duty police officers via municipality. Outdoor public event.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "צוות תפעול (שכיר יום)",
+      "primary_category": "כח אדם ולוגיסטיקה",
+      "contact": {},
+      "notes": "Event operations crew: setup, operations, breakdown.",
+      "items": [
+        {
+          "item_name": "צוות תפעול - הקמה + תפעול + פירוק (3-4 איש, יום)",
+          "unit": "אירוע",
+          "unit_cost_ils": 2000,
+          "quote_date": "2026-04-12",
+          "source_drive_file_id": "17Ws6copGFGCUInvvDXPWN8G46AoXHb_n",
+          "source_drive_file_name": "MAN12.05.xlsx",
+          "notes": "Range seen: 2,000-3,000 ש\"ח for a 3-4 person crew. Outdoor event: 3,000-4,000 ש\"ח.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "פועל/ית תפעול - יחיד (שכיר יום)",
+          "unit": "אדם-אירוע",
+          "unit_cost_ils": 500,
+          "quote_date": "2025-04-21",
+          "source_drive_file_id": "11KLMPrzyylNDJuTMUJc4BwjAA-tPeyIm",
+          "source_drive_file_name": "תקציב סופי ללקוח מתחם התנופה 21.4.25.xlsx",
+          "notes": "Individual crew member. Range: 500-850 ש\"ח/person.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "הובלות (ספקים שונים)",
+      "primary_category": "כח אדם ולוגיסטיקה",
+      "contact": {},
+      "notes": "Transport and delivery for event equipment.",
+      "items": [
+        {
+          "item_name": "הובלות ושליחויות - אירוע בינוני (אינדור)",
+          "unit": "אירוע",
+          "unit_cost_ils": 2500,
+          "quote_date": "2026-04-12",
+          "source_drive_file_id": "17Ws6copGFGCUInvvDXPWN8G46AoXHb_n",
+          "source_drive_file_name": "MAN12.05.xlsx",
+          "notes": "Indoor event. Includes vendor equipment transport + courier deliveries.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "הובלות - אירוע גדול / חוץ",
+          "unit": "אירוע",
+          "unit_cost_ils": 4000,
+          "quote_date": "2026-01-13",
+          "source_drive_file_id": "1sFbRDhkrBUGf7_p6U2uHFIo6fr7c0Fkn",
+          "source_drive_file_name": "תקציב עבודה סופי.רובע הצעירים 013 06.01.xlsx",
+          "notes": "Outdoor event 250p. Setup and breakdown transport.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "עוז - ס.ל.ע אחזקות",
+      "primary_category": "כח אדם ולוגיסטיקה",
+      "contact": {},
+      "notes": "Professional cleaning for events.",
+      "items": [
+        {
+          "item_name": "ניקיון לפני + במהלך + אחרי אירוע",
+          "unit": "אירוע",
+          "unit_cost_ils": 1200,
+          "quote_date": "2025-04-21",
+          "source_drive_file_id": "11KLMPrzyylNDJuTMUJc4BwjAA-tPeyIm",
+          "source_drive_file_name": "תקציב סופי ללקוח מתחם התנופה 21.4.25.xlsx",
+          "notes": "Stairwells + lobby + event space, before and after. Indoor event.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "פינוי אשפה - מכולה ייעודית",
+          "unit": "אירוע",
+          "unit_cost_ils": 1100,
+          "quote_date": "2025-04-21",
+          "source_drive_file_id": "11KLMPrzyylNDJuTMUJc4BwjAA-tPeyIm",
+          "source_drive_file_name": "תקציב סופי ללקוח מתחם התנופה 21.4.25.xlsx",
+          "notes": "Dedicated waste container rental and removal.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "גלעד אורבך",
+      "primary_category": "כח אדם ולוגיסטיקה",
+      "contact": {
+        "bank": "בנק 20 סניף 450 ח/ן 341456"
+      },
+      "notes": "Water connection / temporary water supply for outdoor events.",
+      "items": [
+        {
+          "item_name": "עוקב מים כולל ברזייה לשימוש הקייטרינג והבר",
+          "unit": "אירוע",
+          "unit_cost_ils": 1200,
+          "quote_date": "2026-01-13",
+          "source_drive_file_id": "1sFbRDhkrBUGf7_p6U2uHFIo6fr7c0Fkn",
+          "source_drive_file_name": "תקציב עבודה סופי.רובע הצעירים 013 06.01.xlsx",
+          "notes": "Water tap connection for outdoor events where no permanent water access.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "YTC / יהודה טל - מכשירי קשר",
+      "primary_category": "כח אדם ולוגיסטיקה",
+      "contact": {},
+      "notes": "Walkie-talkies for event management team.",
+      "items": [
+        {
+          "item_name": "מכשירי קשר לצוות המארגן",
+          "unit": "אירוע",
+          "unit_cost_ils": 350,
+          "quote_date": "2026-04-12",
+          "source_drive_file_id": "17Ws6copGFGCUInvvDXPWN8G46AoXHb_n",
+          "source_drive_file_name": "MAN12.05.xlsx",
+          "notes": "Range seen: 320-450 ש\"ח per event. 350 is typical midpoint.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "סהר - ריהוט לאירועים",
+      "primary_category": "שונות",
+      "contact": {},
+      "notes": "Furniture rental. Regular Bold vendor. Pricing by package scope.",
+      "items": [
+        {
+          "item_name": "ריהוט מלא - בר + בית קפה + מזנונים + פרגודים + חבלול",
+          "unit": "אירוע",
+          "unit_cost_ils": 10050,
+          "quote_date": "2026-01-13",
+          "source_drive_file_id": "1sFbRDhkrBUGf7_p6U2uHFIo6fr7c0Fkn",
+          "source_drive_file_name": "תקציב עבודה סופי.רובע הצעירים 013 06.01.xlsx",
+          "notes": "Full furniture package for outdoor 250p event. Screens, partitions, rope lights included.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "ריהוט אלגנטי - ישיבה מול במה + שולחנות בר + עמדת כניסה",
+          "unit": "אירוע",
+          "unit_cost_ils": 9950,
+          "quote_date": "2025-04-21",
+          "source_drive_file_id": "11KLMPrzyylNDJuTMUJc4BwjAA-tPeyIm",
+          "source_drive_file_name": "תקציב סופי ללקוח מתחם התנופה 21.4.25.xlsx",
+          "notes": "Elegant indoor furniture. Stage seating, bar tables, entrance station.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "ריהוט בסיסי - מזנונים + עמדות + שולחנות בר",
+          "unit": "אירוע",
+          "unit_cost_ils": 4200,
+          "quote_date": "2026-04-12",
+          "source_drive_file_id": "17Ws6copGFGCUInvvDXPWN8G46AoXHb_n",
+          "source_drive_file_name": "MAN12.05.xlsx",
+          "notes": "Basic package for smaller event. Range 4,080-4,570 ש\"ח.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "כסא ישיבה (ליחיד, ללא שולחן)",
+          "unit": "יחידה",
+          "unit_cost_ils": 8,
+          "quote_date": "2026-01-13",
+          "source_drive_file_id": "1sFbRDhkrBUGf7_p6U2uHFIo6fr7c0Fkn",
+          "source_drive_file_name": "תקציב עבודה סופי.רובע הצעירים 013 06.01.xlsx",
+          "notes": "Simple seating chairs facing stage. 8 ש\"ח/chair.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "חיה אלוני / בוקי - עיצוב פרחים",
+      "primary_category": "שונות",
+      "contact": {
+        "notes": "חיה אלוני = Haya Aloni (high-end). בוקי = budget alternative."
+      },
+      "notes": "Floral and decorative design. Two pricing tiers.",
+      "items": [
+        {
+          "item_name": "עיצוב פרחים מלא - מרכזי שולחן + כניסה + בר (250 אורחים)",
+          "unit": "אירוע",
+          "unit_cost_ils": 15000,
+          "quote_date": "2026-01-13",
+          "source_drive_file_id": "1sFbRDhkrBUGf7_p6U2uHFIo6fr7c0Fkn",
+          "source_drive_file_name": "תקציב עבודה סופי.רובע הצעירים 013 06.01.xlsx",
+          "notes": "Full floral design: table centerpieces, entrance arrangements, bar decor. Premium vendor (Haya Aloni).",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "עיצוב שולחנות + מזנונים + בר + שירותים (250 אורחים, מינימליסטי)",
+          "unit": "אירוע",
+          "unit_cost_ils": 2771,
+          "quote_date": "2025-04-21",
+          "source_drive_file_id": "11KLMPrzyylNDJuTMUJc4BwjAA-tPeyIm",
+          "source_drive_file_name": "תקציב סופי ללקוח מתחם התנופה 21.4.25.xlsx",
+          "notes": "Simple floral arrangements. Tables, buffet stations, bar, toilet area. Budget tier.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "עיצוב פרחים - כניסה + בר + מרכזי שולחנות (100-200 אורחים)",
+          "unit": "אירוע",
+          "unit_cost_ils": 2000,
+          "quote_date": "2026-04-12",
+          "source_drive_file_id": "17Ws6copGFGCUInvvDXPWN8G46AoXHb_n",
+          "source_drive_file_name": "MAN12.05.xlsx",
+          "notes": "Simpler scope for smaller events.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "גוצה / אחים אקהיס",
+      "primary_category": "שונות",
+      "contact": {
+        "bank": "דיסקונט סניף 148 ח/ן 109520"
+      },
+      "notes": "Synthetic grass for outdoor events.",
+      "items": [
+        {
+          "item_name": "דשא סינטטי - כ-600 מ\"ר",
+          "unit": "מ\"ר",
+          "unit_cost_ils": 25,
+          "quote_date": "2026-01-13",
+          "source_drive_file_id": "1sFbRDhkrBUGf7_p6U2uHFIo6fr7c0Fkn",
+          "source_drive_file_name": "תקציב עבודה סופי.רובע הצעירים 013 06.01.xlsx",
+          "notes": "Derived: 14,000-18,000 ש\"ח for ~600 sqm = ~23-30 ש\"ח/sqm. 25 is midpoint.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "טררם - הפקות מוסיקה",
+      "primary_category": "שונות",
+      "contact": {
+        "bank": "הבינלאומי 31 סניף כפר גנים 095 ח/ן 107476",
+        "notes": "פדי מוסיקה הפקות וארועים (1998) בעמ"
+      },
+      "notes": "Live musical performance: drummers + trumpets. High-energy opening/closing acts.",
+      "items": [
+        {
+          "item_name": "5 מתופפים + 2 חצוצרות - נאמבר ייחודי (פתיחה + סיום)",
+          "unit": "אירוע",
+          "unit_cost_ils": 28000,
+          "quote_date": "2026-01-13",
+          "source_drive_file_id": "1sFbRDhkrBUGf7_p6U2uHFIo6fr7c0Fkn",
+          "source_drive_file_name": "תקציב עבודה סופי.רובע הצעירים 013 06.01.xlsx",
+          "notes": "Window act + closing act. Used at Ramla demolition event.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "יונתן - הרכב מוסיקלי",
+      "primary_category": "שונות",
+      "contact": {},
+      "notes": "Live band with rehearsals. Indoor corporate events.",
+      "items": [
+        {
+          "item_name": "הרכב מוסיקלי כולל נגנים + זמרת + חזרות",
+          "unit": "אירוע",
+          "unit_cost_ils": 16102,
+          "quote_date": "2025-04-21",
+          "source_drive_file_id": "11KLMPrzyylNDJuTMUJc4BwjAA-tPeyIm",
+          "source_drive_file_name": "תקציב סופי ללקוח מתחם התנופה 21.4.25.xlsx",
+          "notes": "Live band with rehearsal sessions included.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "נדב - DJ",
+      "primary_category": "שונות",
+      "contact": {},
+      "notes": "DJ for corporate events.",
+      "items": [
+        {
+          "item_name": "DJ - אירוע (ללא ציוד הגברה)",
+          "unit": "אירוע",
+          "unit_cost_ils": 4500,
+          "quote_date": "2026-01-13",
+          "source_drive_file_id": "1sFbRDhkrBUGf7_p6U2uHFIo6fr7c0Fkn",
+          "source_drive_file_name": "תקציב עבודה סופי.רובע הצעירים 013 06.01.xlsx",
+          "notes": "DJ fee only. Sound system provided by AV vendor separately.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "זיו שלף / פול - צילום",
+      "primary_category": "שונות",
+      "contact": {},
+      "notes": "Event photography and video.",
+      "items": [
+        {
+          "item_name": "צילום סטילס אירוע + לינק תמונות",
+          "unit": "אירוע",
+          "unit_cost_ils": 1800,
+          "quote_date": "2026-04-12",
+          "source_drive_file_id": "17Ws6copGFGCUInvvDXPWN8G46AoXHb_n",
+          "source_drive_file_name": "MAN12.05.xlsx",
+          "notes": "Event photography with post-event digital link. Range: 1,600-1,800 ש\"ח.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        },
+        {
+          "item_name": "צילום וידאו + עריכת קליפ",
+          "unit": "אירוע",
+          "unit_cost_ils": 2100,
+          "quote_date": "2025-04-21",
+          "source_drive_file_id": "11KLMPrzyylNDJuTMUJc4BwjAA-tPeyIm",
+          "source_drive_file_name": "תקציב סופי ללקוח מתחם התנופה 21.4.25.xlsx",
+          "notes": "Shoot + edit reel/clip.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "ביטוח אירועים",
+      "primary_category": "שונות",
+      "contact": {},
+      "notes": "Event insurance. Required for most corporate events.",
+      "items": [
+        {
+          "item_name": "ביטוח אירוע סטנדרטי",
+          "unit": "אירוע",
+          "unit_cost_ils": 4100,
+          "quote_date": "2025-04-21",
+          "source_drive_file_id": "11KLMPrzyylNDJuTMUJc4BwjAA-tPeyIm",
+          "source_drive_file_name": "תקציב סופי ללקוח מתחם התנופה 21.4.25.xlsx",
+          "notes": "Standard event liability insurance.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
+        }
+      ]
+    },
+    {
+      "vendor_name": "אקו\"ם",
+      "primary_category": "שונות",
+      "contact": {},
+      "notes": "Mandatory music rights fee for any event with live or recorded music.",
+      "items": [
+        {
+          "item_name": "אגרת אקו\"ם",
+          "unit": "אירוע",
+          "unit_cost_ils": 350,
+          "quote_date": "2026-04-12",
+          "source_drive_file_id": "17Ws6copGFGCUInvvDXPWN8G46AoXHb_n",
+          "source_drive_file_name": "MAN12.05.xlsx",
+          "notes": "Range seen: 200-420 ש\"ח. Depends on event type and attendance. 350 is typical midpoint.",
+          "ingested_utc": "2026-05-21T14:00:00Z"
         }
       ]
     }
