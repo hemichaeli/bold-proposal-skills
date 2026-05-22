@@ -1,0 +1,262 @@
+{
+  "_schema_version": "0.1.0-seed",
+  "_generated_at": "2026-05-22",
+  "_about": {
+    "purpose": "Real supplier costs extracted from vendor quotes (הצעות מחיר) that vendors sent IN to Bold. Priority 1 source for cost data, per Hemi's direction. To be merged with extracted-prices.seed.json on the registry promotion pass.",
+    "priority_rules": [
+      "Priority 1: vendor quote (this file). The vendor sent a price in writing to Bold. Highest fidelity.",
+      "Priority 2: Bold internal budget WITHOUT the 15% Bold markup (extracted-prices.seed.json lines tagged price_basis=supplier_cost).",
+      "Priority 3: Bold client-facing budget WITH markup (extracted-prices.seed.json lines tagged price_basis=client_unit_price). Back out supplier cost via /1.15."
+    ],
+    "keren_folder_status": "Inaccessible. Folder 0B7TFmdvhXcItZnVaVllQZmZOS0U returns 'File not found' through both Anthropic Google Drive connector and custom MCP server. resourcekey 0-xcmhc8hwdTPZ4Gwz6o2pBQ given by Hemi is not honored by the OAuth scope. Hemi must re-share or re-authenticate.",
+    "efrat_folder_status": "Accessible. Folder 0B7TFmdvhXcItS1JxM2xIZG5YeUU is the Bold project archive root, owned by bold.brand.actions.work@gmail.com. Year folders 2012-2026 plus a special Efrat - 2025 (1hLYKsoffwuBGWMz8IqA5cGDTIsu07f7Y) where Efrat (evenefrat@gmail.com) drops her project drafts."
+  },
+  "vendors_discovered": [
+    {
+      "vendor_key": "the_way",
+      "vendor_name_he": "the way",
+      "vendor_name_en": "the way",
+      "category": "מיתוג ושילוט",
+      "speciality_he": "פיתוח מותג ועיצוב גרפי",
+      "contacts": {
+        "names": ["איתי גנאור", "אריאל שפירא"],
+        "email": "itay@thewayto.co.il"
+      }
+    },
+    {
+      "vendor_key": "irgunei_bamot",
+      "vendor_name_he": "ארגוני במות",
+      "vendor_name_en": "Irgunei Bamot",
+      "category": "טכני",
+      "speciality_he": "בינוי במות, קוליסות, אוהלים, פודיומים",
+      "contacts": {
+        "address": "ת.ד. 259 קיבוץ חולדה 7684200",
+        "phone": "08-9445772",
+        "fax": "08-9445774",
+        "rep": "רינת טרמין",
+        "email": "rinat@irgunei-bamot.co.il",
+        "company_id_he": "ח.פ. 515891786"
+      },
+      "notes": "ספק מרכזי לבנייה זמנית של במות, קירות, אוהלים, פודיומים. עבד עם בולד גם על Phoenix וגם על סופרין-טכנופארק אשדוד."
+    },
+    {
+      "vendor_key": "tov_be_taam_neer_dahan",
+      "vendor_name_he": "טוב בטעם קייטרינג - ניר דהן",
+      "vendor_name_en": "Tov Be-Ta'am Catering, Neer Dahan",
+      "category": "מזון ושתיה",
+      "speciality_he": "קייטרינג עם דוכן שווארמה, צ'יפס, רב הית, בר אספרסו",
+      "contacts": {
+        "name": "ניר דהן",
+        "address": "יהודה הלוי 4, יבנה",
+        "phone": "08-9333817 / 050-8533331",
+        "id_he": "ת.ז. 021470042"
+      }
+    },
+    {
+      "vendor_key": "ambroziya_motti_tzarfati",
+      "vendor_name_he": "אמברוזיה - שף מוטי צרפתי",
+      "vendor_name_en": "Ambroziya, Chef Motti Tzarfati",
+      "category": "מזון ושתיה",
+      "speciality_he": "קייטרינג בוקר/ברנץ' חלבי, מטבח שף, מנות אישיות",
+      "contacts": {
+        "name": "שף מוטי צרפתי",
+        "phone": "052-889-2299"
+      }
+    },
+    {
+      "vendor_key": "london_sound_light",
+      "vendor_name_he": "לונדון סאונד לייט",
+      "vendor_name_en": "London Sound Light",
+      "category": "טכני",
+      "speciality_he": "הגברה, תאורה, הקרנה",
+      "contacts": {
+        "address": "רח' הזמיר 14/12 קריית אונו 5550712",
+        "phone": "054-488-3007 / 073-752-3925",
+        "email": "LONDONFILL1968@GMAIL.COM",
+        "company_id_he": "עוסק מורשה 307134544"
+      },
+      "notes": "הצעת מחיר ספציפית סרוקה (PDF) ולא ניתנת לחילוץ אוטומטי. דורש קריאה ידנית."
+    }
+  ],
+  "quotes": [
+    {
+      "quote_key": "the_way_phoenix_brand_2026",
+      "vendor_key": "the_way",
+      "file_id": "1chyNYuMQkzvvSh8skvpmgrtZQJe6em78",
+      "file_name": "פיתוח מותג_תערוכת אומנות הפניקס 14.pdf",
+      "from_folder": "פניקס / הצעות מחיר ספקים / מיתוג",
+      "quote_date": "2026-04-14",
+      "for_project": "Phoenix Art Event 5-10.10.26",
+      "currency": "NIS",
+      "vat_included": false,
+      "items": [
+        {
+          "category": "מיתוג ושילוט",
+          "service_he": "פיתוח קונספט מותג מלא: בריף ואסטרטגיה, ניתוח שוק, ליבת מותג, 3 חלופות שם, 3 חלופות זהות חזותית, שפה גרפית מלאה (לוגוטייפ, פלטה, טיפוגרפיה), מדריך מותג מלא, קבצי מקור לכל הספקים. כולל בריף לסוציאל ויחצנות, ופיתוח כלי מותג",
+          "qty": 1,
+          "unit_cost_nis": 50000,
+          "stages_he": [
+            "א. בריף ורקחר (עד 14 ימים)",
+            "ב. הצגת אסטרטגיה תידוגית",
+            "ג. פיתוח מותג מלא (עד 30 ימים)",
+            "ד. מדריך מותג וקבצי עבודה (7-14 ימים)",
+            "ה. בריף לספקים",
+            "ו. פיתוח כלי המותג"
+          ]
+        }
+      ],
+      "quote_total_nis": 50000,
+      "matched_budget_line": {
+        "source": "phoenix_oct_2026",
+        "service_he": "פיתוח מותג - שם, לוגו ושפה גרפית",
+        "client_unit_price_nis": 57500,
+        "implied_markup_pct": 15,
+        "match_strength": "exact"
+      }
+    },
+    {
+      "quote_key": "irgunei_bamot_phoenix_opt1_2026",
+      "vendor_key": "irgunei_bamot",
+      "file_id": "1xHYPyoV3dFPumkhKmZDs14GmsJokMv9i",
+      "file_name": "1904 - אופציה 1 - אירוע אוקטובר 2026 - ראשלצ.pdf",
+      "from_folder": "פניקס / הצעות מחיר ספקים / ארגוני במות",
+      "quote_date": "2026-04-23",
+      "quote_number": "1904",
+      "for_project": "Phoenix Oct 2026 - אופציה 1 (ראשון לציון)",
+      "currency": "NIS",
+      "vat_included": false,
+      "items": [
+        {"category": "טכני", "service_he": "6 פודיומים 1.22x1.22 גובה 0.60מ' להצבת פרטי אומנות (כולל יפוי שטיח לבד שחור + יפוי דב שחור)", "qty": 6, "unit_cost_nis": 800, "subtotal_nis": 4800},
+        {"category": "טכני", "service_he": "במה במידה חיצונית 7.72x7.72, עומק 1.22מ', גובה 0.20מ' (כולל יפוי לבד שחור)", "qty": 1, "unit_cost_nis": 15200, "subtotal_nis": 15200},
+        {"category": "טכני", "service_he": "במת ישיבה מדורגת ברוחב 5.49 (ללא מזרנים)", "qty": 1, "unit_cost_nis": 4800, "subtotal_nis": 4800},
+        {"category": "טכני", "service_he": "קיר בצורת R, גובה 4מ', רוחב 3מ', דו-צדדי, ללא מיתוג, כולל משקולות", "qty": 1, "unit_cost_nis": 6900, "subtotal_nis": 6900},
+        {"category": "טכני", "service_he": "קיר רוחב 6.10מ' גובה 4מ' דו-צדדי + פתח מעבר 1.22x2.44מ'", "qty": 1, "unit_cost_nis": 13700, "subtotal_nis": 13700},
+        {"category": "טכני", "service_he": "במה מינימום גובה 6.10x3.05 1מ' + יפוי לבד שחור + יפוי דב שחור", "qty": 1, "unit_cost_nis": 3400, "subtotal_nis": 3400},
+        {"category": "טכני", "service_he": "קיר 29.28מ' רוחב + מחיצות 14 יחידות 1.22x2.44מ' (קוליסות פנים בלבן, ללא מיתוג)", "qty": 1, "unit_cost_nis": 34000, "subtotal_nis": 34000},
+        {"category": "טכני", "service_he": "קיר 14.64מ' רוחב + מחיצות 8 יחידות 1.22x2.44מ'", "qty": 1, "unit_cost_nis": 18000, "subtotal_nis": 18000},
+        {"category": "טכני", "service_he": "קיר 39.04מ' רוחב + מחיצות 20 יחידות 1.22x2.44מ'", "qty": 1, "unit_cost_nis": 46000, "subtotal_nis": 46000},
+        {"category": "טכני", "service_he": "קירות קוליסה כפולים 2.44x2.44מ' 20 יח' לתליית פריטי עיצוב (כולל סגירות צד 0.61x2.44מ' 20 יח', כולל משקולות)", "qty": 20, "unit_cost_nis": 2000, "subtotal_nis": 40000},
+        {"category": "טכני", "service_he": "הובלות ותפעול", "qty": 1, "unit_cost_nis": 15000, "subtotal_nis": 15000}
+      ],
+      "subtotal_nis": 201800,
+      "vat_nis": 36324,
+      "quote_total_nis": 238124,
+      "notes": "המחיר אינו כולל אישור מהנדס קונסטרוקציה וחישובים סטטיים. כל במה גובה מינימום נבנית בחיצוני המבנה."
+    },
+    {
+      "quote_key": "irgunei_bamot_phoenix_opt2_2026",
+      "vendor_key": "irgunei_bamot",
+      "file_id": "1dxVmUZ-1V4geMBl5P1IjjvzwjvV2JWUu",
+      "file_name": "1908 - אופציה 2 - אירוע אוקטובר 2026 - ראשלצ.pdf",
+      "from_folder": "פניקס / הצעות מחיר ספקים / ארגוני במות",
+      "quote_date": "2026-04-23",
+      "quote_number": "1908",
+      "for_project": "Phoenix Oct 2026 - אופציה 2",
+      "currency": "NIS",
+      "vat_included": false,
+      "items": [
+        {"category": "טכני", "service_he": "2 פודיומים 1.22x1.22מ' גובה 0.50מ' + במה 2.44x2.44מ' גובה 0.50מ'", "qty": 2, "unit_cost_nis": 1500, "subtotal_nis": 3000},
+        {"category": "טכני", "service_he": "במת ישיבה מדורגת ברוחב 5.49 (4 יח' 5.49x0.80מ', בגבהים 0.20-0.80)", "qty": 1, "unit_cost_nis": 4800, "subtotal_nis": 4800},
+        {"category": "טכני", "service_he": "16 קירות קוליסה כפולים 2.44x2.44מ' דו-צדדיים + סגירות צד + משקולות עיגון, לתליית פריטי אומנות (ללא מיתוג)", "qty": 16, "unit_cost_nis": 2000, "subtotal_nis": 32000},
+        {"category": "טכני", "service_he": "קירות קוליסה 8 יח' ארוכים 4.88מ' + 2 יח' 1.22מ' x 2.44מ' גובה", "qty": 8, "unit_cost_nis": 5350, "subtotal_nis": 42800},
+        {"category": "טכני", "service_he": "קיר קוליסה דו-צדדי 3.66מ' x 2.44מ' גובה + סגירת צד (כפול 1 יח')", "qty": 1, "unit_cost_nis": 4800, "subtotal_nis": 4800},
+        {"category": "טכני", "service_he": "3 קירות קוליסה ארוכים 3.66מ' דו-צדדיים כפולים + סגירות צד + משקולות עיגון", "qty": 3, "unit_cost_nis": 5333, "subtotal_nis": 16000},
+        {"category": "טכני", "service_he": "מיתוג: יייצור ומתיחת מיתוג על קירות הקוליסה", "qty": 1, "unit_cost_nis": 85000, "subtotal_nis": 85000},
+        {"category": "טכני", "service_he": "קירות קוליסה בתוך המבנה (ללא מיתוג, לבן) גובה 2.44מ' המקיפים את פנים המבנה: 40.26 + 4.88 + 7.32 (חד-צד) + 1.22 + 2.44 (דו-צד)", "qty": 1, "unit_cost_nis": 16000, "subtotal_nis": 16000},
+        {"category": "טכני", "service_he": "קיר R 4מ' גובה 3מ' רוחב דו-צדדי + משקולות", "qty": 1, "unit_cost_nis": 6900, "subtotal_nis": 6900},
+        {"category": "טכני", "service_he": "קיר רוחב 6.10מ' גובה 4מ' דו-צדדי + פתח מעבר", "qty": 1, "unit_cost_nis": 13700, "subtotal_nis": 13700},
+        {"category": "טכני", "service_he": "במה מינימום גובה 6.10x3.05 + יפוי", "qty": 1, "unit_cost_nis": 3400, "subtotal_nis": 3400},
+        {"category": "טכני", "service_he": "הובלות ותפעול", "qty": 1, "unit_cost_nis": 15000, "subtotal_nis": 15000}
+      ],
+      "subtotal_nis": 227400,
+      "vat_nis": 40932,
+      "quote_total_nis": 268332,
+      "notes": "המחיר אינו כולל אישור מהנדס קונסטרוקציה וחישובים סטטיים. אופציה 2 כוללת קירות קוליסה פנים-מבנה ויותר מיתוג מאופציה 1."
+    },
+    {
+      "quote_key": "irgunei_bamot_sufrin_2026_05",
+      "vendor_key": "irgunei_bamot",
+      "file_id": "1gQ-hC8pfG28SJdHSGB67VBP0HNt0B5qb",
+      "file_name": "ארגוני 01.pdf",
+      "from_folder": "סופרין - טכנופארק אשדוד / הצעות",
+      "quote_date": "2026-02-19",
+      "quote_number": "1808",
+      "for_project": "סופרין-טכנופארק אשדוד 16/5/2026",
+      "currency": "NIS",
+      "vat_included": false,
+      "items": [
+        {"category": "טכני", "service_he": "2 אוהלים 15x30, גובה צד 3מ', גובה קודקוד 5.40מ', עם 2 טון משקולות לעיגון לכל רגל", "qty": 2, "unit_cost_nis": 22500, "subtotal_nis": 45000},
+        {"category": "טכני", "service_he": "אוהל מטבח 6x6 + קיבוע משקולות", "qty": 1, "unit_cost_nis": 4500, "subtotal_nis": 4500},
+        {"category": "טכני", "service_he": "במה גובה 0.16מ' לאוהלים 486 מ\"ר + יפוי שטיח לבד", "qty": 1, "unit_cost_nis": 44000, "subtotal_nis": 44000},
+        {"category": "טכני", "service_he": "במת כניסה 6.10x3.66, גובה 0.16מ' + יפוי", "qty": 1, "unit_cost_nis": 2700, "subtotal_nis": 2700},
+        {"category": "טכני", "service_he": "שביל כניסה 30.50x2.44, גובה 0.16מ' + יפוי", "qty": 1, "unit_cost_nis": 11000, "subtotal_nis": 11000},
+        {"category": "טכני", "service_he": "במה 2.44x3.66 גובה 0.40מ' + מדרגה + יפוי", "qty": 1, "unit_cost_nis": 1600, "subtotal_nis": 1600},
+        {"category": "טכני", "service_he": "במה למסך לד 6.21x1.03 גובה 1מ' + קיר תומך אחורי 6.21x2.07 גובה 4מ' + יפוי רשתות + משקולות", "qty": 1, "unit_cost_nis": 8000, "subtotal_nis": 8000},
+        {"category": "טכני", "service_he": "4 קירות מיתוג 4.88x2.44 + סגירות צד + משקולות עיגון (כולל יייצור ומתיחת מיתוג)", "qty": 4, "unit_cost_nis": 3700, "subtotal_nis": 14800},
+        {"category": "טכני", "service_he": "6 קירות מיתוג 2.44x2.44 + סגירות צד + משקולות עיגון (כולל יייצור ומתיחת מיתוג)", "qty": 6, "unit_cost_nis": 2217, "subtotal_nis": 13300},
+        {"category": "טכני", "service_he": "2 בנקטים 2.44x0.40 גובה 0.90 + 1 בנקט 4.88x0.40 גובה 0.90", "qty": 1, "unit_cost_nis": 1400, "subtotal_nis": 1400},
+        {"category": "מיתוג ושילוט", "service_he": "22 תרנים לדגל סיני (לא כולל ייצור הדגל)", "qty": 22, "unit_cost_nis": 132, "subtotal_nis": 2900},
+        {"category": "טכני", "service_he": "הובלות ותפעול", "qty": 1, "unit_cost_nis": 9000, "subtotal_nis": 9000}
+      ],
+      "subtotal_nis": 158200,
+      "vat_nis": 28476,
+      "quote_total_nis": 186676,
+      "notes": "המחיר אינו כולל אישור מהנדס קונסטרוקציה וחישובים סטטיים."
+    },
+    {
+      "quote_key": "tov_be_taam_man_2023",
+      "vendor_key": "tov_be_taam_neer_dahan",
+      "file_id": "1yqIhTWKKy5sjFHtoLI7bhvm5UrVSbWgg",
+      "file_name": "ניר מפעם במאן.pdf",
+      "from_folder": "MAN 2026 / הצעות",
+      "quote_date": "2023-02-21",
+      "quote_number": "51524",
+      "for_project": "MAN event 2/3/2023, 100 guests, 12:00-20:00",
+      "currency": "NIS",
+      "vat_included": false,
+      "items": [
+        {
+          "category": "מזון ושתיה",
+          "service_he": "תפריט קייטרינג מלא ל-100 איש, 8 שעות. כולל: בר שתייה קלה (קוקה קולה), בר אספרסו (כולל אסטרוֹ ספסיפיים, הפוך, אמריקנו, מוקטוֹ, קצר/ארוך, ארוך/קצר, אמריקנו, ארוך שחור), בחירת תה (5 סוגים), שולחן עוגיות מסיק 15 סוגים, רב שווארמה (תרנגול/הודו/כבש על גלגל מסתובב), צ'יפס חם (מתובל במלח/תערוכת תבלינים), 5 סוגי בטטים (קוקטשי/אלף האיים/שום/טבסקו)",
+          "qty": 100,
+          "unit_cost_nis": 120,
+          "subtotal_nis": 12000,
+          "notes": "התפריט הוא חבילה אחת לאירוע ולא לפי איש. סכום בסיס 12,000 כלוא לכל המקבל."
+        },
+        {"category": "מזון ושתיה", "service_he": "תוספת שווארמה 10 ק\"ג (לחשב מראש, יחויב רק אם הלקוח יאשר לפתוח)", "qty": 1, "unit_cost_nis": 900, "subtotal_nis": 900},
+        {"category": "מזון ושתיה", "service_he": "מנה נוספת (מעל המינימום), פר מנה נוספת", "qty": 1, "unit_cost_nis": 100, "subtotal_nis": 100}
+      ],
+      "subtotal_nis": 13000,
+      "vat_nis": 2210,
+      "quote_total_nis": 15210,
+      "notes": "הצעה ישנה (2023). תאריך אירוע 2/3/2023. שימושית כבסיס נתונים היסטורי בלבד - דרושה אישור על תוקף לתאריכי 2026."
+    },
+    {
+      "quote_key": "ambroziya_sufrin_2026_04",
+      "vendor_key": "ambroziya_motti_tzarfati",
+      "file_id": "13EbuGq6FsZ2gwnMArZeheOq-C0zTjA64",
+      "file_name": "אמברוזיה.docx",
+      "from_folder": "סופרין - טכנופארק אשדוד / הצעות",
+      "quote_date": "2026-02-19",
+      "for_project": "אירוע בוקר באשדוד 16.4.26, 200 אורחים, התחלה 11:00",
+      "currency": "NIS",
+      "vat_included": false,
+      "items": [
+        {
+          "category": "מזון ושתיה",
+          "service_he": "תפריט בוקר/ברנץ' חלבי - מנה אישית פר אורח: מוזלי, סלט פירות, מטבח שף עם 8 מנות אישיות (קרואסון ים, כריך לוינסקי, ביס פריקאסה, כנפס ירושלמי, טוניסאי, סלון יווני, מטבח סלוניקי, הבולגרי), שקשוקות, סלטים מ-5 סוגים, לחמים, קישים, ועוגות שמרים. כולל מזנונים מעוצבים, צוות הגשה, מנהל אירוע. כלים חד-פעמיים.",
+          "qty": 200,
+          "unit_cost_nis": 190
+        },
+        {
+          "category": "מזון ושתיה",
+          "service_he": "תוספת לכלים רב-פעמיים (פר אורח)",
+          "qty": 200,
+          "unit_cost_nis": 30
+        }
+      ],
+      "subtotal_nis": 44000,
+      "notes": "לא כולל: בר שתייה וקפה, ציוד ישיבה, מפות, כוסות לבר, מטבח קצה/אוהל/הצללה, מפרט חשמל, מכולת אשפה, תאורה, מקור מים."
+    }
+  ]
+}
