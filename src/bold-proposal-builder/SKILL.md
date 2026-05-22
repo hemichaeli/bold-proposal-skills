@@ -1,12 +1,27 @@
 ---
 name: bold-proposal-builder
-description: Build premium event proposals for Bold Productions, a Tel-Aviv event production company, through a 7-stage flow, brief gathering, research, three-direction brand heart selection, three-direction visualization, content/operations/culinary specialists, budget, assembly, and post-event debrief. Use whenever Hemi Michaeli asks to build, draft, or prepare a proposal or event concept for a Bold client. Also triggers for "לבנות הצעה", "פיץ' לאירוע", "הצעת מחיר לכנס", "קונספט לאירוע של". Mentions of Phoenix, Keren, Efrat clients also trigger. Produces a client-facing package in default deck surfaces (live Canva deck + live Gamma deck + downloadable PowerPoint files from both, plus PDF export from Canva), plus strategy, brand system, mockups, atmosphere video, agenda, scripts, menu, operations, budget XLSX in Bold's canonical 13-column RTL template with dual-layer margin (15% per-line embedded plus 15% production fee), KPIs scorecard, and Trello debrief reminder. At Stage 5 the skill auto-syncs vendor quotes from two Drive folders into data/vendor-registry.json. Requires nano-banana and veo-video-creator skills for Stage 4, the Gamma MCP server, and the Canva MCP server for Stage 6.
+description: Build premium event proposals for Bold Productions, a Tel-Aviv event production company, through a 7-stage flow, brief gathering, research, three-direction brand heart selection, three-direction visualization, content/operations/culinary specialists, budget, assembly, and post-event debrief. Use whenever Hemi Michaeli asks to build, draft, or prepare a proposal or event concept for a Bold client. Also triggers for "לבנות הצעה", "פיץ' לאירוע", "הצעת מחיר לכנס", "קונספט לאירוע של". Mentions of Phoenix, Keren, Efrat clients also trigger. Produces a client-facing package across three deck surfaces (live Canva deck + PDF, live Gamma deck, native Bold PPTX built by python-pptx), plus strategy, brand system, mockups, atmosphere video, agenda, scripts, menu, operations, budget XLSX in Bold's canonical 13-column RTL template with dual-layer margin, KPIs scorecard, and Trello debrief reminder. Requires nano-banana and veo-video-creator skills for Stage 4, the Gamma MCP server, and the Canva MCP server for Stage 6.
 license: Proprietary
 ---
 
-# Bold Proposal Builder (v2.8)
+# Bold Proposal Builder (v2.9)
 
 A 7-stage orchestrator for producing premium event proposals for Bold Productions. Each stage reads a reference file in `references/`, produces its artifacts, hands off. Skip stages and the final proposal fragments.
+
+## What changed in v2.9
+
+Stage 6 now produces a native Bold PPTX as a standalone third output surface, built directly with python-pptx. It is NOT an export from Canva or Gamma. The client receives exactly one .pptx file - the native Bold PPTX. PPTX exports from Canva and Gamma are removed from the default flow.
+
+All three deck surfaces are 16:9.
+
+The native PPTX closing slide is an animated MP4 embedded as a full-bleed video on the last slide, no footer. Two variants exist on Drive:
+
+- **Default (black background decks):** `Black.mp4` - Drive ID `1rd4HYz2O54ipI71jzER_4NwCyj-_GA2J`
+- **White variant (white background decks):** `White.mp4` - Drive ID `1reQG6f2nd2F4W0nkxI5XPubM2SjkFGwD`
+
+Selection rule: if the deck's primary slide background is white, use the white variant. Otherwise use black.
+
+vendor-registry.seed.json updated to v2.2: 30 vendors, 85 line items from 13 real Bold events (2022-2026).
 
 ## What changed in v2.8
 
@@ -31,7 +46,7 @@ Also new: vendor-quote monitoring at Stage 5 open. The skill scans two Drive fol
 | 4c | Operations | `references/stage-4c-operations.md` | `logistics.md` |
 | 4d | Culinary | `references/stage-4d-culinary.md` | `menu.md` |
 | 5 | Budget | `references/stage-5-budget.md` + `references/vendor-quote-monitoring.md` + `assets/budget-categories-reference.md` | `budget.json` (supplier costs only; script derives client prices) |
-| 6 | Assembly | `references/stage-6-assembly.md` + `references/canva-deck-path.md` | Canva deck (URL + PDF + PPTX), Gamma deck (URL + PPTX), `budget.xlsx`, KPI scorecard, summary, Trello card |
+| 6 | Assembly | `references/stage-6-assembly.md` + `references/canva-deck-path.md` | Canva deck (URL + PDF), Gamma deck (URL), native Bold PPTX, `budget.xlsx`, KPI scorecard, summary, Trello card |
 | 7 | Debrief | `references/stage-7-debrief.md` | `debrief-[event].md`, client profile (with `gammaId` and Canva `design_id`), preferences update |
 
 ## The four goal categories
@@ -100,14 +115,23 @@ New quotes since `data/vendor-registry.json` `_meta.last_scan_utc` are parsed an
 
 ## The deck surfaces (Stage 6)
 
-Two default deck surfaces, five artifacts from two MCP calls:
+Three output surfaces. All 16:9. The client receives one .pptx file only (the native Bold PPTX).
 
-| Source | Live URL | PPTX | PDF |
-|---|---|---|---|
-| Canva (`generate-design-structured`) | yes | yes | yes |
-| Gamma (`gamma_generate`) | yes | yes (via `exportAs`) | no |
+| Surface | How built | Live URL | PDF | PPTX |
+|---|---|---|---|---|
+| Canva | `generate-design-structured` MCP call | yes | yes | no |
+| Gamma | `gamma_generate` MCP call | yes | no | no |
+| Native Bold PPTX | python-pptx, built directly by the skill | no | no | yes (only .pptx) |
 
-Both 16:9 (Canva and Gamma native). The historical Bold 4:3 template (`assets/bold-presentation-template-spec.md`) is preserved as a legacy reference only.
+### Native Bold PPTX structure (16:9)
+
+- **Cover slide:** full-bleed image (client visual from Stage 4a). No footer.
+- **Body slides:** content slides per section. Footer on every body slide: white Bold logo bottom-left, "A Bold Presentation© [year]" centered Verdana 14pt gray #808080, client logo bottom-right.
+- **Closing slide:** full-bleed animated MP4, no footer. Variant selected by deck background color:
+  - Black background (default): `Black.mp4` - Drive ID `1rd4HYz2O54ipI71jzER_4NwCyj-_GA2J`
+  - White background: `White.mp4` - Drive ID `1reQG6f2nd2F4W0nkxI5XPubM2SjkFGwD`
+
+The closing MP4 files live on `bold.brand.actions.work@gmail.com` Drive. Fetch via Google Drive MCP at build time if not already cached locally at `assets/closing/`.
 
 ## Voice rules
 
@@ -128,7 +152,7 @@ Both 16:9 (Canva and Gamma native). The historical Bold 4:3 template (`assets/bo
 - Gate 4→5: All specialists reference brand system + visual.
 - Gate 4→5 additional: vendor-quote delta check has run successfully; `vendor-registry.json` `_meta.last_scan_utc` is from this session.
 - Gate 5→6: Every line maps to one of the 6 canonical categories; 70%+ lines reference `source_vendor_registry`; no line has a manual `unit_price` field; no line description contains "דמי ארגון" or "production fee" (the script adds that row automatically).
-- Gate 6→done: Six core artifacts. If a deck MCP is unavailable, that surface is skipped and summary.md notes the gap.
+- Gate 6→done: Canva URL + PDF, Gamma URL, native Bold PPTX, budget.xlsx, KPI scorecard, summary.md. If a deck MCP is unavailable, that surface is skipped and summary.md notes the gap. Native PPTX is always produced regardless of MCP availability.
 - Gate 7: Runs 24h after event from Trello card.
 
 ## Required sibling skills
@@ -143,9 +167,9 @@ Both 16:9 (Canva and Gamma native). The historical Bold 4:3 template (`assets/bo
 
 | MCP server | Used in | Role |
 |---|---|---|
-| Gamma (custom Bold-operated, `gamma-mcp-server-production-959b.up.railway.app/sse`) | Stage 6, Stage 7 | Live Gamma deck + PPTX export, `gamma_generate_from_template` for returning clients |
-| Canva (`mcp.canva.com/mcp`) | Stage 6 | Canva deck + PDF + PPTX exports |
-| Google Drive (built-in) | Stage 5 vendor sync | Listing and fetching files from the two Drive source folders |
+| Gamma (custom Bold-operated, `gamma-mcp-server-production-959b.up.railway.app/sse`) | Stage 6, Stage 7 | Live Gamma deck, `gamma_generate_from_template` for returning clients |
+| Canva (`mcp.canva.com/mcp`) | Stage 6 | Live Canva deck + PDF export |
+| Google Drive (built-in) | Stage 5 vendor sync, Stage 6 closing MP4 fetch | Vendor quotes from two Drive folders; closing MP4 assets |
 
 ## Assets in the skill package
 
@@ -160,6 +184,8 @@ Both 16:9 (Canva and Gamma native). The historical Bold 4:3 template (`assets/bo
 | `assets/logos/bold-black-opening.jpg` | Black Bold logo (binary, not in Git) |
 | `assets/logos/bold-white-footer.jpg` | White Bold logo (binary, not in Git) |
 | `assets/logos/README.md` | Logo usage rules |
+| `assets/closing/Black.mp4` | Closing slide - black variant (Drive ID: 1rd4HYz2O54ipI71jzER_4NwCyj-_GA2J, binary, not in Git) |
+| `assets/closing/White.mp4` | Closing slide - white variant (Drive ID: 1reQG6f2nd2F4W0nkxI5XPubM2SjkFGwD, binary, not in Git) |
 | `scripts/build_budget_xlsx.py` v4.0 | Produces budget.xlsx with dual-layer margin, formula-driven |
 | `data/vendor-registry.json` | Working memory of supplier quotes, auto-updated at Stage 5 open |
 
@@ -174,7 +200,8 @@ Both 16:9 (Canva and Gamma native). The historical Bold 4:3 template (`assets/bo
 7. Verify Canva MCP connected. If absent, note that the Canva surface will be skipped.
 8. If both Canva and Gamma MCPs absent, verify `premium-deck-strategist` for fallback.
 9. Verify `data/canva-config.json` or run `Canva:list-brand-kits` first time and cache.
-10. Begin Stage 1.
+10. Check `assets/closing/` for cached MP4 files. If absent, fetch from Drive at Stage 6 build time.
+11. Begin Stage 1.
 
 ## Success
 
