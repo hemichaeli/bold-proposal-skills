@@ -1,14 +1,20 @@
 {
-  "_schema_version": "0.1.0-seed",
+  "_schema_version": "0.2.0-seed",
   "_generated_at": "2026-05-22",
   "_about": {
     "purpose": "Seed index of confirmed Bold vendor pricelists and reference budgets in Google Drive, for the bold-proposal-builder vendor-quote auto-sync at session start. Not the live registry. A starter scaffold for Hemi to confirm, correct, and promote to vendor-registry.json.",
     "status": "SEED. category_guess fields are best-guess from filename only and require Hemi confirmation. file_id values verified via Google Drive MCP on 2026-05-22.",
     "discovery_notes": [
       "Handoff folder id 0B7TFmdvhXcItS1JxM2xIZG5YeUU resolves; contents are Bold project archive root (year folders 2012-2026 plus client folders), not a vendor folder.",
-      "Handoff folder id 0B7TFmdvhXcItZnVaVllQZmZOS0U resolves but is empty.",
+      "Handoff folder id 0B7TFmdvhXcItZnVaVllQZmZOS0U returns 'File not found' on metadata calls. It is a DELETED folder. The list endpoint returns an empty array, which is what was observed in the previous session.",
       "Bold has no single canonical vendor-quote folder. Vendor pricelists are scattered across per-vendor folders. Most reliable harvest: name-pattern search across Drive for 'מחירון' and 'הצעת מחיר'.",
       "Real supplier costs Hemi has actually used live in his recent project budget XLSXes (תקציב). These are the highest-fidelity source for current rates."
+    ],
+    "v0_2_0_changes": [
+      "Added 'מזון ושתיה' (F&B) as a 7th budget category, sitting between 'כח אדם ולוגיסטיקה' and 'שונות'.",
+      "Wine ('יין') and bar ('בר') items are part of F&B; the legacy 'יינות' / 'יין' / 'בר' lines move from 'שונות' to 'מזון ושתיה'.",
+      "Reclassified kerem_barak_breakfast, kerem_barak_tour, and the legacy wine pricelists into 'מזון ושתיה'.",
+      "Added companion file extracted-prices.seed.json with 116 supplier-cost and client-unit-price line items extracted from Tzion 3 v03, MAN 2025 (Sorek + Beit HaDvash), and Phoenix 5-10.10.26 budgets."
     ]
   },
   "budget_categories": [
@@ -17,8 +23,12 @@
     "מיתוג ושילוט",
     "טכני",
     "כח אדם ולוגיסטיקה",
+    "מזון ושתיה",
     "שונות"
   ],
+  "category_notes": {
+    "מזון ושתיה": "Covers wine (יין), bar (בר), catering, F&B labor on the bar, glassware, and any beverage/food line. Bar STRUCTURE ('מבנה בר') is also tagged here in Phoenix and MAN, though it could arguably belong to 'טכני' as physical buildout."
+  },
   "drive_folders_verified": {
     "project_archive_root": {
       "id": "0B7TFmdvhXcItS1JxM2xIZG5YeUU",
@@ -27,23 +37,34 @@
       "contains_vendor_data": false,
       "notes": "Project archive root. Year subfolders 2012 through 2026 plus client folders (Efrat, אורי, אלישבע and others)."
     },
-    "second_handoff_folder_empty": {
+    "second_handoff_folder_DELETED": {
       "id": "0B7TFmdvhXcItZnVaVllQZmZOS0U",
       "verified_at": "2026-05-22",
-      "verified_resolves": true,
+      "verified_resolves": false,
       "contains_vendor_data": false,
-      "notes": "Resolves but contains zero files. Was tagged as vendor folder in handoff prompt; either wrong id or has been emptied."
+      "notes": "DELETED folder. 'File not found' on get_file_metadata; list_folder_contents returns empty array. Was probably a real folder before Drive's 2017 ID format migration and was deleted afterward. Drop from any sync logic."
     },
     "year_2026": {
       "id": "1RfLjmp8kwn5Ar3ouDZISD8b--gVdd_Mf",
       "verified_at": "2026-05-22",
       "verified_resolves": true,
-      "notes": "Current-year active projects. Modern Bold project subfolders use a numbered scheme (e.g. '01 - תקציב ופיננסים')."
+      "client_subfolders": [
+        {"id": "1OyHSvF4VFH1zv1qKF4dPRBvgI60ViMeX", "name": "יין בבוסתן 2026"},
+        {"id": "182HMRFtufkXOplu_490XJB9EmGyG7l7I", "name": "פניקס"},
+        {"id": "1Z6o5HxyOigXq99PvgxbcTwTubWunrLyn", "name": "ציון 3"},
+        {"id": "1i0D0a3eODxsKytpEO-4sz8ud4_mee9Nq", "name": "MAN 2026"},
+        {"id": "1Rems7i5_ru021vw3e8PaTbzGzTWFBr5y", "name": "סופרין - טכנופארק אשדוד"}
+      ]
     },
     "year_2025_efrat": {
       "id": "1hLYKsoffwuBGWMz8IqA5cGDTIsu07f7Y",
       "verified_at": "2026-05-22",
-      "verified_resolves": true
+      "verified_resolves": true,
+      "client_subfolders": [
+        {"id": "1rGqMuN4sSHplie9r5ahL99mxWER3AXot", "name": "רמלה - ארוע הריסה"},
+        {"id": "1Iz372x9dTOtdjvuULiu77X1AbxM0jVVn", "name": "MAN 09.25"},
+        {"id": "1dE5Eb1GtR9X7jZvC5NJsW8V6x70hGc0C", "name": "כתב"}
+      ]
     },
     "year_2024": {
       "id": "1Ff-mFOSnhbM9xBUrv_TDjoPd1DIWiYl5",
@@ -92,8 +113,7 @@
       "file_name": "מחירון השכרות 2023.pdf",
       "mime_type": "application/pdf",
       "modified": "2024-06-16",
-      "parent_folder_id": "1A_cQ3p8aalG1cLGyW39NkoOm_sF9DOEw",
-      "notes": "Sibling file in same folder: מחירון מועדון 2024.pdf. Same vendor likely covers rentals plus venue services."
+      "parent_folder_id": "1A_cQ3p8aalG1cLGyW39NkoOm_sF9DOEw"
     },
     {
       "vendor_key": "rentals_updated",
@@ -117,8 +137,7 @@
       "file_name": "מחירון מועדון 2024.pdf",
       "mime_type": "application/pdf",
       "modified": "2024-06-16",
-      "parent_folder_id": "1A_cQ3p8aalG1cLGyW39NkoOm_sF9DOEw",
-      "notes": "Venue (club). Bold uses for activities and venues outside core 6-category lines."
+      "parent_folder_id": "1A_cQ3p8aalG1cLGyW39NkoOm_sF9DOEw"
     },
     {
       "vendor_key": "catamaran_card",
@@ -142,8 +161,7 @@
       "file_name": "מחירון מועדון  2024.pdf",
       "mime_type": "application/pdf",
       "modified": "2024-06-04",
-      "parent_folder_id": "19QzOJzJIQkDjcCQziOT4ixQN1sOcwW90",
-      "notes": "Sibling of catamaran_card; likely the same activity provider."
+      "parent_folder_id": "19QzOJzJIQkDjcCQziOT4ixQN1sOcwW90"
     },
     {
       "vendor_key": "producers_2024",
@@ -155,8 +173,7 @@
       "file_name": "מחירון מפיקים.pdf",
       "mime_type": "application/pdf",
       "modified": "2024-05-19",
-      "parent_folder_id": "1fJu0uKIXR6JNwjAg70iFf7mud7D_4eOG",
-      "notes": "Same parent folder also contains 'BOLD _ הסכם + הצעת מחיר _ 2025.xps.pdf' (file id 1Wg0aVYlCEMrkcjX0oqUlaGWZIyBc2s3t) which is a Bold-vendor agreement plus quote for 2025. Confirm whether this is a Bold-internal producers rate or external."
+      "parent_folder_id": "1fJu0uKIXR6JNwjAg70iFf7mud7D_4eOG"
     },
     {
       "vendor_key": "hostesses",
@@ -175,7 +192,7 @@
       "vendor_key": "kerem_barak_breakfast",
       "vendor_label_he": "מחירון סוכנים כרם ברק - ארוחת בוקר ושדרוגים",
       "vendor_label_en": "Kerem Barak winery, agents pricelist, breakfast plus upgrades",
-      "category_guess": "שונות",
+      "category_guess": "מזון ושתיה",
       "category_confirmed": false,
       "file_id": "1mDdvW6nHGd2VeQfM1HuUAQmkxmMLSffd",
       "file_name": "מחירון סוכנים כרם ברק - ארוחת בוקר + שדרוגים.pdf",
@@ -187,13 +204,39 @@
       "vendor_key": "kerem_barak_tour",
       "vendor_label_he": "מחירון סוכנים כרם ברק - סיור ביקב וטעימות יין",
       "vendor_label_en": "Kerem Barak winery, agents pricelist, winery tour and wine tasting",
-      "category_guess": "שונות",
+      "category_guess": "מזון ושתיה",
       "category_confirmed": false,
       "file_id": "1m3cRzNZsRsC0oV0d7ziMIJ1vPsOvA0F0",
       "file_name": "מחירון סוכנים כרם ברק - סיור ביקב וטעימות יין.pdf",
       "mime_type": "application/pdf",
       "modified": "2023-01-19",
       "parent_folder_id": "1lg9rBZMM_jpmVeKJCHgoDXqvazdjM8d2"
+    },
+    {
+      "vendor_key": "wine_zappa",
+      "vendor_label_he": "מחירון יין - זאפה כשר",
+      "vendor_label_en": "Zappa wine pricelist (kosher)",
+      "category_guess": "מזון ושתיה",
+      "category_confirmed": false,
+      "file_id": "0B7TFmdvhXcItdExQUGRVSnUzR0k",
+      "file_name": "זאפה-מחירון עדכני כשר.pdf",
+      "mime_type": "application/pdf",
+      "modified": "2014-07-30",
+      "parent_folder_id": "0B7TFmdvhXcItTkllTC1CQm1sNG8",
+      "notes": "Stale (2014). Refresh if still in use."
+    },
+    {
+      "vendor_key": "wine_list_2014",
+      "vendor_label_he": "מחירון יינות 2014",
+      "vendor_label_en": "Wine pricelist 2014",
+      "category_guess": "מזון ושתיה",
+      "category_confirmed": false,
+      "file_id": "0B7TFmdvhXcItSTI1LXF0c0otQXc",
+      "file_name": "מחירון יינות.doc",
+      "mime_type": "application/msword",
+      "modified": "2014-08-19",
+      "parent_folder_id": "0B7TFmdvhXcItaXFFa3JFbnFtUzQ",
+      "notes": "Stale (2014). Refresh if still in use."
     },
     {
       "vendor_key": "rosh_hanikra_2018",
@@ -219,7 +262,7 @@
       "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
       "modified": "2019-01-24",
       "parent_folder_id": "1LRZ4JyOukiqe9owUOSKffnazvBtwC34f",
-      "notes": "Call-center pricelist, candidate for the 'תקשור מקדים' category (pre-event RSVP and reminder calls)."
+      "notes": "Call-center pricelist; fits the 'תקשור מקדים' category (pre-event RSVP and reminder calls)."
     },
     {
       "vendor_key": "hostess_call_2020",
@@ -245,18 +288,21 @@
       "mime_type": "application/pdf",
       "modified": "2026-05-17",
       "parent_folder_id": "1WfgdN7f9m_IfumHXt_QSbac5LZJXjb98",
-      "notes": "Companion DOCX: 1MO14Qr9aqjvLEZ4fU0QdZ4nORz-vja7e. Authoritative recent budget for a known Bold client."
+      "exposes_supplier_cost": false,
+      "notes": "Companion DOCX: 1MO14Qr9aqjvLEZ4fU0QdZ4nORz-vja7e. Authoritative recent budget for a known Bold client. Only client unit prices exposed. Lines extracted to extracted-prices.seed.json."
     },
     {
       "budget_key": "tzion3_v03",
       "label_he": "תקציב והפקה ציון3 03",
       "client": "Tzion 3",
+      "venue": "אמפי תל אביב",
       "file_id": "1YQgVuEGtF2hXk95Fo2uhr7LbWe7D1tsZ",
       "file_name": "תקציב והפקה  ציון3 03.xlsx",
       "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
       "modified": "2026-05-17",
       "parent_folder_id": "1m-Unv8Or0Eko_g92ebh0JBPur2K7uz4i",
-      "notes": "Latest revision in a v01/v02/v03 series. Highest-fidelity recent supplier-cost source."
+      "exposes_supplier_cost": true,
+      "notes": "Latest revision in a v01/v02/v03 series. Exposes BOTH 'עלות יחידה' (supplier cost) and 'מחיר יחידה' (client price); highest-fidelity supplier-cost source. Lines extracted to extracted-prices.seed.json."
     },
     {
       "budget_key": "tzion3_v02_06",
@@ -298,13 +344,43 @@
       "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
       "modified": "2026-03-01",
       "parent_folder_id": "1nDTyfO0HULAbHwNjk9GY0huF4LgJB_4I"
+    },
+    {
+      "budget_key": "man_2025_sorek",
+      "label_he": "MAN 2025 - שורק (תקציב 001)",
+      "client": "MAN 2025",
+      "venue": "שורק",
+      "event_date": "2025-10-28",
+      "file_id": "1U5m15Z1GSQc3bWWf2Ld2BESQlJKxgyjXZUhM7xjaRek",
+      "file_name": "תקציב 001",
+      "mime_type": "application/vnd.google-apps.document",
+      "modified": "2026-01-26",
+      "parent_folder_id": "1Ks676polEq0s3XTqHiDNeetjpgZEIBsz",
+      "from_folder_path": "Efrat - 2025 / MAN 09.25 / תקציב",
+      "owner": "evenefrat@gmail.com",
+      "exposes_supplier_cost": false,
+      "notes": "Sales day at Sorek. Client prices only. Lines extracted to extracted-prices.seed.json."
+    },
+    {
+      "budget_key": "man_2025_dvash",
+      "label_he": "MAN 2025 - בית הדבש, נס ציונה (תקציב 002)",
+      "client": "MAN 2025",
+      "venue": "בית הדבש, נס ציונה",
+      "event_date": "2025-10-28",
+      "file_id": "1ThG_raMGwrLxYAoB5YIL-9V15kZ3W7yW",
+      "file_name": "תקציב 002.pdf",
+      "mime_type": "application/pdf",
+      "modified": "2025-08-21",
+      "parent_folder_id": "1Ks676polEq0s3XTqHiDNeetjpgZEIBsz",
+      "from_folder_path": "Efrat - 2025 / MAN 09.25 / תקציב",
+      "exposes_supplier_cost": false
     }
   ],
   "open_questions": [
-    "Confirm or replace the two folder IDs from the original handoff. The right behavior for vendor-quote auto-sync is a Drive-wide name-pattern search, not a fixed folder scan, since vendors are scattered.",
-    "Confirm the category_guess for each vendor pricelist. Some are ambiguous: catamaran and Kerem Barak could be 'שונות' or a future 'F&B' or 'experience' category; reshetcall could be 'תקשור מקדים' or 'כח אדם'.",
-    "Decide whether 'יין' (wine) and 'תפריט' (menu) get a dedicated catering/F&B category or stay under 'שונות'. Multiple wine-pricelist files exist (e.g. 'מחירון יינות.doc' at 0B7TFmdvhXcItSTI1LXF0c0otQXc).",
+    "Locate the 'קרן' folder Hemi referenced. No client/project folder named קרן exists under the 2024/2025/2026 year roots, nor in Efrat - 2025. Please provide its folder id (or owner email if it lives in someone else's Drive).",
+    "Confirm the category_guess for each vendor pricelist. Several remain ambiguous: catamaran and Rosh HaNikra could stay 'שונות' or move to a future 'פעילות אורחים' (experiences) category.",
+    "Confirm that 'מבנה בר' (bar STRUCTURE) belongs under 'מזון ושתיה' and not 'טכני'. Currently in extracted-prices.seed.json it sits under 'מזון ושתיה'.",
     "Decide whether the Bold internal 2018 rate card (.msg) should be parsed and promoted to a baseline, or retired.",
-    "Decide whether to extract supplier costs from the recent Phoenix and Tzion 3 budgets and back-fill them into the registry as live unit costs."
+    "Decide whether to promote extracted-prices.seed.json into a live unit-cost-registry.json that build_budget_xlsx.py reads. Conversion needed for client_unit_price entries: supplier_cost = client_unit_price / 1.15 to back out the layer-1 markup."
   ]
 }
