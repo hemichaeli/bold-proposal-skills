@@ -1,6 +1,6 @@
 # Bold Proposal Skills
 
-Three Claude skills that together produce end-to-end, premium event-production proposals for Bold Productions (חברת ההפקה "לי").
+Three Claude skills that together produce end-to-end, premium event-production proposals for Bold Productions (חברת ההפקה "שלי").
 
 ## Architecture
 
