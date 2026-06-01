@@ -207,6 +207,33 @@ If the user only wants the slide-by-slide text breakdown without a file, stop af
 
 The goal is not to fill slides. The goal is to produce a deck where every slide carries exactly one idea, the audience remembers the takeaway without the deck in front of them, and the designer can execute from your output without asking a single clarifying question.
 
+## Design Passes (optional visual refinement)
+
+After the deck's narrative and structure are set, optionally refine visual
+craft with the design passes in `design-passes/`. They are opt-in and run in a
+fixed order; clarity, legibility, and presenter experience override them.
+
+Read `design-passes/pipeline.md` first, then apply only the passes whose
+triggers match the request:
+
+1. **reference-enrichment** (`design-passes/reference-enrichment.md`) - anti-generic
+   slide taste + art direction. Trigger: "premium", "less generic", "better taste".
+2. **layout-cleanup** (`design-passes/layout-cleanup.md`) - slide grid, type
+   hierarchy, alignment, kill bullet walls, legibility. Trigger: "cleaner slides",
+   "fix layout", "too much text". Highest-leverage pass.
+3. **motion** (`design-passes/motion.md`) - one consistent transition + purposeful
+   builds, no spin/fly-in. Trigger: "transitions", "animate", "polished".
+
+Order is fixed: reference -> layout -> motion. The passes refine **how the deck
+looks and moves** - they never rewrite the narrative, reorder slides, or change
+the argument (that remains this skill's job). Run zero passes when the request
+is purely about content or strategy.
+
+Render the finished deck through whatever is connected - Gamma, Canva, Google
+Slides (gdrive), or export to PPTX - or deliver the deck spec for the user to
+drop into their tool.
+
+
 ## Hebrew/RTL OOXML Authoring Rules
 
 When the deck is in Hebrew (or any RTL language), follow these rules to prevent bidi/spell-check defects. Every rule was learned from a real defect in production decks.
