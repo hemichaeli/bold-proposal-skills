@@ -1,6 +1,6 @@
 # Bold Proposal Skills
 
-Three Claude skills that together produce end-to-end, premium event-production proposals for Bold Productions (חברת ההפקה "שלי").
+Claude skills for Bold Productions (חברת ההפקה "שלי"). Three of them work together as a pipeline that produces end-to-end, premium event-production proposals; a fourth, `rtl-hebrew-docs`, is a standalone utility for generating professional right-to-left Hebrew documents (PDF / DOCX / PPTX).
 
 ## Architecture
 
@@ -26,7 +26,7 @@ Three Claude skills that together produce end-to-end, premium event-production p
 
 The orchestrator owns the pipeline. The two specialist skills handle the heavy visual work and are called in stage 4.
 
-## The three skills
+## The skills
 
 ### `bold-proposal-builder`
 
@@ -58,6 +58,15 @@ Requires `GEMINI_API_KEY` environment variable. Free tier ~500 images/day.
 ### `veo-video-creator`
 
 Thin wrapper over the user's connected Veo MCP server (`veo-mcp-server-production.up.railway.app`). Focused on 5-15 second single-shot atmosphere videos. Two canonical shapes: *slow push-in* (reveal) and *ambient hold* (atmosphere). Image-to-video is the preferred workflow: generate the still with `nano-banana` first, then animate.
+
+### `rtl-hebrew-docs`
+
+Standalone skill for generating professional right-to-left Hebrew documents (PDF, DOCX, PPTX) with correct bidi layout and Hebrew typography. The default and most reliable path is HTML with `dir="rtl"` rendered to PDF via headless Chrome, the only path that renders identically across every viewer. DOCX (`python-docx`, three-level RTL) is reserved for files the recipient must edit in Microsoft Word; PPTX uses `pptxgenjs` with `rtlMode`. Covers safe commercial/administrative templates (הצעת מחיר, חוזה, פרוטוקול, מכתב רשמי, תעודה, דוח) and explicitly excludes regulated tax invoices/receipts (חשבונית מס / קבלה). Three helper scripts:
+- `scripts/html_to_pdf.py` HTML → PDF via headless Chrome, plus `proposal`/`certificate` JSON templates
+- `scripts/make_docx.py` editable Word with section + paragraph + run RTL
+- `scripts/make_pptx.js` Hebrew slides with deck-wide and per-block RTL
+
+On Linux, install a Hebrew font once (`fonts-noto-hebrew`); macOS and Windows ship one.
 
 ## Installation
 
@@ -137,10 +146,23 @@ bold-proposal-skills/
     │   └── scripts/
     │       ├── generate.py
     │       └── batch_generate.py
-    └── veo-video-creator/
+    ├── veo-video-creator/
+    │   ├── SKILL.md
+    │   └── references/
+    │       └── video-prompting.md
+    └── rtl-hebrew-docs/
         ├── SKILL.md
-        └── references/
-            └── video-prompting.md
+        ├── references/
+        │   ├── rtl-rendering.md
+        │   ├── hebrew-fonts.md
+        │   └── document-templates.md
+        ├── assets/
+        │   └── fonts/
+        │       └── README.md
+        └── scripts/
+            ├── html_to_pdf.py
+            ├── make_docx.py
+            └── make_pptx.js
 ```
 
 ## Dependencies
